@@ -8,13 +8,15 @@ import (
 
 func TestBorders(t *testing.T) {
 
-	NewPdf().Children(
-		NewBlock().
-			BorderColor("#ff0000").
-			BorderWidth(1).
-			Width(100).
-			Height(100),
-	).Build()
+	NewPdf().Pages(
+		NewPage().Children(
+			NewBlock().
+				BorderColor("#ff0000").
+				BorderWidth(1).
+				Width(100).
+				Height(800),
+		),
+	).Render()
 
 	assert.True(t, true)
 

@@ -24,69 +24,56 @@ const (
 )
 
 type Block struct {
-	flexNode *flex.Node
+	AbstractElement
+	children []Element
 	border   [edgeCount]*border
-	pdf      *Pdf
-	parent   *Block
-	children []*Block
 }
 
 func NewBlock() *Block {
 	config := flex.NewConfig()
 	node := flex.NewNodeWithConfig(config)
 
-	return &Block{
-		flexNode: node,
-		border:   [edgeCount]*border{{}, {}, {}, {}},
+	block := &Block{
+		border: [edgeCount]*border{{}, {}, {}, {}},
 	}
+
+	block.AbstractElement.setFlexNode(node)
+	return block
 }
 
-func (block *Block) Children(children ...*Block) *Block {
+func (block *Block) Children(children ...Element) *Block {
 
 	for _, child := range children {
-		block.flexNode.InsertChild(child.flexNode, len(block.flexNode.Children))
+		block.getFlexNode().InsertChild(child.getFlexNode(), len(block.getFlexNode().Children))
+		block.children = append(block.children, child)
 	}
-
-	block.children = append(block.children, children...)
 
 	return block
 }
 
-func (block *Block) X() float32 {
-	x := block.flexNode.LayoutGetLeft()
-	if block.flexNode.Parent != nil {
-		x += block.flexNode.Parent.LayoutGetLeft()
-	}
+func (block *Block) render(pdf *Pdf) {
 
-	return x
-}
-
-func (block *Block) Y() float32 {
-	y := block.flexNode.LayoutGetTop()
-	if block.flexNode.Parent != nil {
-		y += block.flexNode.Parent.LayoutGetTop()
-	}
-
-	return y
-}
-
-func (block *Block) build() *Block {
-
-	block.buildBorders()
+	block.renderBorders(pdf)
 
 	for _, child := range block.children {
-		child.build()
+		child.render(pdf)
 	}
+}
 
+func (block *Block) Width(width float64) *Block {
+	block.getFlexNode().StyleSetWidth(float32(width))
 	return block
 }
 
-func (block *Block) setPdf(pdf *Pdf) *Block {
-	block.pdf = pdf
-
-	for _, block := range block.children {
-		block.setPdf(pdf)
-	}
-
+func (block *Block) Height(height float64) *Block {
+	block.getFlexNode().StyleSetHeight(float32(height))
 	return block
+}
+
+func (block *Block) GetWidth() float64 {
+	return float64(block.getFlexNode().StyleGetWidth().Value)
+}
+
+func (block *Block) GetHeight() float64 {
+	return float64(block.getFlexNode().StyleGetHeight().Value)
 }

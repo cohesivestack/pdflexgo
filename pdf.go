@@ -8,42 +8,72 @@ import (
 	"github.com/kjk/flex"
 )
 
+type Orientation string
+type Unit string
+type Size string
+type Edge int
+
+const (
+	OrientationPortrait  Orientation = "P"
+	OrientationLandscape Orientation = "L"
+
+	UnitPt Unit = "pt"
+	UnitMm Unit = "mm"
+	UnitCm Unit = "cm"
+	UnitIn Unit = "in"
+
+	SizeA3      Size = "a3"
+	SizeA4      Size = "a4"
+	SizeA5      Size = "a5"
+	SizeA6      Size = "a6"
+	SizeA2      Size = "a2"
+	SizeA1      Size = "a1"
+	SizeLetter  Size = "letter"
+	SizeLegal   Size = "legal"
+	SizeTabloid Size = "tabloid"
+
+	EdgeLeft       Edge = Edge(flex.EdgeLeft)
+	EdgeTop        Edge = Edge(flex.EdgeTop)
+	EdgeRight      Edge = Edge(flex.EdgeRight)
+	EdgeBottom     Edge = Edge(flex.EdgeBottom)
+	EdgeStart      Edge = Edge(flex.EdgeStart)
+	EdgeEnd        Edge = Edge(flex.EdgeEnd)
+	EdgeHorizontal Edge = Edge(flex.EdgeHorizontal)
+	EdgeVertical   Edge = Edge(flex.EdgeVertical)
+	EdgeAll        Edge = Edge(flex.EdgeAll)
+)
+
+const DefaultOrientation = OrientationPortrait
+const DefaultUnit = UnitPt
+const DefaultSize = SizeA4
+const DefaultMarginInPoints = 72
+
 type Pdf struct {
-	fpdf *gofpdf.Fpdf
-	root *Block
+	fpdf  *gofpdf.Fpdf
+	pages []*Page
 }
 
 func NewPdf() *Pdf {
+
 	pdf := &Pdf{
-		fpdf: gofpdf.New("P", "mm", "A4", ""),
+		fpdf: gofpdf.New(string(DefaultOrientation), string(DefaultUnit), string(DefaultSize), ""),
 	}
-
-	pdf.root = NewBlock()
-	pdf.root.setPdf(pdf)
 
 	return pdf
 }
 
-func (pdf *Pdf) Children(children ...*Block) *Pdf {
-
-	for _, block := range children {
-		block.setPdf(pdf)
+func (pdf *Pdf) Pages(pages ...*Page) *Pdf {
+	for _, page := range pages {
+		pdf.pages = append(pdf.pages, page)
 	}
-
-	pdf.root.Children(children...)
-
 	return pdf
 }
 
-func (pdf *Pdf) Build() *Pdf {
+func (pdf *Pdf) Render() *Pdf {
 
-	pdf.fpdf.AddPage()
-
-	pdf.root.flexNode.StyleSetMargin(flex.EdgeAll, 10)
-
-	flex.CalculateLayout(pdf.root.flexNode, flex.Undefined, flex.Undefined, flex.DirectionLTR)
-
-	pdf.root.build()
+	for _, page := range pdf.pages {
+		page.render(pdf)
+	}
 
 	err := pdf.fpdf.OutputFileAndClose("tmp/hello.pdf")
 	if err != nil {
