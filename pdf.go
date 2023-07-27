@@ -1,9 +1,6 @@
 package pdflexgo
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/jung-kurt/gofpdf"
 	"github.com/kjk/flex"
 )
@@ -83,11 +80,9 @@ func (pdf *Pdf) Render() *Pdf {
 		page.render(pdf)
 	}
 
-	err := pdf.fpdf.OutputFileAndClose("tmp/hello.pdf")
-	if err != nil {
-		fmt.Println("Could not save PDF:", err)
-		os.Exit(1)
-	}
-
 	return pdf
+}
+
+func (pdf *Pdf) OutputFileAndClose(filePath string) error {
+	return pdf.fpdf.OutputFileAndClose(filePath)
 }
