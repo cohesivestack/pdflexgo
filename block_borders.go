@@ -108,7 +108,7 @@ func (block *Block) renderBorderTop(pdf *Pdf) *Block {
 	pdf.fpdf.Line(
 		float64(block.X()),
 		float64(block.Y()),
-		float64(block.getFlexNode().LayoutGetWidth()+block.X()),
+		float64(block.X()+block.getFlexNode().LayoutGetWidth()),
 		float64(block.Y()))
 
 	return block
@@ -128,7 +128,7 @@ func (block *Block) renderBorderRight(pdf *Pdf) *Block {
 			float64(block.X()+block.getFlexNode().LayoutGetWidth()),
 			float64(block.Y()),
 			float64(block.X()+block.getFlexNode().LayoutGetWidth()),
-			float64(block.X()+block.getFlexNode().LayoutGetHeight()))
+			float64(block.Y()+block.getFlexNode().LayoutGetHeight()))
 	}
 
 	return block
@@ -166,9 +166,9 @@ func (block *Block) renderBorderLeft(pdf *Pdf) *Block {
 		pdf.fpdf.SetLineWidth(float64(block.getFlexNode().LayoutGetBorder(flex.EdgeLeft)))
 		pdf.fpdf.Line(
 			float64(block.X()),
-			float64(block.Y()+block.getFlexNode().LayoutGetBottom()),
+			float64(block.Y()),
 			float64(block.X()),
-			float64(block.X()+block.getFlexNode().LayoutGetHeight()))
+			float64(block.Y()+block.getFlexNode().LayoutGetHeight()))
 	}
 
 	return block

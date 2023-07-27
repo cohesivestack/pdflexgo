@@ -10,7 +10,10 @@ func TestBorders(t *testing.T) {
 
 	NewPdf().Pages(
 		NewPage().
-			Margin(10).
+			MarginLeft(10).
+			MarginRight(20).
+			MarginTop(30).
+			MarginBottom(40).
 			BorderColor("#ff0000").
 			BorderWidth(1),
 	).Render()
