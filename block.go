@@ -38,7 +38,7 @@ func NewBlock() *Block {
 	}
 
 	block.AbstractElement.setFlexNode(node)
-	block.Margin(0)
+	block.MarginAll(0)
 	block.BorderWidth(0)
 	block.BorderColor("#000000")
 	return block

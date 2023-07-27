@@ -28,7 +28,33 @@ func (page *Page) MarginRight(margin float64) *Page {
 	return page
 }
 
-func (page *Page) Margin(margin float64) *Page {
+func (page *Page) Margin(top float64, right float64, bottom float64, left float64) *Page {
+	page.root.
+		MarginTop(top).
+		MarginRight(right).
+		MarginBottom(bottom).
+		MarginLeft(left)
+
+	return page
+}
+
+func (page *Page) MarginVertical(vertical float64) *Page {
+	page.root.
+		MarginTop(vertical).
+		MarginBottom(vertical)
+
+	return page
+}
+
+func (page *Page) MarginHorizontal(horizontal float64) *Page {
+	page.root.
+		MarginLeft(horizontal).
+		MarginRight(horizontal)
+
+	return page
+}
+
+func (page *Page) MarginAll(margin float64) *Page {
 	page.root.
 		MarginTop(margin).
 		MarginRight(margin).
