@@ -24,6 +24,7 @@ func NewPage() *Page {
 	}
 
 	page.width, page.height = sizeToWidthHeight(DefaultSize)
+	page.FlexDirection(FlexDirectionColumn)
 
 	return page
 }
@@ -51,6 +52,11 @@ func (page *Page) Width(width float64) *Page {
 
 func (page *Page) Height(height float64) *Page {
 	page.root.Height(height)
+	return page
+}
+
+func (page *Page) FlexDirection(direction FlexDirection) *Page {
+	page.root.FlexDirection(direction)
 	return page
 }
 

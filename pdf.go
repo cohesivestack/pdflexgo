@@ -12,6 +12,14 @@ type Orientation string
 type Unit string
 type Size string
 type Edge int
+type FlexDirection int
+
+const (
+	FlexDirectionColumn FlexDirection = iota
+	FlexDirectionColumnReverse
+	FlexDirectionRow
+	FlexDirectionRowReverse
+)
 
 const (
 	OrientationPortrait  Orientation = "P"

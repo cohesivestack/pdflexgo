@@ -41,6 +41,7 @@ func NewBlock() *Block {
 	block.MarginAll(0)
 	block.BorderWidth(0)
 	block.BorderColor("#000000")
+	block.FlexDirection(FlexDirectionColumn)
 	return block
 }
 
@@ -79,4 +80,9 @@ func (block *Block) GetWidth() float64 {
 
 func (block *Block) GetHeight() float64 {
 	return float64(block.getFlexNode().StyleGetHeight().Value)
+}
+
+func (block *Block) FlexDirection(direction FlexDirection) *Block {
+	block.getFlexNode().StyleSetFlexDirection(flex.FlexDirection(direction))
+	return block
 }
