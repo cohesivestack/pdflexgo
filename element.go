@@ -24,19 +24,23 @@ func (elem *AbstractElement) getFlexNode() *flex.Node {
 }
 
 func (elem *AbstractElement) X() float32 {
-	x := elem._flexNode.LayoutGetLeft()
-	if elem._flexNode.Parent != nil {
-		x += elem._flexNode.Parent.LayoutGetLeft()
-	}
-
-	return x
+	return getXParent(elem.getFlexNode())
 }
 
 func (elem *AbstractElement) Y() float32 {
-	y := elem._flexNode.LayoutGetTop()
-	if elem._flexNode.Parent != nil {
-		y += elem._flexNode.Parent.LayoutGetTop()
-	}
+	return getYParent(elem.getFlexNode())
+}
 
-	return y
+func getYParent(flexNode *flex.Node) float32 {
+	if flexNode.Parent != nil {
+		return flexNode.LayoutGetTop() + getYParent(flexNode.Parent)
+	}
+	return flexNode.LayoutGetTop()
+}
+
+func getXParent(flexNode *flex.Node) float32 {
+	if flexNode.Parent != nil {
+		return flexNode.LayoutGetLeft() + getXParent(flexNode.Parent)
+	}
+	return flexNode.LayoutGetLeft()
 }
