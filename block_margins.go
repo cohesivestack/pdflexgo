@@ -40,3 +40,23 @@ func (block *Block) Margin(width float64) *Block {
 
 	return block
 }
+
+func (block *Block) GetMarginTop() float64 {
+
+	return float64(block.getFlexNode().StyleGetMargin(flex.EdgeTop).Value)
+}
+
+func (block *Block) GetMarginBottom() float64 {
+
+	return float64(block.getFlexNode().StyleGetMargin(flex.EdgeBottom).Value)
+}
+
+func (block *Block) GetMarginLeft() float64 {
+
+	return float64(block.getFlexNode().StyleGetMargin(flex.EdgeLeft).Value)
+}
+
+func (block *Block) GetMarginRight() float64 {
+
+	return float64(block.getFlexNode().StyleGetMargin(flex.EdgeRight).Value)
+}

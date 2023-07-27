@@ -55,6 +55,9 @@ func (page *Page) render(pdf *Pdf) {
 		string(page.orientation),
 		gofpdf.SizeType{Wd: page.width, Ht: page.height})
 
+	page.root.Width(page.width - (page.root.GetMarginLeft() + page.root.GetMarginRight()))
+	page.root.Height(page.height - (page.root.GetMarginTop() + page.root.GetMarginBottom()))
+
 	flex.CalculateLayout(page.root.getFlexNode(), flex.Undefined, flex.Undefined, flex.DirectionLTR)
 
 	page.root.render(pdf)
