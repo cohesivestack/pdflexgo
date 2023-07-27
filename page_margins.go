@@ -1,39 +1,39 @@
 package pdflexgo
 
-func (page *Page) MarginTopWidth(width float64) *Page {
+func (page *Page) MarginTop(margin float64) *Page {
 
-	page.root.MarginTop(width)
-
-	return page
-}
-
-func (page *Page) MarginBottomWidth(width float64) *Page {
-
-	page.root.MarginBottom(width)
+	page.root.MarginTop(margin)
 
 	return page
 }
 
-func (page *Page) MarginLeftWidth(width float64) *Page {
+func (page *Page) MarginBottom(margin float64) *Page {
 
-	page.root.MarginLeft(width)
-
-	return page
-}
-
-func (page *Page) MarginRightWidth(width float64) *Page {
-
-	page.root.MarginRight(width)
+	page.root.MarginBottom(margin)
 
 	return page
 }
 
-func (page *Page) MarginWidth(width float64) *Page {
+func (page *Page) MarginLeft(margin float64) *Page {
+
+	page.root.MarginLeft(margin)
+
+	return page
+}
+
+func (page *Page) MarginRight(margin float64) *Page {
+
+	page.root.MarginRight(margin)
+
+	return page
+}
+
+func (page *Page) Margin(margin float64) *Page {
 	page.root.
-		MarginTop(width).
-		MarginRight(width).
-		MarginBottom(width).
-		MarginLeft(width)
+		MarginTop(margin).
+		MarginRight(margin).
+		MarginBottom(margin).
+		MarginLeft(margin)
 
 	return page
 }
