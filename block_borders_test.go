@@ -3,21 +3,18 @@ package pdflexgo
 import (
 	"testing"
 
+	"github.com/kjk/flex"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBorders(t *testing.T) {
+func TestPageBorderWidth(t *testing.T) {
 
-	NewPdf().Pages(
-		NewPage().
-			MarginLeft(10).
-			MarginRight(20).
-			MarginTop(30).
-			MarginBottom(40).
-			BorderColor("#ff0000").
-			BorderWidth(1),
-	).Render()
+	page := NewPage().
+		BorderWidth(5)
 
-	assert.True(t, true)
+	assert.Equal(t, float32(5), page.root.getFlexNode().StyleGetBorder(flex.EdgeTop))
+	assert.Equal(t, float32(5), page.root.getFlexNode().StyleGetBorder(flex.EdgeRight))
+	assert.Equal(t, float32(5), page.root.getFlexNode().StyleGetBorder(flex.EdgeBottom))
+	assert.Equal(t, float32(5), page.root.getFlexNode().StyleGetBorder(flex.EdgeLeft))
 
 }
