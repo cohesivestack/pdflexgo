@@ -44,6 +44,16 @@ func (page *Page) Unit(unit Unit) *Page {
 	return page
 }
 
+func (page *Page) Width(width float64) *Page {
+	page.root.Width(width)
+	return page
+}
+
+func (page *Page) Height(height float64) *Page {
+	page.root.Height(height)
+	return page
+}
+
 func (page *Page) Children(children ...Element) *Page {
 	page.root.Children(children...)
 
