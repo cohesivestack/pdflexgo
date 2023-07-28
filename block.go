@@ -39,8 +39,8 @@ func NewBlock() *Block {
 
 	block.AbstractElement.setFlexNode(node)
 	block.MarginAll(0)
-	block.BorderWidth(0)
-	block.BorderColor("#000000")
+	block.BorderAll(0)
+	block.BorderAllColor("#000000")
 	block.FlexDirection(FlexDirectionColumn)
 	return block
 }
