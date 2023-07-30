@@ -78,12 +78,14 @@ const (
 )
 
 // Justify
-type Justify string
+type Justify int
 
 const (
-	JustifyStart  Justify = "start"
-	JustifyEnd    Justify = "end"
-	JustifyCenter Justify = "center"
+	JustifyFlexStart Justify = iota
+	JustifyCenter
+	JustifyFlexEnd
+	JustifySpaceBetween
+	JustifySpaceAround
 )
 
 // Direction
