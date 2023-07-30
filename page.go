@@ -23,7 +23,7 @@ func NewPage() *Page {
 		root: NewBlock(),
 	}
 
-	page.width, page.height = sizeToWidthHeight(DefaultSize)
+	page.Size(DefaultSize)
 	page.FlexDirection(FlexDirectionColumn)
 
 	return page

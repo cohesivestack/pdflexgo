@@ -52,6 +52,7 @@ const DefaultOrientation = OrientationPortrait
 const DefaultUnit = UnitPt
 const DefaultSize = SizeA4
 const DefaultMarginInPoints = 72
+const DefaultFlexDirection = FlexDirectionRow
 
 type Pdf struct {
 	fpdf  *gofpdf.Fpdf

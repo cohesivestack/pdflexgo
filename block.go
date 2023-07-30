@@ -1,6 +1,10 @@
 package pdflexgo
 
-import "github.com/kjk/flex"
+import (
+	"math"
+
+	"github.com/kjk/flex"
+)
 
 type Align string
 type Justify string
@@ -38,10 +42,9 @@ func NewBlock() *Block {
 	}
 
 	block.AbstractElement.setFlexNode(node)
-	block.MarginAll(0)
 	block.BorderAll(0)
 	block.BorderAllColor("#000000")
-	block.FlexDirection(FlexDirectionColumn)
+	block.FlexDirection(DefaultFlexDirection)
 	return block
 }
 
@@ -69,8 +72,23 @@ func (block *Block) Width(width float64) *Block {
 	return block
 }
 
+func (block *Block) WidthAuto() *Block {
+	block.getFlexNode().StyleSetWidthAuto()
+	return block
+}
+
 func (block *Block) Height(height float64) *Block {
 	block.getFlexNode().StyleSetHeight(float32(height))
+	return block
+}
+
+func (block *Block) Flex(flext float64) *Block {
+	block.getFlexNode().StyleSetFlex(float32(math.NaN()))
+	return block
+}
+
+func (block *Block) Display(display flex.Display) *Block {
+	block.getFlexNode().StyleSetDisplay(display)
 	return block
 }
 
@@ -80,9 +98,4 @@ func (block *Block) GetWidth() float64 {
 
 func (block *Block) GetHeight() float64 {
 	return float64(block.getFlexNode().StyleGetHeight().Value)
-}
-
-func (block *Block) FlexDirection(direction FlexDirection) *Block {
-	block.getFlexNode().StyleSetFlexDirection(flex.FlexDirection(direction))
-	return block
 }
