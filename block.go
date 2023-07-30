@@ -42,7 +42,7 @@ func NewBlock() *Block {
 	}
 
 	block.AbstractElement.setFlexNode(node)
-	block.BorderAll(0)
+	block.BorderAllWidth(0)
 	block.BorderAllColor("#000000")
 	block.FlexDirection(DefaultFlexDirection)
 	return block

@@ -10,39 +10,39 @@ type border struct {
 	color string
 }
 
-func (block *Block) BorderTop(width float64) *Block {
+func (block *Block) BorderTopWidth(width float64) *Block {
 
 	block.getFlexNode().StyleSetBorder(flex.EdgeTop, float32(width))
 
 	return block
 }
 
-func (block *Block) BorderBottom(width float64) *Block {
+func (block *Block) BorderBottomWidth(width float64) *Block {
 
 	block.getFlexNode().StyleSetBorder(flex.EdgeBottom, float32(width))
 
 	return block
 }
 
-func (block *Block) BorderLeft(width float64) *Block {
+func (block *Block) BorderLeftWidth(width float64) *Block {
 
 	block.getFlexNode().StyleSetBorder(flex.EdgeLeft, float32(width))
 
 	return block
 }
 
-func (block *Block) BorderRight(width float64) *Block {
+func (block *Block) BorderRightWidth(width float64) *Block {
 
 	block.getFlexNode().StyleSetBorder(flex.EdgeRight, float32(width))
 
 	return block
 }
 
-func (block *Block) Border(top float64, right float64, bottom float64, left float64) *Block {
-	block.BorderTop(top)
-	block.BorderRight(right)
-	block.BorderBottom(bottom)
-	block.BorderLeft(left)
+func (block *Block) BorderWidth(top float64, right float64, bottom float64, left float64) *Block {
+	block.BorderTopWidth(top)
+	block.BorderRightWidth(right)
+	block.BorderBottomWidth(bottom)
+	block.BorderLeftWidth(left)
 
 	return block
 }
@@ -184,28 +184,28 @@ func (block *Block) renderBorderLeft(pdf *Pdf) *Block {
 	return block
 }
 
-func (block *Block) BorderVertical(vertical float64) *Block {
+func (block *Block) BorderVerticalWidth(vertical float64) *Block {
 	block.
-		BorderTop(vertical).
-		BorderBottom(vertical)
+		BorderTopWidth(vertical).
+		BorderBottomWidth(vertical)
 
 	return block
 }
 
-func (block *Block) BorderHorizontal(horizontal float64) *Block {
+func (block *Block) BorderHorizontalWidth(horizontal float64) *Block {
 	block.
-		BorderLeft(horizontal).
-		BorderRight(horizontal)
+		BorderLeftWidth(horizontal).
+		BorderRightWidth(horizontal)
 
 	return block
 }
 
-func (block *Block) BorderAll(border float64) *Block {
+func (block *Block) BorderAllWidth(border float64) *Block {
 	block.
-		BorderTop(border).
-		BorderRight(border).
-		BorderBottom(border).
-		BorderLeft(border)
+		BorderTopWidth(border).
+		BorderRightWidth(border).
+		BorderBottomWidth(border).
+		BorderLeftWidth(border)
 
 	return block
 }

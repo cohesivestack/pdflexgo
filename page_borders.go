@@ -1,38 +1,38 @@
 package pdflexgo
 
-func (page *Page) BorderTop(width float64) *Page {
+func (page *Page) BorderTopWidth(width float64) *Page {
 
-	page.root.BorderTop(width)
-
-	return page
-}
-
-func (page *Page) BorderBottom(width float64) *Page {
-
-	page.root.BorderBottom(width)
+	page.root.BorderTopWidth(width)
 
 	return page
 }
 
-func (page *Page) BorderLeft(width float64) *Page {
+func (page *Page) BorderBottomWidth(width float64) *Page {
 
-	page.root.BorderLeft(width)
-
-	return page
-}
-
-func (page *Page) BorderRight(width float64) *Page {
-
-	page.root.BorderRight(width)
+	page.root.BorderBottomWidth(width)
 
 	return page
 }
 
-func (page *Page) Border(top float64, right float64, bottom float64, left float64) *Page {
-	page.BorderTop(top).
-		BorderRight(right).
-		BorderBottom(bottom).
-		BorderLeft(left)
+func (page *Page) BorderLeftWidth(width float64) *Page {
+
+	page.root.BorderLeftWidth(width)
+
+	return page
+}
+
+func (page *Page) BorderRightWidth(width float64) *Page {
+
+	page.root.BorderRightWidth(width)
+
+	return page
+}
+
+func (page *Page) BorderWidth(top float64, right float64, bottom float64, left float64) *Page {
+	page.BorderTopWidth(top).
+		BorderRightWidth(right).
+		BorderBottomWidth(bottom).
+		BorderLeftWidth(left)
 
 	return page
 }
@@ -74,28 +74,28 @@ func (page *Page) BorderColor(top string, right string, bottom string, left stri
 	return page
 }
 
-func (page *Page) BorderVertical(vertical float64) *Page {
+func (page *Page) BorderVerticalWidth(vertical float64) *Page {
 	page.root.
-		BorderTop(vertical).
-		BorderBottom(vertical)
+		BorderTopWidth(vertical).
+		BorderBottomWidth(vertical)
 
 	return page
 }
 
-func (page *Page) BorderHorizontal(horizontal float64) *Page {
+func (page *Page) BorderHorizontalWidth(horizontal float64) *Page {
 	page.root.
-		BorderLeft(horizontal).
-		BorderRight(horizontal)
+		BorderLeftWidth(horizontal).
+		BorderRightWidth(horizontal)
 
 	return page
 }
 
-func (page *Page) BorderAll(border float64) *Page {
+func (page *Page) BorderAllWidth(border float64) *Page {
 	page.root.
-		BorderTop(border).
-		BorderRight(border).
-		BorderBottom(border).
-		BorderLeft(border)
+		BorderTopWidth(border).
+		BorderRightWidth(border).
+		BorderBottomWidth(border).
+		BorderLeftWidth(border)
 
 	return page
 }

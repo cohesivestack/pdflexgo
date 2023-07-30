@@ -10,7 +10,7 @@ import (
 func TestPageMarginWidth(t *testing.T) {
 
 	page := NewPage().
-		Border(5, 5, 5, 5)
+		BorderWidth(5, 5, 5, 5)
 
 	assert.Equal(t, float32(5), page.root.getFlexNode().StyleGetBorder(flex.EdgeTop))
 	assert.Equal(t, float32(5), page.root.getFlexNode().StyleGetBorder(flex.EdgeRight))
@@ -18,39 +18,39 @@ func TestPageMarginWidth(t *testing.T) {
 	assert.Equal(t, float32(5), page.root.getFlexNode().StyleGetBorder(flex.EdgeLeft))
 
 	page = NewPage().
-		BorderTop(6)
+		BorderTopWidth(6)
 
 	assert.Equal(t, float32(6), page.root.getFlexNode().StyleGetBorder(flex.EdgeTop))
 
 	page = NewPage().
-		BorderRight(6)
+		BorderRightWidth(6)
 
 	assert.Equal(t, float32(6), page.root.getFlexNode().StyleGetBorder(flex.EdgeRight))
 
 	page = NewPage().
-		BorderBottom(6)
+		BorderBottomWidth(6)
 
 	assert.Equal(t, float32(6), page.root.getFlexNode().StyleGetBorder(flex.EdgeBottom))
 
 	page = NewPage().
-		BorderLeft(6)
+		BorderLeftWidth(6)
 
 	assert.Equal(t, float32(6), page.root.getFlexNode().StyleGetBorder(flex.EdgeLeft))
 
 	page = NewPage().
-		BorderVertical(7)
+		BorderVerticalWidth(7)
 
 	assert.Equal(t, float32(7), page.root.getFlexNode().StyleGetBorder(flex.EdgeTop))
 	assert.Equal(t, float32(7), page.root.getFlexNode().StyleGetBorder(flex.EdgeBottom))
 
 	page = NewPage().
-		BorderHorizontal(7)
+		BorderHorizontalWidth(7)
 
 	assert.Equal(t, float32(7), page.root.getFlexNode().StyleGetBorder(flex.EdgeRight))
 	assert.Equal(t, float32(7), page.root.getFlexNode().StyleGetBorder(flex.EdgeLeft))
 
 	page = NewPage().
-		BorderAll(6)
+		BorderAllWidth(6)
 
 	assert.Equal(t, float32(6), page.root.getFlexNode().StyleGetBorder(flex.EdgeTop))
 	assert.Equal(t, float32(6), page.root.getFlexNode().StyleGetBorder(flex.EdgeRight))
