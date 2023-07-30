@@ -1,31 +1,18 @@
 package pdflexgo
 
+//go:generate go run generator/main.go
+
 import (
 	"math"
 
 	"github.com/kjk/flex"
 )
 
-type Align string
-type Justify string
-
 const edgeCount = 4
 const edgeTopIndex = 0
 const edgeRightIndex = 1
 const edgeBottomIndex = 2
 const edgeLeftIndex = 3
-
-const (
-	AlignStart  Align = "start"
-	AlignEnd    Align = "end"
-	AlignCenter Align = "center"
-)
-
-const (
-	JustifyStart  Justify = "start"
-	JustifyEnd    Justify = "end"
-	JustifyCenter Justify = "center"
-)
 
 type Block struct {
 	AbstractElement
@@ -42,6 +29,7 @@ func NewBlock() *Block {
 	}
 
 	block.AbstractElement.setFlexNode(node)
+	block.MarginAll(0)
 	block.BorderAllWidth(0)
 	block.BorderAllColor("#000000")
 	block.FlexDirection(DefaultFlexDirection)
@@ -98,4 +86,23 @@ func (block *Block) GetWidth() float64 {
 
 func (block *Block) GetHeight() float64 {
 	return float64(block.getFlexNode().StyleGetHeight().Value)
+}
+
+func (block *Block) FlexBasis(basis float64) *Block {
+	block.getFlexNode().StyleSetFlexBasis(float32(basis))
+	return block
+}
+
+func (block *Block) FlexAuto() *Block {
+	return block.
+		FlexGrow(1).
+		FlexShrink(1).
+		FlexBasis(math.NaN())
+}
+
+func (block *Block) FlexNone() *Block {
+	return block.
+		FlexGrow(0).
+		FlexShrink(0).
+		FlexBasis(math.NaN())
 }
