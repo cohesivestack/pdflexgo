@@ -96,34 +96,39 @@ func (block *Block) renderBorders(pdf *Pdf) *Block {
 
 func (block *Block) renderBorderTop(pdf *Pdf) *Block {
 
-	if block.border[edgeTopIndex].color != "" {
-		r, g, b, err := hexToRGB(block.border[edgeTopIndex].color)
-		if err != nil {
-			log.Fatal(err)
+	if block.getFlexNode().LayoutGetBorder(flex.EdgeTop) > 0 {
+		if block.border[edgeTopIndex].color != "" {
+			r, g, b, err := hexToRGB(block.border[edgeTopIndex].color)
+			if err != nil {
+				log.Fatal(err)
+			}
+			pdf.fpdf.SetDrawColor(r, g, b)
 		}
-		pdf.fpdf.SetDrawColor(r, g, b)
-	}
 
-	pdf.fpdf.SetLineWidth(float64(block.getFlexNode().LayoutGetBorder(flex.EdgeTop)))
-	pdf.fpdf.Line(
-		float64(block.X()),
-		float64(block.Y()),
-		float64(block.X()+block.getFlexNode().LayoutGetWidth()),
-		float64(block.Y()))
+		pdf.fpdf.SetLineWidth(float64(block.getFlexNode().LayoutGetBorder(flex.EdgeTop)))
+		pdf.fpdf.Line(
+			float64(block.X()),
+			float64(block.Y()),
+			float64(block.X()+block.getFlexNode().LayoutGetWidth()),
+			float64(block.Y()))
+	}
 
 	return block
 }
 
 func (block *Block) renderBorderRight(pdf *Pdf) *Block {
 
-	if block.border[edgeRightIndex].color != "" {
-		r, g, b, err := hexToRGB(block.border[edgeRightIndex].color)
-		if err != nil {
-			log.Fatal(err)
-		}
+	if block.getFlexNode().LayoutGetBorder(flex.EdgeRight) > 0 {
+		if block.border[edgeRightIndex].color != "" {
+			r, g, b, err := hexToRGB(block.border[edgeRightIndex].color)
+			if err != nil {
+				log.Fatal(err)
+			}
 
-		pdf.fpdf.SetDrawColor(r, g, b)
+			pdf.fpdf.SetDrawColor(r, g, b)
+		}
 		pdf.fpdf.SetLineWidth(float64(block.getFlexNode().LayoutGetBorder(flex.EdgeRight)))
+
 		pdf.fpdf.Line(
 			float64(block.X()+block.getFlexNode().LayoutGetWidth()),
 			float64(block.Y()),
@@ -136,33 +141,38 @@ func (block *Block) renderBorderRight(pdf *Pdf) *Block {
 
 func (block *Block) renderBorderBottom(pdf *Pdf) *Block {
 
-	if block.border[edgeBottomIndex].color != "" {
-		r, g, b, err := hexToRGB(block.border[edgeBottomIndex].color)
-		if err != nil {
-			log.Fatal(err)
+	if block.getFlexNode().LayoutGetBorder(flex.EdgeBottom) > 0 {
+		if block.border[edgeBottomIndex].color != "" {
+			r, g, b, err := hexToRGB(block.border[edgeBottomIndex].color)
+			if err != nil {
+				log.Fatal(err)
+			}
+			pdf.fpdf.SetDrawColor(r, g, b)
 		}
-		pdf.fpdf.SetDrawColor(r, g, b)
-	}
 
-	pdf.fpdf.SetLineWidth(float64(block.getFlexNode().LayoutGetBorder(flex.EdgeBottom)))
-	pdf.fpdf.Line(
-		float64(block.X()),
-		float64(block.Y()+block.getFlexNode().LayoutGetHeight()),
-		float64(block.X()+block.getFlexNode().LayoutGetWidth()),
-		float64(block.Y()+block.getFlexNode().LayoutGetHeight()))
+		pdf.fpdf.SetLineWidth(float64(block.getFlexNode().LayoutGetBorder(flex.EdgeBottom)))
+		pdf.fpdf.Line(
+			float64(block.X()),
+			float64(block.Y()+block.getFlexNode().LayoutGetHeight()),
+			float64(block.X()+block.getFlexNode().LayoutGetWidth()),
+			float64(block.Y()+block.getFlexNode().LayoutGetHeight()))
+	}
 
 	return block
 }
 
 func (block *Block) renderBorderLeft(pdf *Pdf) *Block {
 
-	if block.border[edgeLeftIndex].color != "" {
-		r, g, b, err := hexToRGB(block.border[edgeLeftIndex].color)
-		if err != nil {
-			log.Fatal(err)
+	if block.getFlexNode().LayoutGetBorder(flex.EdgeLeft) > 0 {
+		if block.border[edgeLeftIndex].color != "" {
+			r, g, b, err := hexToRGB(block.border[edgeLeftIndex].color)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			pdf.fpdf.SetDrawColor(r, g, b)
 		}
 
-		pdf.fpdf.SetDrawColor(r, g, b)
 		pdf.fpdf.SetLineWidth(float64(block.getFlexNode().LayoutGetBorder(flex.EdgeLeft)))
 		pdf.fpdf.Line(
 			float64(block.X()),
