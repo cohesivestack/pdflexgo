@@ -6,8 +6,8 @@ import (
 )
 
 {{ range . -}}
-func (block *Block) {{ .Name }}({{ .Param }} {{ .Type }}) *Block {
-	block.getFlexNode().StyleSet{{ .Name }}({{ .TypeInternal }}({{ .Param }}))
+func (block *Block) {{ .Name }}({{ if and .Param .Type }}{{ .Param }} {{ .Type }}{{ end }}) *Block {
+	block.getFlexNode().StyleSet{{ .Name }}({{ if and .Param .TypeInternal }}{{ .TypeInternal }}({{ .Param }}){{ end }})
 	return block
 }
 

@@ -70,11 +70,6 @@ func (block *Block) Height(height float64) *Block {
 	return block
 }
 
-func (block *Block) Flex(flext float64) *Block {
-	block.getFlexNode().StyleSetFlex(float32(math.NaN()))
-	return block
-}
-
 func (block *Block) Display(display flex.Display) *Block {
 	block.getFlexNode().StyleSetDisplay(display)
 	return block
@@ -86,11 +81,6 @@ func (block *Block) GetWidth() float64 {
 
 func (block *Block) GetHeight() float64 {
 	return float64(block.getFlexNode().StyleGetHeight().Value)
-}
-
-func (block *Block) FlexBasis(basis float64) *Block {
-	block.getFlexNode().StyleSetFlexBasis(float32(basis))
-	return block
 }
 
 func (block *Block) FlexAuto() *Block {
@@ -105,4 +95,9 @@ func (block *Block) FlexNone() *Block {
 		FlexGrow(0).
 		FlexShrink(0).
 		FlexBasis(math.NaN())
+}
+
+func (block *Block) FlexBasisAuto() *Block {
+	flex.NodeStyleSetFlexBasisAuto(block.getFlexNode())
+	return block
 }

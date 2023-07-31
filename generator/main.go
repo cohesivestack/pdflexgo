@@ -17,9 +17,13 @@ type Prop struct {
 func main() {
 
 	props := []Prop{
+		{"FlexDirection", "direction", "FlexDirection", "flex.FlexDirection"},
+		{"FlexWrap", "wrap", "Wrap", "flex.Wrap"},
+		{"Flex", "flex", "float64", "float32"},
 		{"FlexGrow", "grow", "float64", "float32"},
 		{"FlexShrink", "shrink", "float64", "float32"},
-		{"FlexDirection", "direction", "FlexDirection", "flex.FlexDirection"},
+		{"FlexBasis", "basis", "float64", "float32"},
+		{"FlexBasisPercent", "basisPercent", "float64", "float32"},
 	}
 
 	propsWithEdge := []Prop{

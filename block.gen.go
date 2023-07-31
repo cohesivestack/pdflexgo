@@ -5,6 +5,21 @@ import (
 	"github.com/kjk/flex"
 )
 
+func (block *Block) FlexDirection(direction FlexDirection) *Block {
+	block.getFlexNode().StyleSetFlexDirection(flex.FlexDirection(direction))
+	return block
+}
+
+func (block *Block) FlexWrap(wrap Wrap) *Block {
+	block.getFlexNode().StyleSetFlexWrap(flex.Wrap(wrap))
+	return block
+}
+
+func (block *Block) Flex(flex float64) *Block {
+	block.getFlexNode().StyleSetFlex(float32(flex))
+	return block
+}
+
 func (block *Block) FlexGrow(grow float64) *Block {
 	block.getFlexNode().StyleSetFlexGrow(float32(grow))
 	return block
@@ -15,8 +30,13 @@ func (block *Block) FlexShrink(shrink float64) *Block {
 	return block
 }
 
-func (block *Block) FlexDirection(direction FlexDirection) *Block {
-	block.getFlexNode().StyleSetFlexDirection(flex.FlexDirection(direction))
+func (block *Block) FlexBasis(basis float64) *Block {
+	block.getFlexNode().StyleSetFlexBasis(float32(basis))
+	return block
+}
+
+func (block *Block) FlexBasisPercent(basisPercent float64) *Block {
+	block.getFlexNode().StyleSetFlexBasisPercent(float32(basisPercent))
 	return block
 }
 

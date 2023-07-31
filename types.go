@@ -96,3 +96,12 @@ const (
 	DirectionLTR
 	DirectionRTL
 )
+
+// Wrap
+type Wrap int
+
+const (
+	WrapNoWrap Wrap = iota
+	WrapWrap
+	WrapWrapReverse
+)
