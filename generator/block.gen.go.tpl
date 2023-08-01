@@ -7,8 +7,14 @@ import (
 
 {{ range . -}}
 func (block *Block) {{ .Name }}({{ if and .Param .Type }}{{ .Param }} {{ .Type }}{{ end }}) *Block {
-	block.getFlexNode().StyleSet{{ .Name }}({{ if and .Param .TypeInternal }}{{ .TypeInternal }}({{ .Param }}){{ end }})
+	block.getFlexNode().StyleSet{{ .NameInternal }}({{ if and .Param .TypeInternal }}{{ .TypeInternal }}({{ .Param }}){{ end }})
 	return block
 }
+{{if or (eq .GetFunctionType "withGet") (eq .GetFunctionType "withProp")}}
+
+func (block *Block) Get{{ .Name }}() {{ .Type }} {
+	return {{ .Type }}(block.getFlexNode().{{ if eq .GetFunctionType "withGet" }}StyleGet{{ .NameInternal }}(){{ else }}Style.{{ .NameInternal }}{{ end }})
+}
+{{ end }}
 
 {{ end }}

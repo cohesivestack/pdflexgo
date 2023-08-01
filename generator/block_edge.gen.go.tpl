@@ -8,44 +8,47 @@ import (
 {{ range . -}}
 
 func (block *Block) {{ .Name }}Top({{ .Param }} {{ .Type }}) *Block {
-	block.getFlexNode().StyleSet{{ .Name }}(flex.EdgeTop, {{ .TypeInternal }}({{ .Param }}))
+	block.getFlexNode().StyleSet{{ .NameInternal }}(flex.EdgeTop, {{ .TypeInternal }}({{ .Param }}))
 
 	return block
 }
 
 func (block *Block) {{ .Name }}Right({{ .Param }} {{ .Type }}) *Block {
-	block.getFlexNode().StyleSet{{ .Name }}(flex.EdgeRight, {{ .TypeInternal }}({{ .Param }}))
+	block.getFlexNode().StyleSet{{ .NameInternal }}(flex.EdgeRight, {{ .TypeInternal }}({{ .Param }}))
 
 	return block
 }
 
 func (block *Block) {{ .Name }}Bottom({{ .Param }} {{ .Type }}) *Block {
-	block.getFlexNode().StyleSet{{ .Name }}(flex.EdgeBottom, {{ .TypeInternal }}({{ .Param }}))
+	block.getFlexNode().StyleSet{{ .NameInternal }}(flex.EdgeBottom, {{ .TypeInternal }}({{ .Param }}))
 
 	return block
 }
 
 func (block *Block) {{ .Name }}Left({{ .Param }} {{ .Type }}) *Block {
-	block.getFlexNode().StyleSet{{ .Name }}(flex.EdgeLeft, {{ .TypeInternal }}({{ .Param }}))
+	block.getFlexNode().StyleSet{{ .NameInternal }}(flex.EdgeLeft, {{ .TypeInternal }}({{ .Param }}))
 
 	return block
 }
+{{if or (eq .GetFunctionType "withGet") (eq .GetFunctionType "withProp")}}
 
 func (block *Block) Get{{ .Name }}Top() {{ .Type }} {
-	return {{ .Type }}(block.getFlexNode().StyleGet{{ .Name }}(flex.EdgeTop).Value)
+	return {{ .Type }}(block.getFlexNode().{{ if eq .GetFunctionType "withGet" }}StyleGet{{ .NameInternal }}(flex.EdgeTop).Value){{ else }}Style.{{ .NameInternal }}[flex.EdgeTop].Value{{ end }}
 }
 
 func (block *Block) Get{{ .Name }}Right() {{ .Type }} {
-	return {{ .Type }}(block.getFlexNode().StyleGet{{ .Name }}(flex.EdgeRight).Value)
+	return {{ .Type }}(block.getFlexNode().StyleGet{{ .NameInternal }}(flex.EdgeRight).Value)
 }
 
 func (block *Block) Get{{ .Name }}Bottom() {{ .Type }} {
-	return {{ .Type }}(block.getFlexNode().StyleGet{{ .Name }}(flex.EdgeBottom).Value)
+	return {{ .Type }}(block.getFlexNode().StyleGet{{ .NameInternal }}(flex.EdgeBottom).Value)
 }
 
 func (block *Block) Get{{ .Name }}Left() {{ .Type }} {
-	return {{ .Type }}(block.getFlexNode().StyleGet{{ .Name }}(flex.EdgeLeft).Value)
+	return {{ .Type }}(block.getFlexNode().StyleGet{{ .NameInternal }}(flex.EdgeLeft).Value)
 }
+
+{{ end }}
 
 func (block *Block) {{ .Name }}(top {{ .Type }}, right {{ .Type }}, bottom {{ .Type }}, left {{ .Type }}) *Block {
 	block.

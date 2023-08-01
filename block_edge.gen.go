@@ -29,6 +29,7 @@ func (block *Block) MarginLeft(margin float64) *Block {
 	return block
 }
 
+
 func (block *Block) GetMarginTop() float64 {
 	return float64(block.getFlexNode().StyleGetMargin(flex.EdgeTop).Value)
 }
@@ -44,6 +45,8 @@ func (block *Block) GetMarginBottom() float64 {
 func (block *Block) GetMarginLeft() float64 {
 	return float64(block.getFlexNode().StyleGetMargin(flex.EdgeLeft).Value)
 }
+
+
 
 func (block *Block) Margin(top float64, right float64, bottom float64, left float64) *Block {
 	block.
@@ -105,6 +108,7 @@ func (block *Block) PaddingLeft(padding float64) *Block {
 	return block
 }
 
+
 func (block *Block) GetPaddingTop() float64 {
 	return float64(block.getFlexNode().StyleGetPadding(flex.EdgeTop).Value)
 }
@@ -120,6 +124,8 @@ func (block *Block) GetPaddingBottom() float64 {
 func (block *Block) GetPaddingLeft() float64 {
 	return float64(block.getFlexNode().StyleGetPadding(flex.EdgeLeft).Value)
 }
+
+
 
 func (block *Block) Padding(top float64, right float64, bottom float64, left float64) *Block {
 	block.

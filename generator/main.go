@@ -7,28 +7,38 @@ import (
 	"text/template"
 )
 
+type GetFunctionType string
+
+const (
+	GetFunctionTypeNone     GetFunctionType = "none"
+	GetFunctionTypeWithGet  GetFunctionType = "withGet"
+	GetFunctionTypeWithProp GetFunctionType = "withProp"
+)
+
 type Prop struct {
-	Name         string
-	Param        string
-	Type         string
-	TypeInternal string
+	Name            string
+	NameInternal    string
+	Param           string
+	Type            string
+	TypeInternal    string
+	GetFunctionType GetFunctionType
 }
 
 func main() {
 
 	props := []Prop{
-		{"FlexDirection", "direction", "FlexDirection", "flex.FlexDirection"},
-		{"FlexWrap", "wrap", "Wrap", "flex.Wrap"},
-		{"Flex", "flex", "float64", "float32"},
-		{"FlexGrow", "grow", "float64", "float32"},
-		{"FlexShrink", "shrink", "float64", "float32"},
-		{"FlexBasis", "basis", "float64", "float32"},
-		{"FlexBasisPercent", "basisPercent", "float64", "float32"},
+		{"FlexDirection", "FlexDirection", "direction", "FlexDirection", "flex.FlexDirection", GetFunctionTypeWithProp},
+		{"FlexWrap", "FlexWrap", "wrap", "Wrap", "flex.Wrap", GetFunctionTypeWithProp},
+		{"Flex", "Flex", "flex", "float64", "float32", GetFunctionTypeWithProp},
+		{"FlexGrow", "FlexGrow", "grow", "float64", "float32", GetFunctionTypeWithGet},
+		{"FlexShrink", "FlexShrink", "shrink", "float64", "float32", GetFunctionTypeWithGet},
+		{"FlexBasis", "FlexBasis", "basis", "float64", "float32", GetFunctionTypeNone},
+		{"FlexBasisPercent", "FlexBasisPercent", "basisPercent", "float64", "float32", GetFunctionTypeNone},
 	}
 
 	propsWithEdge := []Prop{
-		{"Margin", "margin", "float64", "float32"},
-		{"Padding", "padding", "float64", "float32"},
+		{"Margin", "Margin", "margin", "float64", "float32", GetFunctionTypeWithGet},
+		{"Padding", "Padding", "padding", "float64", "float32", GetFunctionTypeWithGet},
 	}
 
 	tmpl, err := template.ParseGlob(filepath.Join("generator", "*.tpl"))

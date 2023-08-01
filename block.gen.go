@@ -10,33 +10,65 @@ func (block *Block) FlexDirection(direction FlexDirection) *Block {
 	return block
 }
 
+
+func (block *Block) GetFlexDirection() FlexDirection {
+	return FlexDirection(block.getFlexNode().Style.FlexDirection)
+}
+
+
 func (block *Block) FlexWrap(wrap Wrap) *Block {
 	block.getFlexNode().StyleSetFlexWrap(flex.Wrap(wrap))
 	return block
 }
+
+
+func (block *Block) GetFlexWrap() Wrap {
+	return Wrap(block.getFlexNode().Style.FlexWrap)
+}
+
 
 func (block *Block) Flex(flex float64) *Block {
 	block.getFlexNode().StyleSetFlex(float32(flex))
 	return block
 }
 
+
+func (block *Block) GetFlex() float64 {
+	return float64(block.getFlexNode().Style.Flex)
+}
+
+
 func (block *Block) FlexGrow(grow float64) *Block {
 	block.getFlexNode().StyleSetFlexGrow(float32(grow))
 	return block
 }
+
+
+func (block *Block) GetFlexGrow() float64 {
+	return float64(block.getFlexNode().StyleGetFlexGrow())
+}
+
 
 func (block *Block) FlexShrink(shrink float64) *Block {
 	block.getFlexNode().StyleSetFlexShrink(float32(shrink))
 	return block
 }
 
+
+func (block *Block) GetFlexShrink() float64 {
+	return float64(block.getFlexNode().StyleGetFlexShrink())
+}
+
+
 func (block *Block) FlexBasis(basis float64) *Block {
 	block.getFlexNode().StyleSetFlexBasis(float32(basis))
 	return block
 }
 
+
 func (block *Block) FlexBasisPercent(basisPercent float64) *Block {
 	block.getFlexNode().StyleSetFlexBasisPercent(float32(basisPercent))
 	return block
 }
+
 
