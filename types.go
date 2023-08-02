@@ -105,3 +105,28 @@ const (
 	WrapWrap
 	WrapWrapReverse
 )
+
+// PositionType
+type PositionType int
+
+const (
+	PositionTypeRelative PositionType = iota
+	PositionTypeAbsolute
+)
+
+// Overflow
+type Overflow int
+
+const (
+	OverflowVisible Overflow = iota
+	OverflowHidden
+	OverflowScroll
+)
+
+// Display
+type Display int
+
+const (
+	DisplayFlex Display = iota
+	DisplayNone
+)

@@ -29,7 +29,6 @@ func (block *Block) MarginLeft(margin float64) *Block {
 	return block
 }
 
-
 func (block *Block) GetMarginTop() float64 {
 	return float64(block.getFlexNode().StyleGetMargin(flex.EdgeTop).Value)
 }
@@ -45,8 +44,6 @@ func (block *Block) GetMarginBottom() float64 {
 func (block *Block) GetMarginLeft() float64 {
 	return float64(block.getFlexNode().StyleGetMargin(flex.EdgeLeft).Value)
 }
-
-
 
 func (block *Block) Margin(top float64, right float64, bottom float64, left float64) *Block {
 	block.
@@ -84,6 +81,66 @@ func (block *Block) MarginAll(margin float64) *Block {
 	return block
 }
 
+func (block *Block) MarginPercentTop(percent float64) *Block {
+	block.getFlexNode().StyleSetMarginPercent(flex.EdgeTop, float32(percent))
+
+	return block
+}
+
+func (block *Block) MarginPercentRight(percent float64) *Block {
+	block.getFlexNode().StyleSetMarginPercent(flex.EdgeRight, float32(percent))
+
+	return block
+}
+
+func (block *Block) MarginPercentBottom(percent float64) *Block {
+	block.getFlexNode().StyleSetMarginPercent(flex.EdgeBottom, float32(percent))
+
+	return block
+}
+
+func (block *Block) MarginPercentLeft(percent float64) *Block {
+	block.getFlexNode().StyleSetMarginPercent(flex.EdgeLeft, float32(percent))
+
+	return block
+}
+
+func (block *Block) MarginPercent(top float64, right float64, bottom float64, left float64) *Block {
+	block.
+		MarginPercentTop(top).
+		MarginPercentRight(right).
+		MarginPercentBottom(bottom).
+		MarginPercentLeft(left)
+
+	return block
+}
+
+func (block *Block) MarginPercentVertical(percent float64) *Block {
+	block.
+		MarginPercentTop(percent).
+		MarginPercentBottom(percent)
+
+	return block
+}
+
+func (block *Block) MarginPercentHorizontal(percent float64) *Block {
+	block.
+		MarginPercentLeft(percent).
+		MarginPercentRight(percent)
+
+	return block
+}
+
+func (block *Block) MarginPercentAll(percent float64) *Block {
+	block.
+		MarginPercentTop(percent).
+		MarginPercentRight(percent).
+		MarginPercentBottom(percent).
+		MarginPercentLeft(percent)
+
+	return block
+}
+
 func (block *Block) PaddingTop(padding float64) *Block {
 	block.getFlexNode().StyleSetPadding(flex.EdgeTop, float32(padding))
 
@@ -108,7 +165,6 @@ func (block *Block) PaddingLeft(padding float64) *Block {
 	return block
 }
 
-
 func (block *Block) GetPaddingTop() float64 {
 	return float64(block.getFlexNode().StyleGetPadding(flex.EdgeTop).Value)
 }
@@ -124,8 +180,6 @@ func (block *Block) GetPaddingBottom() float64 {
 func (block *Block) GetPaddingLeft() float64 {
 	return float64(block.getFlexNode().StyleGetPadding(flex.EdgeLeft).Value)
 }
-
-
 
 func (block *Block) Padding(top float64, right float64, bottom float64, left float64) *Block {
 	block.
@@ -163,3 +217,258 @@ func (block *Block) PaddingAll(padding float64) *Block {
 	return block
 }
 
+func (block *Block) PaddingPercentTop(percent float64) *Block {
+	block.getFlexNode().StyleSetPaddingPercent(flex.EdgeTop, float32(percent))
+
+	return block
+}
+
+func (block *Block) PaddingPercentRight(percent float64) *Block {
+	block.getFlexNode().StyleSetPaddingPercent(flex.EdgeRight, float32(percent))
+
+	return block
+}
+
+func (block *Block) PaddingPercentBottom(percent float64) *Block {
+	block.getFlexNode().StyleSetPaddingPercent(flex.EdgeBottom, float32(percent))
+
+	return block
+}
+
+func (block *Block) PaddingPercentLeft(percent float64) *Block {
+	block.getFlexNode().StyleSetPaddingPercent(flex.EdgeLeft, float32(percent))
+
+	return block
+}
+
+func (block *Block) PaddingPercent(top float64, right float64, bottom float64, left float64) *Block {
+	block.
+		PaddingPercentTop(top).
+		PaddingPercentRight(right).
+		PaddingPercentBottom(bottom).
+		PaddingPercentLeft(left)
+
+	return block
+}
+
+func (block *Block) PaddingPercentVertical(percent float64) *Block {
+	block.
+		PaddingPercentTop(percent).
+		PaddingPercentBottom(percent)
+
+	return block
+}
+
+func (block *Block) PaddingPercentHorizontal(percent float64) *Block {
+	block.
+		PaddingPercentLeft(percent).
+		PaddingPercentRight(percent)
+
+	return block
+}
+
+func (block *Block) PaddingPercentAll(percent float64) *Block {
+	block.
+		PaddingPercentTop(percent).
+		PaddingPercentRight(percent).
+		PaddingPercentBottom(percent).
+		PaddingPercentLeft(percent)
+
+	return block
+}
+
+func (block *Block) BorderTop(border float64) *Block {
+	block.getFlexNode().StyleSetBorder(flex.EdgeTop, float32(border))
+
+	return block
+}
+
+func (block *Block) BorderRight(border float64) *Block {
+	block.getFlexNode().StyleSetBorder(flex.EdgeRight, float32(border))
+
+	return block
+}
+
+func (block *Block) BorderBottom(border float64) *Block {
+	block.getFlexNode().StyleSetBorder(flex.EdgeBottom, float32(border))
+
+	return block
+}
+
+func (block *Block) BorderLeft(border float64) *Block {
+	block.getFlexNode().StyleSetBorder(flex.EdgeLeft, float32(border))
+
+	return block
+}
+
+func (block *Block) Border(top float64, right float64, bottom float64, left float64) *Block {
+	block.
+		BorderTop(top).
+		BorderRight(right).
+		BorderBottom(bottom).
+		BorderLeft(left)
+
+	return block
+}
+
+func (block *Block) BorderVertical(border float64) *Block {
+	block.
+		BorderTop(border).
+		BorderBottom(border)
+
+	return block
+}
+
+func (block *Block) BorderHorizontal(border float64) *Block {
+	block.
+		BorderLeft(border).
+		BorderRight(border)
+
+	return block
+}
+
+func (block *Block) BorderAll(border float64) *Block {
+	block.
+		BorderTop(border).
+		BorderRight(border).
+		BorderBottom(border).
+		BorderLeft(border)
+
+	return block
+}
+
+func (block *Block) PositionTop(position float64) *Block {
+	block.getFlexNode().StyleSetPosition(flex.EdgeTop, float32(position))
+
+	return block
+}
+
+func (block *Block) PositionRight(position float64) *Block {
+	block.getFlexNode().StyleSetPosition(flex.EdgeRight, float32(position))
+
+	return block
+}
+
+func (block *Block) PositionBottom(position float64) *Block {
+	block.getFlexNode().StyleSetPosition(flex.EdgeBottom, float32(position))
+
+	return block
+}
+
+func (block *Block) PositionLeft(position float64) *Block {
+	block.getFlexNode().StyleSetPosition(flex.EdgeLeft, float32(position))
+
+	return block
+}
+
+func (block *Block) GetPositionTop() float64 {
+	return float64(block.getFlexNode().StyleGetPosition(flex.EdgeTop).Value)
+}
+
+func (block *Block) GetPositionRight() float64 {
+	return float64(block.getFlexNode().StyleGetPosition(flex.EdgeRight).Value)
+}
+
+func (block *Block) GetPositionBottom() float64 {
+	return float64(block.getFlexNode().StyleGetPosition(flex.EdgeBottom).Value)
+}
+
+func (block *Block) GetPositionLeft() float64 {
+	return float64(block.getFlexNode().StyleGetPosition(flex.EdgeLeft).Value)
+}
+
+func (block *Block) Position(top float64, right float64, bottom float64, left float64) *Block {
+	block.
+		PositionTop(top).
+		PositionRight(right).
+		PositionBottom(bottom).
+		PositionLeft(left)
+
+	return block
+}
+
+func (block *Block) PositionVertical(position float64) *Block {
+	block.
+		PositionTop(position).
+		PositionBottom(position)
+
+	return block
+}
+
+func (block *Block) PositionHorizontal(position float64) *Block {
+	block.
+		PositionLeft(position).
+		PositionRight(position)
+
+	return block
+}
+
+func (block *Block) PositionAll(position float64) *Block {
+	block.
+		PositionTop(position).
+		PositionRight(position).
+		PositionBottom(position).
+		PositionLeft(position)
+
+	return block
+}
+
+func (block *Block) PositionPercentTop(percent float64) *Block {
+	block.getFlexNode().StyleSetPositionPercent(flex.EdgeTop, float32(percent))
+
+	return block
+}
+
+func (block *Block) PositionPercentRight(percent float64) *Block {
+	block.getFlexNode().StyleSetPositionPercent(flex.EdgeRight, float32(percent))
+
+	return block
+}
+
+func (block *Block) PositionPercentBottom(percent float64) *Block {
+	block.getFlexNode().StyleSetPositionPercent(flex.EdgeBottom, float32(percent))
+
+	return block
+}
+
+func (block *Block) PositionPercentLeft(percent float64) *Block {
+	block.getFlexNode().StyleSetPositionPercent(flex.EdgeLeft, float32(percent))
+
+	return block
+}
+
+func (block *Block) PositionPercent(top float64, right float64, bottom float64, left float64) *Block {
+	block.
+		PositionPercentTop(top).
+		PositionPercentRight(right).
+		PositionPercentBottom(bottom).
+		PositionPercentLeft(left)
+
+	return block
+}
+
+func (block *Block) PositionPercentVertical(percent float64) *Block {
+	block.
+		PositionPercentTop(percent).
+		PositionPercentBottom(percent)
+
+	return block
+}
+
+func (block *Block) PositionPercentHorizontal(percent float64) *Block {
+	block.
+		PositionPercentLeft(percent).
+		PositionPercentRight(percent)
+
+	return block
+}
+
+func (block *Block) PositionPercentAll(percent float64) *Block {
+	block.
+		PositionPercentTop(percent).
+		PositionPercentRight(percent).
+		PositionPercentBottom(percent).
+		PositionPercentLeft(percent)
+
+	return block
+}

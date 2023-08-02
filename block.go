@@ -55,23 +55,13 @@ func (block *Block) render(pdf *Pdf) {
 	}
 }
 
-func (block *Block) Width(width float64) *Block {
-	block.getFlexNode().StyleSetWidth(float32(width))
-	return block
-}
-
 func (block *Block) WidthAuto() *Block {
 	block.getFlexNode().StyleSetWidthAuto()
 	return block
 }
 
-func (block *Block) Height(height float64) *Block {
-	block.getFlexNode().StyleSetHeight(float32(height))
-	return block
-}
-
-func (block *Block) Display(display flex.Display) *Block {
-	block.getFlexNode().StyleSetDisplay(display)
+func (block *Block) HeightAuto() *Block {
+	block.getFlexNode().StyleSetHeightAuto()
 	return block
 }
 

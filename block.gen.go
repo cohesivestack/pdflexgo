@@ -5,70 +5,194 @@ import (
 	"github.com/kjk/flex"
 )
 
+func (block *Block) Width(width float64) *Block {
+	block.getFlexNode().StyleSetWidth(float32(width))
+	return block
+}
+
+func (block *Block) WidthPercent(percent float64) *Block {
+	block.getFlexNode().StyleSetWidthPercent(float32(percent))
+	return block
+}
+
+func (block *Block) Height(height float64) *Block {
+	block.getFlexNode().StyleSetHeight(float32(height))
+	return block
+}
+
+func (block *Block) HeightPercent(percent float64) *Block {
+	block.getFlexNode().StyleSetHeightPercent(float32(percent))
+	return block
+}
+
+func (block *Block) PositionType(position PositionType) *Block {
+	block.getFlexNode().StyleSetPositionType(flex.PositionType(position))
+	return block
+}
+
+func (block *Block) GetPositionType() PositionType {
+	return PositionType(block.getFlexNode().Style.PositionType)
+}
+
+func (block *Block) Direction(direction Direction) *Block {
+	block.getFlexNode().StyleSetDirection(flex.Direction(direction))
+	return block
+}
+
+func (block *Block) GetDirection() Direction {
+	return Direction(block.getFlexNode().Style.Direction)
+}
+
 func (block *Block) FlexDirection(direction FlexDirection) *Block {
 	block.getFlexNode().StyleSetFlexDirection(flex.FlexDirection(direction))
 	return block
 }
 
-
 func (block *Block) GetFlexDirection() FlexDirection {
 	return FlexDirection(block.getFlexNode().Style.FlexDirection)
 }
 
+func (block *Block) JustifyContent(justifyContent Justify) *Block {
+	block.getFlexNode().StyleSetJustifyContent(flex.Justify(justifyContent))
+	return block
+}
+
+func (block *Block) GetJustifyContent() Justify {
+	return Justify(block.getFlexNode().Style.JustifyContent)
+}
+
+func (block *Block) AlignContent(alignContent flex.Align) *Block {
+	block.getFlexNode().StyleSetAlignContent(flex.Align(alignContent))
+	return block
+}
+
+func (block *Block) GetAlignContent() flex.Align {
+	return flex.Align(block.getFlexNode().Style.AlignContent)
+}
+
+func (block *Block) AlignItems(alignItems flex.Align) *Block {
+	block.getFlexNode().StyleSetAlignItems(flex.Align(alignItems))
+	return block
+}
+
+func (block *Block) GetAlignItems() flex.Align {
+	return flex.Align(block.getFlexNode().Style.AlignItems)
+}
+
+func (block *Block) AlignSelf(alignSelf flex.Align) *Block {
+	block.getFlexNode().StyleSetAlignSelf(flex.Align(alignSelf))
+	return block
+}
+
+func (block *Block) GetAlignSelf() flex.Align {
+	return flex.Align(block.getFlexNode().Style.AlignSelf)
+}
 
 func (block *Block) FlexWrap(wrap Wrap) *Block {
 	block.getFlexNode().StyleSetFlexWrap(flex.Wrap(wrap))
 	return block
 }
 
-
 func (block *Block) GetFlexWrap() Wrap {
 	return Wrap(block.getFlexNode().Style.FlexWrap)
 }
 
+func (block *Block) Overflow(overflow Overflow) *Block {
+	block.getFlexNode().StyleSetOverflow(flex.Overflow(overflow))
+	return block
+}
+
+func (block *Block) GetOverflow() Overflow {
+	return Overflow(block.getFlexNode().Style.Overflow)
+}
+
+func (block *Block) Display(overflow Display) *Block {
+	block.getFlexNode().StyleSetDisplay(flex.Display(overflow))
+	return block
+}
+
+func (block *Block) GetDisplay() Display {
+	return Display(block.getFlexNode().Style.Display)
+}
 
 func (block *Block) Flex(flex float64) *Block {
 	block.getFlexNode().StyleSetFlex(float32(flex))
 	return block
 }
 
-
 func (block *Block) GetFlex() float64 {
 	return float64(block.getFlexNode().Style.Flex)
 }
-
 
 func (block *Block) FlexGrow(grow float64) *Block {
 	block.getFlexNode().StyleSetFlexGrow(float32(grow))
 	return block
 }
 
-
 func (block *Block) GetFlexGrow() float64 {
 	return float64(block.getFlexNode().StyleGetFlexGrow())
 }
-
 
 func (block *Block) FlexShrink(shrink float64) *Block {
 	block.getFlexNode().StyleSetFlexShrink(float32(shrink))
 	return block
 }
 
-
 func (block *Block) GetFlexShrink() float64 {
 	return float64(block.getFlexNode().StyleGetFlexShrink())
 }
-
 
 func (block *Block) FlexBasis(basis float64) *Block {
 	block.getFlexNode().StyleSetFlexBasis(float32(basis))
 	return block
 }
 
-
-func (block *Block) FlexBasisPercent(basisPercent float64) *Block {
-	block.getFlexNode().StyleSetFlexBasisPercent(float32(basisPercent))
+func (block *Block) FlexBasisPercent(percent float64) *Block {
+	block.getFlexNode().StyleSetFlexBasisPercent(float32(percent))
 	return block
 }
 
+func (block *Block) MinWidth(minWidth float64) *Block {
+	block.getFlexNode().StyleSetMinWidth(float32(minWidth))
+	return block
+}
 
+func (block *Block) MinWidthPercent(percent float64) *Block {
+	block.getFlexNode().StyleSetMinWidthPercent(float32(percent))
+	return block
+}
+
+func (block *Block) MinHeight(minHeight float64) *Block {
+	block.getFlexNode().StyleSetMinHeight(float32(minHeight))
+	return block
+}
+
+func (block *Block) MinHeightPercent(percent float64) *Block {
+	block.getFlexNode().StyleSetMinHeightPercent(float32(percent))
+	return block
+}
+
+func (block *Block) MaxWidth(maxWidth float64) *Block {
+	block.getFlexNode().StyleSetMaxWidth(float32(maxWidth))
+	return block
+}
+
+func (block *Block) MaxWidthPercent(percent float64) *Block {
+	block.getFlexNode().StyleSetMaxWidthPercent(float32(percent))
+	return block
+}
+
+func (block *Block) MaxHeight(maxHeight float64) *Block {
+	block.getFlexNode().StyleSetMaxHeight(float32(maxHeight))
+	return block
+}
+
+func (block *Block) MaxHeightPercent(percent float64) *Block {
+	block.getFlexNode().StyleSetMaxHeightPercent(float32(percent))
+	return block
+}
+
+func (block *Block) AspectRatio(aspectRatio float64) *Block {
+	block.getFlexNode().StyleSetAspectRatio(float32(aspectRatio))
+	return block
+}
