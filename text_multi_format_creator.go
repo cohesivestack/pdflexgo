@@ -8,19 +8,26 @@ type TextMultiFormatCreator struct {
 
 func TextMultiFormat() *TextMultiFormatCreator {
 
+	return &TextMultiFormatCreator{
+		element: &TextMultiFormatElement{
+			lineHeight: nil,
+
+			size:       DefaultFontSize,
+			color:      DefaultFontColor,
+			fontStyle:  DefaultFontStyle,
+			fontFamily: DefaultFontFamily,
+
+			parts: []*textMultiFormatPart{},
+		},
+	}
+}
+
+func (constructor *TextMultiFormatCreator) Create() *TextMultiFormatElement {
+	constructor.element.addPart()
+
 	config := flex.NewConfig()
 	node := flex.NewNodeWithConfig(config)
-
-	element := &TextMultiFormatElement{
-		lineHeight: nil,
-
-		size:       DefaultFontSize,
-		color:      DefaultFontColor,
-		fontStyle:  DefaultFontStyle,
-		fontFamily: DefaultFontFamily,
-
-		parts: []*textMultiFormatPart{},
-	}
+	element := constructor.element
 
 	element.AbstractElement.setFlexNode(node)
 	element._flexNode.StyleSetMargin(flex.EdgeAll, 0)
@@ -39,7 +46,7 @@ func TextMultiFormat() *TextMultiFormatCreator {
 			lineHeight := 0.0
 			element.lineHeight = &lineHeight
 			for _, part := range element.parts {
-				setFont(fpdf, part.fontFamily, part.fontStyle, part.size)
+				fpdf.SetFontSize(float64(part.size))
 				_, fontHeight := fpdf.GetFontSize()
 				if fontHeight > *element.lineHeight {
 					element.lineHeight = &fontHeight
@@ -47,7 +54,7 @@ func TextMultiFormat() *TextMultiFormatCreator {
 			}
 		}
 		for _, part := range element.parts {
-			fpdf.SetFontSize(float64(part.size))
+			setFont(fpdf, part.fontFamily, part.fontStyle, part.size)
 			fpdf.Write(*element.lineHeight, part.content)
 		}
 
@@ -58,13 +65,6 @@ func TextMultiFormat() *TextMultiFormatCreator {
 
 	node.SetMeasureFunc(measureFunc)
 
-	return &TextMultiFormatCreator{
-		element: element,
-	}
-}
-
-func (constructor *TextMultiFormatCreator) Create() *TextMultiFormatElement {
-	constructor.element.addPart()
 	return constructor.element
 }
 
