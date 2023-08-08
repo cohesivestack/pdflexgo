@@ -1,6 +1,8 @@
 package pdflexgo
 
 import (
+	"io"
+
 	"github.com/jung-kurt/gofpdf"
 )
 
@@ -34,6 +36,10 @@ func (pdf *Pdf) Render() *Pdf {
 
 func (pdf *Pdf) OutputFileAndClose(filePath string) error {
 	return pdf.fpdf.OutputFileAndClose(filePath)
+}
+
+func (pdf *Pdf) Output(writer io.Writer) error {
+	return pdf.fpdf.Output(writer)
 }
 
 func (pdf *Pdf) AddFont(family string, style FontStyle, filePath string) *Pdf {
