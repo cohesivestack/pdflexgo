@@ -3,6 +3,7 @@ package pdflexgo
 //go:generate go run generator/main.go
 
 import (
+	"log"
 	"math"
 
 	"github.com/jung-kurt/gofpdf"
@@ -17,8 +18,9 @@ const edgeLeftIndex = 3
 
 type BlockElement struct {
 	AbstractElement
-	children []Element
-	border   [edgeCount]*border
+	children       []Element
+	border         [edgeCount]*border
+	backgrondColor string
 }
 
 func Block() *BlockElement {
@@ -51,6 +53,20 @@ func (block *BlockElement) Children(children ...Element) *BlockElement {
 func (block *BlockElement) render(pdf *Pdf) {
 
 	block.renderBorders(pdf)
+
+	if block.backgrondColor != "" {
+		r, g, b, err := hexToRGB(block.backgrondColor)
+		if err != nil {
+			log.Fatal(err)
+		}
+		pdf.fpdf.SetFillColor(r, g, b)
+		pdf.fpdf.Rect(
+			float64(block.X()+block.getFlexNode().LayoutGetBorder(flex.EdgeLeft)),
+			float64(block.Y()+block.getFlexNode().LayoutGetBorder(flex.EdgeTop)),
+			float64(block.getFlexNode().LayoutGetWidth()-(block.getFlexNode().LayoutGetBorder(flex.EdgeLeft)+block.getFlexNode().LayoutGetBorder(flex.EdgeRight))),
+			float64(block.getFlexNode().LayoutGetHeight()-(block.getFlexNode().LayoutGetBorder(flex.EdgeTop)+block.getFlexNode().LayoutGetBorder(flex.EdgeBottom))), "F")
+
+	}
 
 	for _, child := range block.children {
 		child.render(pdf)
@@ -100,5 +116,11 @@ func (block *BlockElement) FlexNone() *BlockElement {
 
 func (block *BlockElement) FlexBasisAuto() *BlockElement {
 	flex.NodeStyleSetFlexBasisAuto(block.getFlexNode())
+	return block
+}
+
+func (block *BlockElement) BackgroundColor(color string) *BlockElement {
+	block.backgrondColor = color
+
 	return block
 }
