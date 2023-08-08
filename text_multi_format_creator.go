@@ -83,6 +83,11 @@ func (creator *TextMultiFormatCreator) Color(color string) *TextMultiFormatCreat
 	return creator
 }
 
+func (creator *TextMultiFormatCreator) FontFamily(family string) *TextMultiFormatCreator {
+	creator.element.fontFamily = family
+	return creator
+}
+
 func (creator *TextMultiFormatCreator) Thin() *TextMultiFormatCreator {
 	creator.element.fontStyle = FontStyleThin
 	return creator

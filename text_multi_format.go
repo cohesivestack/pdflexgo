@@ -138,6 +138,11 @@ func (element *TextMultiFormatElement) BlackItalic() *TextMultiFormatElement {
 	return element
 }
 
+func (element *TextMultiFormatElement) FontFamily(family string) *TextMultiFormatElement {
+	element.parts[len(element.parts)-1].fontFamily = family
+	return element
+}
+
 func (element *TextMultiFormatElement) Content(text string) *TextMultiFormatElement {
 	part := element.parts[len(element.parts)-1]
 	part.content = text
