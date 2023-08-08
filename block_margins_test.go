@@ -9,7 +9,7 @@ import (
 
 func TestBlockMargin(t *testing.T) {
 
-	block := NewBlock().
+	block := Block().
 		Margin(5, 4, 3, 2)
 
 	assert.Equal(t, float32(5), block.getFlexNode().StyleGetMargin(flex.EdgeTop).Value)
@@ -17,7 +17,7 @@ func TestBlockMargin(t *testing.T) {
 	assert.Equal(t, float32(3), block.getFlexNode().StyleGetMargin(flex.EdgeBottom).Value)
 	assert.Equal(t, float32(2), block.getFlexNode().StyleGetMargin(flex.EdgeLeft).Value)
 
-	block = NewBlock().
+	block = Block().
 		MarginTop(5).
 		MarginRight(4).
 		MarginBottom(3).
@@ -28,7 +28,7 @@ func TestBlockMargin(t *testing.T) {
 	assert.Equal(t, float32(3), block.getFlexNode().StyleGetMargin(flex.EdgeBottom).Value)
 	assert.Equal(t, float32(2), block.getFlexNode().StyleGetMargin(flex.EdgeLeft).Value)
 
-	block = NewBlock().
+	block = Block().
 		MarginVertical(6).
 		MarginHorizontal(5)
 
@@ -37,7 +37,7 @@ func TestBlockMargin(t *testing.T) {
 	assert.Equal(t, float32(5), block.getFlexNode().StyleGetMargin(flex.EdgeRight).Value)
 	assert.Equal(t, float32(5), block.getFlexNode().StyleGetMargin(flex.EdgeLeft).Value)
 
-	block = NewBlock().
+	block = Block().
 		MarginAll(6)
 
 	assert.Equal(t, float32(6), block.getFlexNode().StyleGetMargin(flex.EdgeTop).Value)

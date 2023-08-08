@@ -15,17 +15,17 @@ const edgeRightIndex = 1
 const edgeBottomIndex = 2
 const edgeLeftIndex = 3
 
-type Block struct {
+type BlockElement struct {
 	AbstractElement
 	children []Element
 	border   [edgeCount]*border
 }
 
-func NewBlock() *Block {
+func Block() *BlockElement {
 	config := flex.NewConfig()
 	node := flex.NewNodeWithConfig(config)
 
-	block := &Block{
+	block := &BlockElement{
 		border: [edgeCount]*border{{}, {}, {}, {}},
 	}
 
@@ -38,7 +38,7 @@ func NewBlock() *Block {
 	return block
 }
 
-func (block *Block) Children(children ...Element) *Block {
+func (block *BlockElement) Children(children ...Element) *BlockElement {
 
 	for _, child := range children {
 		block.getFlexNode().InsertChild(child.getFlexNode(), len(block.getFlexNode().Children))
@@ -48,7 +48,7 @@ func (block *Block) Children(children ...Element) *Block {
 	return block
 }
 
-func (block *Block) render(pdf *Pdf) {
+func (block *BlockElement) render(pdf *Pdf) {
 
 	block.renderBorders(pdf)
 
@@ -57,7 +57,7 @@ func (block *Block) render(pdf *Pdf) {
 	}
 }
 
-func (block *Block) setPreRenderFpdf(fpdf *gofpdf.Fpdf) {
+func (block *BlockElement) setPreRenderFpdf(fpdf *gofpdf.Fpdf) {
 
 	block.AbstractElement.setPreRenderFpdf(fpdf)
 
@@ -66,39 +66,39 @@ func (block *Block) setPreRenderFpdf(fpdf *gofpdf.Fpdf) {
 	}
 }
 
-func (block *Block) WidthAuto() *Block {
+func (block *BlockElement) WidthAuto() *BlockElement {
 	block.getFlexNode().StyleSetWidthAuto()
 	return block
 }
 
-func (block *Block) HeightAuto() *Block {
+func (block *BlockElement) HeightAuto() *BlockElement {
 	block.getFlexNode().StyleSetHeightAuto()
 	return block
 }
 
-func (block *Block) GetWidth() float64 {
+func (block *BlockElement) GetWidth() float64 {
 	return float64(block.getFlexNode().StyleGetWidth().Value)
 }
 
-func (block *Block) GetHeight() float64 {
+func (block *BlockElement) GetHeight() float64 {
 	return float64(block.getFlexNode().StyleGetHeight().Value)
 }
 
-func (block *Block) FlexAuto() *Block {
+func (block *BlockElement) FlexAuto() *BlockElement {
 	return block.
 		FlexGrow(1).
 		FlexShrink(1).
 		FlexBasis(math.NaN())
 }
 
-func (block *Block) FlexNone() *Block {
+func (block *BlockElement) FlexNone() *BlockElement {
 	return block.
 		FlexGrow(0).
 		FlexShrink(0).
 		FlexBasis(math.NaN())
 }
 
-func (block *Block) FlexBasisAuto() *Block {
+func (block *BlockElement) FlexBasisAuto() *BlockElement {
 	flex.NodeStyleSetFlexBasisAuto(block.getFlexNode())
 	return block
 }

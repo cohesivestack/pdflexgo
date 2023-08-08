@@ -9,7 +9,7 @@ import (
 
 func TestBlockBorderWidth(t *testing.T) {
 
-	block := NewBlock().
+	block := Block().
 		BorderWidth(5, 4, 3, 2)
 
 	assert.Equal(t, float32(5), block.getFlexNode().StyleGetBorder(flex.EdgeTop))
@@ -17,7 +17,7 @@ func TestBlockBorderWidth(t *testing.T) {
 	assert.Equal(t, float32(3), block.getFlexNode().StyleGetBorder(flex.EdgeBottom))
 	assert.Equal(t, float32(2), block.getFlexNode().StyleGetBorder(flex.EdgeLeft))
 
-	block = NewBlock().
+	block = Block().
 		BorderTopWidth(5).
 		BorderRightWidth(4).
 		BorderBottomWidth(3).
@@ -28,7 +28,7 @@ func TestBlockBorderWidth(t *testing.T) {
 	assert.Equal(t, float32(3), block.getFlexNode().StyleGetBorder(flex.EdgeBottom))
 	assert.Equal(t, float32(2), block.getFlexNode().StyleGetBorder(flex.EdgeLeft))
 
-	block = NewBlock().
+	block = Block().
 		BorderVerticalWidth(7).
 		BorderHorizontalWidth(6)
 
@@ -38,7 +38,7 @@ func TestBlockBorderWidth(t *testing.T) {
 	assert.Equal(t, float32(6), block.getFlexNode().StyleGetBorder(flex.EdgeRight))
 	assert.Equal(t, float32(6), block.getFlexNode().StyleGetBorder(flex.EdgeLeft))
 
-	block = NewBlock().
+	block = Block().
 		BorderAllWidth(6)
 
 	assert.Equal(t, float32(6), block.getFlexNode().StyleGetBorder(flex.EdgeTop))

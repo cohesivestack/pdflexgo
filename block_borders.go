@@ -10,35 +10,35 @@ type border struct {
 	color string
 }
 
-func (block *Block) BorderTopWidth(width float64) *Block {
+func (block *BlockElement) BorderTopWidth(width float64) *BlockElement {
 
 	block.getFlexNode().StyleSetBorder(flex.EdgeTop, float32(width))
 
 	return block
 }
 
-func (block *Block) BorderBottomWidth(width float64) *Block {
+func (block *BlockElement) BorderBottomWidth(width float64) *BlockElement {
 
 	block.getFlexNode().StyleSetBorder(flex.EdgeBottom, float32(width))
 
 	return block
 }
 
-func (block *Block) BorderLeftWidth(width float64) *Block {
+func (block *BlockElement) BorderLeftWidth(width float64) *BlockElement {
 
 	block.getFlexNode().StyleSetBorder(flex.EdgeLeft, float32(width))
 
 	return block
 }
 
-func (block *Block) BorderRightWidth(width float64) *Block {
+func (block *BlockElement) BorderRightWidth(width float64) *BlockElement {
 
 	block.getFlexNode().StyleSetBorder(flex.EdgeRight, float32(width))
 
 	return block
 }
 
-func (block *Block) BorderWidth(top float64, right float64, bottom float64, left float64) *Block {
+func (block *BlockElement) BorderWidth(top float64, right float64, bottom float64, left float64) *BlockElement {
 	block.BorderTopWidth(top)
 	block.BorderRightWidth(right)
 	block.BorderBottomWidth(bottom)
@@ -47,35 +47,35 @@ func (block *Block) BorderWidth(top float64, right float64, bottom float64, left
 	return block
 }
 
-func (block *Block) BorderTopColor(color string) *Block {
+func (block *BlockElement) BorderTopColor(color string) *BlockElement {
 
 	block.border[edgeTopIndex].color = color
 
 	return block
 }
 
-func (block *Block) BorderRightColor(color string) *Block {
+func (block *BlockElement) BorderRightColor(color string) *BlockElement {
 
 	block.border[edgeRightIndex].color = color
 
 	return block
 }
 
-func (block *Block) BorderBottomColor(color string) *Block {
+func (block *BlockElement) BorderBottomColor(color string) *BlockElement {
 
 	block.border[edgeBottomIndex].color = color
 
 	return block
 }
 
-func (block *Block) BorderLeftColor(color string) *Block {
+func (block *BlockElement) BorderLeftColor(color string) *BlockElement {
 
 	block.border[edgeLeftIndex].color = color
 
 	return block
 }
 
-func (block *Block) BorderColor(top string, right string, bottom string, left string) *Block {
+func (block *BlockElement) BorderColor(top string, right string, bottom string, left string) *BlockElement {
 	block.BorderTopColor(top)
 	block.BorderRightColor(right)
 	block.BorderBottomColor(bottom)
@@ -84,7 +84,7 @@ func (block *Block) BorderColor(top string, right string, bottom string, left st
 	return block
 }
 
-func (block *Block) renderBorders(pdf *Pdf) *Block {
+func (block *BlockElement) renderBorders(pdf *Pdf) *BlockElement {
 
 	block.renderBorderTop(pdf)
 	block.renderBorderRight(pdf)
@@ -94,7 +94,7 @@ func (block *Block) renderBorders(pdf *Pdf) *Block {
 	return block
 }
 
-func (block *Block) renderBorderTop(pdf *Pdf) *Block {
+func (block *BlockElement) renderBorderTop(pdf *Pdf) *BlockElement {
 
 	if block.getFlexNode().LayoutGetBorder(flex.EdgeTop) > 0 {
 		if block.border[edgeTopIndex].color != "" {
@@ -116,7 +116,7 @@ func (block *Block) renderBorderTop(pdf *Pdf) *Block {
 	return block
 }
 
-func (block *Block) renderBorderRight(pdf *Pdf) *Block {
+func (block *BlockElement) renderBorderRight(pdf *Pdf) *BlockElement {
 
 	if block.getFlexNode().LayoutGetBorder(flex.EdgeRight) > 0 {
 		if block.border[edgeRightIndex].color != "" {
@@ -139,7 +139,7 @@ func (block *Block) renderBorderRight(pdf *Pdf) *Block {
 	return block
 }
 
-func (block *Block) renderBorderBottom(pdf *Pdf) *Block {
+func (block *BlockElement) renderBorderBottom(pdf *Pdf) *BlockElement {
 
 	if block.getFlexNode().LayoutGetBorder(flex.EdgeBottom) > 0 {
 		if block.border[edgeBottomIndex].color != "" {
@@ -161,7 +161,7 @@ func (block *Block) renderBorderBottom(pdf *Pdf) *Block {
 	return block
 }
 
-func (block *Block) renderBorderLeft(pdf *Pdf) *Block {
+func (block *BlockElement) renderBorderLeft(pdf *Pdf) *BlockElement {
 
 	if block.getFlexNode().LayoutGetBorder(flex.EdgeLeft) > 0 {
 		if block.border[edgeLeftIndex].color != "" {
@@ -184,7 +184,7 @@ func (block *Block) renderBorderLeft(pdf *Pdf) *Block {
 	return block
 }
 
-func (block *Block) BorderVerticalWidth(vertical float64) *Block {
+func (block *BlockElement) BorderVerticalWidth(vertical float64) *BlockElement {
 	block.
 		BorderTopWidth(vertical).
 		BorderBottomWidth(vertical)
@@ -192,7 +192,7 @@ func (block *Block) BorderVerticalWidth(vertical float64) *Block {
 	return block
 }
 
-func (block *Block) BorderHorizontalWidth(horizontal float64) *Block {
+func (block *BlockElement) BorderHorizontalWidth(horizontal float64) *BlockElement {
 	block.
 		BorderLeftWidth(horizontal).
 		BorderRightWidth(horizontal)
@@ -200,7 +200,7 @@ func (block *Block) BorderHorizontalWidth(horizontal float64) *Block {
 	return block
 }
 
-func (block *Block) BorderAllWidth(border float64) *Block {
+func (block *BlockElement) BorderAllWidth(border float64) *BlockElement {
 	block.
 		BorderTopWidth(border).
 		BorderRightWidth(border).
@@ -210,7 +210,7 @@ func (block *Block) BorderAllWidth(border float64) *Block {
 	return block
 }
 
-func (block *Block) BorderVerticalColor(color string) *Block {
+func (block *BlockElement) BorderVerticalColor(color string) *BlockElement {
 	block.
 		BorderTopColor(color).
 		BorderBottomColor(color)
@@ -218,7 +218,7 @@ func (block *Block) BorderVerticalColor(color string) *Block {
 	return block
 }
 
-func (block *Block) BorderHorizontalColor(color string) *Block {
+func (block *BlockElement) BorderHorizontalColor(color string) *BlockElement {
 	block.
 		BorderLeftColor(color).
 		BorderRightColor(color)
@@ -226,7 +226,7 @@ func (block *Block) BorderHorizontalColor(color string) *Block {
 	return block
 }
 
-func (block *Block) BorderAllColor(color string) *Block {
+func (block *BlockElement) BorderAllColor(color string) *BlockElement {
 	block.
 		BorderTopColor(color).
 		BorderRightColor(color).

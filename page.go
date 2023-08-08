@@ -9,7 +9,7 @@ import (
 )
 
 type Page struct {
-	root *Block
+	root *BlockElement
 
 	// Public attributes
 	orientation Orientation
@@ -20,7 +20,7 @@ type Page struct {
 
 func NewPage() *Page {
 	page := &Page{
-		root: NewBlock(),
+		root: Block(),
 	}
 
 	page.Size(DefaultSize)

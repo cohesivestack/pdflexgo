@@ -4,28 +4,28 @@ import (
 	"github.com/kjk/flex"
 )
 
-type Text struct {
+type TextElement struct {
 	AbstractElement
 
 	content string
 	size    float64
 }
 
-func (text *Text) Content(content string) *Text {
+func (text *TextElement) Content(content string) *TextElement {
 	text.content = content
 	return text
 }
 
-func (text *Text) Size(size float64) *Text {
+func (text *TextElement) Size(size float64) *TextElement {
 	text.size = size
 	return text
 }
 
-func NewText() *Text {
+func Text() *TextElement {
 	config := flex.NewConfig()
 	node := flex.NewNodeWithConfig(config)
 
-	text := &Text{
+	text := &TextElement{
 		size: DefaultFontSize,
 	}
 
@@ -54,7 +54,7 @@ func NewText() *Text {
 	return text
 }
 
-func (text *Text) render(pdf *Pdf) {
+func (text *TextElement) render(pdf *Pdf) {
 	fpdf := pdf.fpdf
 
 	fpdf.SetFontSize(float64(text.size))
