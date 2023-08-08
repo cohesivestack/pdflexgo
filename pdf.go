@@ -35,3 +35,13 @@ func (pdf *Pdf) Render() *Pdf {
 func (pdf *Pdf) OutputFileAndClose(filePath string) error {
 	return pdf.fpdf.OutputFileAndClose(filePath)
 }
+
+func (pdf *Pdf) AddFont(family string, style FontStyle, filePath string) *Pdf {
+	pdf.fpdf.AddUTF8Font(family, string(style), filePath)
+	return pdf
+}
+
+func (pdf *Pdf) AddFontFromBytes(family string, style FontStyle, bytes []byte) *Pdf {
+	pdf.fpdf.AddUTF8FontFromBytes(family, string(style), bytes)
+	return pdf
+}
