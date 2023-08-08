@@ -2,6 +2,9 @@ package pdflexgo
 
 import "github.com/kjk/flex"
 
+// Font Size
+const DefaultFontSize = 11.0
+
 // Orientation
 type Orientation string
 
