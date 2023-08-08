@@ -1,12 +1,15 @@
 package pdflexgo
 
 import (
+	"log"
+
 	"github.com/kjk/flex"
 )
 
 type textMultiFormatPart struct {
 	content string
 	size    float64
+	color   string
 }
 
 type TextMultiFormatElement struct {
@@ -38,7 +41,8 @@ func (constructor *TextMultiFormatCreator) Create() *TextMultiFormatElement {
 		lineHeight: constructor.lineHeight,
 		parts: []*textMultiFormatPart{
 			{
-				size: DefaultFontSize,
+				size:  DefaultFontSize,
+				color: DefaultFontColor,
 			},
 		},
 	}
@@ -87,12 +91,18 @@ func (element *TextMultiFormatElement) Size(size float64) *TextMultiFormatElemen
 	return element
 }
 
+func (element *TextMultiFormatElement) Color(color string) *TextMultiFormatElement {
+	element.parts[len(element.parts)-1].color = color
+	return element
+}
+
 func (element *TextMultiFormatElement) Content(text string) *TextMultiFormatElement {
 	part := element.parts[len(element.parts)-1]
 	part.content = text
 
 	element.parts = append(element.parts, &textMultiFormatPart{
-		size: part.size,
+		size:  part.size,
+		color: part.color,
 	})
 	return element
 }
@@ -108,6 +118,11 @@ func (element *TextMultiFormatElement) render(pdf *Pdf) {
 	fpdf.SetMargins(float64(element.X()), float64(element.Y()), pageWidth-float64(element.X()+element._flexNode.LayoutGetWidth()))
 
 	for _, part := range element.parts {
+		r, g, b, err := hexToRGB(part.color)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fpdf.SetTextColor(r, g, b)
 		fpdf.SetFontSize(part.size)
 		fpdf.Write(*element.lineHeight, part.content)
 	}

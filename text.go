@@ -1,6 +1,8 @@
 package pdflexgo
 
 import (
+	"log"
+
 	"github.com/kjk/flex"
 )
 
@@ -9,6 +11,7 @@ type TextElement struct {
 
 	content string
 	size    float64
+	color   string
 }
 
 func (text *TextElement) Content(content string) *TextElement {
@@ -21,12 +24,18 @@ func (text *TextElement) Size(size float64) *TextElement {
 	return text
 }
 
+func (text *TextElement) Color(color string) *TextElement {
+	text.color = color
+	return text
+}
+
 func Text() *TextElement {
 	config := flex.NewConfig()
 	node := flex.NewNodeWithConfig(config)
 
 	text := &TextElement{
-		size: DefaultFontSize,
+		size:  DefaultFontSize,
+		color: DefaultFontColor,
 	}
 
 	text.AbstractElement.setFlexNode(node)
@@ -56,6 +65,12 @@ func Text() *TextElement {
 
 func (text *TextElement) render(pdf *Pdf) {
 	fpdf := pdf.fpdf
+
+	r, g, b, err := hexToRGB(text.color)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fpdf.SetTextColor(r, g, b)
 
 	fpdf.SetFontSize(float64(text.size))
 	_, fontSize := fpdf.GetFontSize()
