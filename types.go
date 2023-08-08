@@ -4,7 +4,47 @@ import "github.com/kjk/flex"
 
 // Font Size
 const DefaultFontSize = 11.0
+
+// Font Color
 const DefaultFontColor = "#000000"
+
+// Font Style
+type FontStyle string
+
+const (
+	FontStyleThin             FontStyle = "Thin"
+	FontStyleExtraLight       FontStyle = "ExtraLight"
+	FontStyleLight            FontStyle = "Light"
+	FontStyleRegular          FontStyle = "Regular"
+	FontStyleMedium           FontStyle = "Medium"
+	FontStyleSemiBold         FontStyle = "SemiBold"
+	FontStyleBold             FontStyle = "Bold"
+	FontStyleExtraBold        FontStyle = "ExtraBold"
+	FontStyleBlack            FontStyle = "Black"
+	FontStyleThinItalic       FontStyle = "ThinItalic"
+	FontStyleExtraLightItalic FontStyle = "ExtraLightItalic"
+	FontStyleLightItalic      FontStyle = "LightItalic"
+	FontStyleRegularItalic    FontStyle = "RegularItalic"
+	FontStyleMediumItalic     FontStyle = "MediumItalic"
+	FontStyleSemiBoldItalic   FontStyle = "SemiBoldItalic"
+	FontStyleBoldItalic       FontStyle = "BoldItalic"
+	FontStyleExtraBoldItalic  FontStyle = "ExtraBoldItalic"
+	FontStyleBlackItalic      FontStyle = "BlackItalic"
+)
+
+const DefaultFontStyle = FontStyleRegular
+
+// Font Family
+
+const (
+	FontFamilyCourier   = "Courier"
+	FontFamilyHelvetica = "Helvetica"
+	FontFamilyArial     = "Arial"
+	FontFamilyTime      = "Times"
+	FontFamilySymbol    = "Symbol"
+)
+
+const DefaultFontFamily = FontFamilyHelvetica
 
 // Orientation
 type Orientation string

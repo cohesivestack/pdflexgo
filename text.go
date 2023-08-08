@@ -9,9 +9,11 @@ import (
 type TextElement struct {
 	AbstractElement
 
-	content string
-	size    float64
-	color   string
+	content    string
+	size       float64
+	color      string
+	fontStyle  FontStyle
+	fontFamily string
 }
 
 func (text *TextElement) Content(content string) *TextElement {
@@ -29,13 +31,93 @@ func (text *TextElement) Color(color string) *TextElement {
 	return text
 }
 
+func (text *TextElement) Thin() *TextElement {
+	text.fontStyle = FontStyleThin
+	return text
+}
+func (text *TextElement) ExtraLight() *TextElement {
+	text.fontStyle = FontStyleExtraLight
+	return text
+}
+func (text *TextElement) Light() *TextElement {
+	text.fontStyle = FontStyleLight
+	return text
+}
+func (text *TextElement) Regular() *TextElement {
+	text.fontStyle = FontStyleRegular
+	return text
+}
+func (text *TextElement) Medium() *TextElement {
+	text.fontStyle = FontStyleMedium
+	return text
+}
+func (text *TextElement) SemiBold() *TextElement {
+	text.fontStyle = FontStyleSemiBold
+	return text
+}
+func (text *TextElement) Bold() *TextElement {
+	text.fontStyle = FontStyleBold
+	return text
+}
+func (text *TextElement) ExtraBold() *TextElement {
+	text.fontStyle = FontStyleExtraBold
+	return text
+}
+func (text *TextElement) Black() *TextElement {
+	text.fontStyle = FontStyleBlack
+	return text
+}
+func (text *TextElement) ThinItalic() *TextElement {
+	text.fontStyle = FontStyleThinItalic
+	return text
+}
+func (text *TextElement) ExtraLightItalic() *TextElement {
+	text.fontStyle = FontStyleExtraLightItalic
+	return text
+}
+func (text *TextElement) LightItalic() *TextElement {
+	text.fontStyle = FontStyleLightItalic
+	return text
+}
+func (text *TextElement) RegularItalic() *TextElement {
+	text.fontStyle = FontStyleRegularItalic
+	return text
+}
+func (text *TextElement) MediumItalic() *TextElement {
+	text.fontStyle = FontStyleMediumItalic
+	return text
+}
+func (text *TextElement) SemiBoldItalic() *TextElement {
+	text.fontStyle = FontStyleSemiBoldItalic
+	return text
+}
+func (text *TextElement) BoldItalic() *TextElement {
+	text.fontStyle = FontStyleBoldItalic
+	return text
+}
+func (text *TextElement) ExtraBoldItalic() *TextElement {
+	text.fontStyle = FontStyleExtraBoldItalic
+	return text
+}
+func (text *TextElement) BlackItalic() *TextElement {
+	text.fontStyle = FontStyleBlackItalic
+	return text
+}
+
+func (text *TextElement) FontFamily(family string) *TextElement {
+	text.fontFamily = family
+	return text
+}
+
 func Text() *TextElement {
 	config := flex.NewConfig()
 	node := flex.NewNodeWithConfig(config)
 
 	text := &TextElement{
-		size:  DefaultFontSize,
-		color: DefaultFontColor,
+		size:       DefaultFontSize,
+		color:      DefaultFontColor,
+		fontStyle:  DefaultFontStyle,
+		fontFamily: DefaultFontFamily,
 	}
 
 	text.AbstractElement.setFlexNode(node)
@@ -47,7 +129,7 @@ func Text() *TextElement {
 	var measureFunc = func(node *flex.Node, width float32, widthMode flex.MeasureMode, height float32, heightMode flex.MeasureMode) flex.Size {
 		fpdf := text.preRenderPdf
 
-		fpdf.SetFontSize(float64(text.size))
+		setFont(fpdf, text.fontFamily, text.fontStyle, text.size)
 		_, fontSize := fpdf.GetFontSize()
 		fpdf.SetXY(0, 0)
 		pageWidth, _ := fpdf.GetPageSize()
@@ -72,7 +154,7 @@ func (text *TextElement) render(pdf *Pdf) {
 	}
 	fpdf.SetTextColor(r, g, b)
 
-	fpdf.SetFontSize(float64(text.size))
+	setFont(fpdf, text.fontFamily, text.fontStyle, text.size)
 	_, fontSize := fpdf.GetFontSize()
 	fpdf.SetXY(
 		float64(text.X()),

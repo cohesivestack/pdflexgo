@@ -14,7 +14,6 @@ func NewPdf() *Pdf {
 	pdf := &Pdf{
 		fpdf: gofpdf.New(string(DefaultOrientation), string(DefaultUnit), string(DefaultSize), ""),
 	}
-	pdf.fpdf.SetFont("Arial", "", 16)
 
 	return pdf
 }
