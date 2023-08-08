@@ -14,14 +14,13 @@ func NewPdf() *Pdf {
 	pdf := &Pdf{
 		fpdf: gofpdf.New(string(DefaultOrientation), string(DefaultUnit), string(DefaultSize), ""),
 	}
+	pdf.fpdf.SetFont("Arial", "", 16)
 
 	return pdf
 }
 
 func (pdf *Pdf) Pages(pages ...*Page) *Pdf {
-	for _, page := range pages {
-		pdf.pages = append(pdf.pages, page)
-	}
+	pdf.pages = append(pdf.pages, pages...)
 	return pdf
 }
 

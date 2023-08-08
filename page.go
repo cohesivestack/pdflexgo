@@ -67,14 +67,32 @@ func (page *Page) Children(children ...Element) *Page {
 }
 
 func (page *Page) render(pdf *Pdf) {
-	pdf.fpdf.AddPageFormat(
-		string(page.orientation),
-		gofpdf.SizeType{Wd: page.width, Ht: page.height})
+
+	initializeFpdf := func(fpdf *gofpdf.Fpdf) {
+		fpdf.AddPageFormat(
+			string(page.orientation),
+			gofpdf.SizeType{Wd: page.width, Ht: page.height})
+		fpdf.SetFont("Arial", "", DefaultFontSize)
+	}
+
+	fpdf := pdf.fpdf
+
+	initializeFpdf(fpdf)
 
 	page.root.Width(page.width - (page.root.GetMarginLeft() + page.root.GetMarginRight()))
 	page.root.Height(page.height - (page.root.GetMarginTop() + page.root.GetMarginBottom()))
 
+	// Prerender is used to calculate the size of the elements with the
+	// CalculateLayout process
+	fpdfTemp := gofpdf.New(string(DefaultOrientation), string(DefaultUnit), string(DefaultSize), "")
+	initializeFpdf(fpdfTemp)
+	page.root.setPreRenderFpdf(fpdfTemp)
+
+	// Calculate Flex nodes
 	flex.CalculateLayout(page.root.getFlexNode(), flex.Undefined, flex.Undefined, flex.DirectionLTR)
+
+	// Set Nil since preRenderPdf is only used with the CalculateLayout process
+	page.root.setPreRenderFpdf(nil)
 
 	page.root.render(pdf)
 }

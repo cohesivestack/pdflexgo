@@ -5,6 +5,7 @@ package pdflexgo
 import (
 	"math"
 
+	"github.com/jung-kurt/gofpdf"
 	"github.com/kjk/flex"
 )
 
@@ -33,6 +34,7 @@ func NewBlock() *Block {
 	block.BorderAllWidth(0)
 	block.BorderAllColor("#000000")
 	block.FlexDirection(DefaultFlexDirection)
+
 	return block
 }
 
@@ -52,6 +54,15 @@ func (block *Block) render(pdf *Pdf) {
 
 	for _, child := range block.children {
 		child.render(pdf)
+	}
+}
+
+func (block *Block) setPreRenderFpdf(fpdf *gofpdf.Fpdf) {
+
+	block.AbstractElement.setPreRenderFpdf(fpdf)
+
+	for _, child := range block.children {
+		child.setPreRenderFpdf(fpdf)
 	}
 }
 
