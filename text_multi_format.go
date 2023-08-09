@@ -1,7 +1,6 @@
 package pdflexgo
 
 import (
-	"fmt"
 	"log"
 )
 
@@ -38,7 +37,6 @@ func (element *TextMultiFormatElement) render(pdf *Pdf) {
 	if marginRight < 0 {
 		marginRight = 0
 	}
-	fmt.Println(float64(element.X()), float64(element.Y()), marginRight)
 	fpdf.SetMargins(float64(element.X()), float64(element.Y()), marginRight)
 
 	for _, part := range element.parts {
