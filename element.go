@@ -9,15 +9,16 @@ type Element interface {
 	setFlexNode(*flex.Node)
 	getFlexNode() *flex.Node
 	render(*Pdf)
-	setPreRenderFpdf(*gofpdf.Fpdf)
+	preRender(*defaultProps, *gofpdf.Fpdf)
+	setZeroFpdf()
 	X() float32
 	Y() float32
 }
 
 type AbstractElement struct {
-	_parent      Element
-	preRenderPdf *gofpdf.Fpdf
-	_flexNode    *flex.Node
+	_parent       Element
+	preRenderFpdf *gofpdf.Fpdf
+	_flexNode     *flex.Node
 }
 
 func (elem *AbstractElement) setFlexNode(flexNode *flex.Node) {
@@ -36,8 +37,12 @@ func (elem *AbstractElement) Y() float32 {
 	return getYParent(elem.getFlexNode())
 }
 
-func (elem *AbstractElement) setPreRenderFpdf(fpdf *gofpdf.Fpdf) {
-	elem.preRenderPdf = fpdf
+func (elem *AbstractElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf) {
+	elem.preRenderFpdf = fpdf
+}
+
+func (elem *AbstractElement) setZeroFpdf() {
+	elem.preRenderFpdf = nil
 }
 
 func getYParent(flexNode *flex.Node) float32 {

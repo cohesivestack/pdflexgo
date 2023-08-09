@@ -2,6 +2,9 @@ package pdflexgo
 
 import (
 	"log"
+
+	"github.com/jung-kurt/gofpdf"
+	"github.com/kjk/flex"
 )
 
 type textMultiFormatPart struct {
@@ -23,6 +26,73 @@ type TextMultiFormatElement struct {
 	fontFamily string
 
 	parts []*textMultiFormatPart
+}
+
+func (element *TextMultiFormatElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf) {
+	element.AbstractElement.preRender(defaultProps, fpdf)
+
+	if element.fontFamily == "" {
+		element.fontFamily = defaultProps.fontFamily
+	}
+	if element.fontStyle == "" {
+		element.fontStyle = defaultProps.fontStyle
+	}
+	if element.color == "" {
+		element.color = defaultProps.fontColor
+	}
+	if element.size == -1 {
+		element.size = defaultProps.fontSize
+	}
+
+	for _, part := range element.parts {
+		if part.fontFamily == "" {
+			part.fontFamily = defaultProps.fontFamily
+		}
+		if part.fontStyle == "" {
+			part.fontStyle = defaultProps.fontStyle
+		}
+		if part.color == "" {
+			part.color = defaultProps.fontColor
+		}
+		if part.size == -1 {
+			part.size = defaultProps.fontSize
+		}
+	}
+
+	var measureFunc = func(node *flex.Node, width float32, widthMode flex.MeasureMode, height float32, heightMode flex.MeasureMode) flex.Size {
+		fpdf := element.preRenderFpdf
+
+		fpdf.SetXY(0, 0)
+		pageWidth, _ := fpdf.GetPageSize()
+		marginRight := pageWidth - float64(width)
+		if marginRight < 0 {
+			marginRight = 0
+		}
+		fpdf.SetMargins(0, 0, marginRight)
+
+		if element.lineHeight == nil {
+			lineHeight := 0.0
+			element.lineHeight = &lineHeight
+			for _, part := range element.parts {
+				fpdf.SetFontSize(float64(part.size))
+				_, fontHeight := fpdf.GetFontSize()
+				if fontHeight > *element.lineHeight {
+					element.lineHeight = &fontHeight
+				}
+			}
+		}
+
+		for _, part := range element.parts {
+			setFont(fpdf, part.fontFamily, part.fontStyle, part.size)
+			fpdf.Write(*element.lineHeight, part.content)
+		}
+
+		newHeight := fpdf.GetY() + *element.lineHeight
+
+		return flex.Size{Width: width, Height: float32(newHeight)}
+	}
+
+	element.getFlexNode().SetMeasureFunc(measureFunc)
 }
 
 func (element *TextMultiFormatElement) render(pdf *Pdf) {
@@ -51,12 +121,7 @@ func (element *TextMultiFormatElement) render(pdf *Pdf) {
 }
 
 func (element *TextMultiFormatElement) addPart() {
-	element.parts = append(element.parts, &textMultiFormatPart{
-		size:       element.size,
-		color:      element.color,
-		fontFamily: element.fontFamily,
-		fontStyle:  element.fontStyle,
-	})
+	element.parts = append(element.parts, &textMultiFormatPart{})
 }
 
 func (element *TextMultiFormatElement) Size(size float64) *TextMultiFormatElement {

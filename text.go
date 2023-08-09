@@ -3,6 +3,7 @@ package pdflexgo
 import (
 	"log"
 
+	"github.com/jung-kurt/gofpdf"
 	"github.com/kjk/flex"
 )
 
@@ -114,10 +115,7 @@ func Text() *TextElement {
 	node := flex.NewNodeWithConfig(config)
 
 	text := &TextElement{
-		size:       DefaultFontSize,
-		color:      DefaultFontColor,
-		fontStyle:  DefaultFontStyle,
-		fontFamily: DefaultFontFamily,
+		size: -1,
 	}
 
 	text.AbstractElement.setFlexNode(node)
@@ -126,8 +124,28 @@ func Text() *TextElement {
 	text._flexNode.StyleSetHeightAuto()
 	text._flexNode.StyleSetWidthAuto()
 
+	return text
+}
+
+func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf) {
+
+	text.AbstractElement.preRender(defaultProps, fpdf)
+
+	if text.fontFamily == "" {
+		text.fontFamily = defaultProps.fontFamily
+	}
+	if text.fontStyle == "" {
+		text.fontStyle = defaultProps.fontStyle
+	}
+	if text.color == "" {
+		text.color = defaultProps.fontColor
+	}
+	if text.size == -1 {
+		text.size = defaultProps.fontSize
+	}
+
 	var measureFunc = func(node *flex.Node, width float32, widthMode flex.MeasureMode, height float32, heightMode flex.MeasureMode) flex.Size {
-		fpdf := text.preRenderPdf
+		fpdf := text.preRenderFpdf
 
 		setFont(fpdf, text.fontFamily, text.fontStyle, text.size)
 
@@ -145,9 +163,7 @@ func Text() *TextElement {
 		return flex.Size{Width: width, Height: float32(newHeight)}
 	}
 
-	node.SetMeasureFunc(measureFunc)
-
-	return text
+	text.getFlexNode().SetMeasureFunc(measureFunc)
 }
 
 func (text *TextElement) render(pdf *Pdf) {

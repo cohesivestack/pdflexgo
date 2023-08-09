@@ -86,13 +86,13 @@ func (page *Page) render(pdf *Pdf) {
 	// CalculateLayout process
 	fpdfTemp := gofpdf.New(string(DefaultOrientation), string(DefaultUnit), string(DefaultSize), "")
 	initializeFpdf(fpdfTemp)
-	page.root.setPreRenderFpdf(fpdfTemp)
+	page.root.preRender(pdf.defaultProps, fpdfTemp)
 
 	// Calculate Flex nodes
 	flex.CalculateLayout(page.root.getFlexNode(), flex.Undefined, flex.Undefined, flex.DirectionLTR)
 
 	// Set Nil since preRenderPdf is only used with the CalculateLayout process
-	page.root.setPreRenderFpdf(nil)
+	page.root.setZeroFpdf()
 
 	page.root.render(pdf)
 }

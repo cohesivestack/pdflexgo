@@ -23,7 +23,7 @@ func Image() *ImageElement {
 	image._flexNode.StyleSetWidthAuto()
 
 	var measureFunc = func(node *flex.Node, width float32, widthMode flex.MeasureMode, height float32, heightMode flex.MeasureMode) flex.Size {
-		fpdf := image.preRenderPdf
+		fpdf := image.preRenderFpdf
 
 		fpdf.SetXY(0, 0)
 		fpdf.ImageOptions(image.filePath, 0, 0, float64(width), 0, true, gofpdf.ImageOptions{}, 0, "")

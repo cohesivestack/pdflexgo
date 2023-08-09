@@ -13,11 +13,7 @@ func TextMultiFormat() *TextMultiFormatCreator {
 	return &TextMultiFormatCreator{
 		element: &TextMultiFormatElement{
 			lineHeight: nil,
-
-			size:       DefaultFontSize,
-			color:      DefaultFontColor,
-			fontStyle:  DefaultFontStyle,
-			fontFamily: DefaultFontFamily,
+			size:       -1,
 
 			parts: []*textMultiFormatPart{},
 		},
@@ -36,41 +32,6 @@ func (constructor *TextMultiFormatCreator) Create() *TextMultiFormatElement {
 	element._flexNode.StyleSetPadding(flex.EdgeAll, 0)
 	element._flexNode.StyleSetHeightAuto()
 	element._flexNode.StyleSetWidthAuto()
-
-	var measureFunc = func(node *flex.Node, width float32, widthMode flex.MeasureMode, height float32, heightMode flex.MeasureMode) flex.Size {
-		fpdf := element.preRenderPdf
-
-		fpdf.SetXY(0, 0)
-		pageWidth, _ := fpdf.GetPageSize()
-		marginRight := pageWidth - float64(width)
-		if marginRight < 0 {
-			marginRight = 0
-		}
-		fpdf.SetMargins(0, 0, marginRight)
-
-		if element.lineHeight == nil {
-			lineHeight := 0.0
-			element.lineHeight = &lineHeight
-			for _, part := range element.parts {
-				fpdf.SetFontSize(float64(part.size))
-				_, fontHeight := fpdf.GetFontSize()
-				if fontHeight > *element.lineHeight {
-					element.lineHeight = &fontHeight
-				}
-			}
-		}
-
-		for _, part := range element.parts {
-			setFont(fpdf, part.fontFamily, part.fontStyle, part.size)
-			fpdf.Write(*element.lineHeight, part.content)
-		}
-
-		newHeight := fpdf.GetY() + *element.lineHeight
-
-		return flex.Size{Width: width, Height: float32(newHeight)}
-	}
-
-	node.SetMeasureFunc(measureFunc)
 
 	return constructor.element
 }
