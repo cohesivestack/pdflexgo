@@ -133,7 +133,11 @@ func Text() *TextElement {
 		_, fontSize := fpdf.GetFontSize()
 		fpdf.SetXY(0, 0)
 		pageWidth, _ := fpdf.GetPageSize()
-		fpdf.SetMargins(0, 0, pageWidth-float64(width))
+		marginRight := pageWidth - float64(width)
+		if marginRight < 0 {
+			marginRight = 0
+		}
+		fpdf.SetMargins(0, 0, marginRight)
 		fpdf.Write(fontSize, text.content)
 		newHeight := fpdf.GetY() + fontSize
 
@@ -160,6 +164,10 @@ func (text *TextElement) render(pdf *Pdf) {
 		float64(text.X()),
 		float64(text.Y()))
 	pageWidth, _ := fpdf.GetPageSize()
-	fpdf.SetMargins(float64(text.X()), float64(text.Y()), pageWidth-float64(text.X()+text._flexNode.LayoutGetWidth()))
+	marginRight := pageWidth - float64(text.X()+text._flexNode.LayoutGetWidth())
+	if marginRight < 0 {
+		marginRight = 0
+	}
+	fpdf.SetMargins(float64(text.X()), float64(text.Y()), marginRight)
 	fpdf.Write(fontSize, text.content)
 }

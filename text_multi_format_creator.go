@@ -1,6 +1,8 @@
 package pdflexgo
 
-import "github.com/kjk/flex"
+import (
+	"github.com/kjk/flex"
+)
 
 type TextMultiFormatCreator struct {
 	element *TextMultiFormatElement
@@ -40,7 +42,11 @@ func (constructor *TextMultiFormatCreator) Create() *TextMultiFormatElement {
 
 		fpdf.SetXY(0, 0)
 		pageWidth, _ := fpdf.GetPageSize()
-		fpdf.SetMargins(0, 0, pageWidth-float64(width))
+		marginRight := pageWidth - float64(width)
+		if marginRight < 0 {
+			marginRight = 0
+		}
+		fpdf.SetMargins(0, 0, marginRight)
 
 		if element.lineHeight == nil {
 			lineHeight := 0.0
@@ -53,6 +59,7 @@ func (constructor *TextMultiFormatCreator) Create() *TextMultiFormatElement {
 				}
 			}
 		}
+
 		for _, part := range element.parts {
 			setFont(fpdf, part.fontFamily, part.fontStyle, part.size)
 			fpdf.Write(*element.lineHeight, part.content)
