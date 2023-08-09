@@ -1,8 +1,19 @@
 package pdflexgo
 
-import "github.com/jung-kurt/gofpdf"
+import (
+	"fmt"
+
+	"github.com/jung-kurt/gofpdf"
+)
 
 func setFont(fpdf *gofpdf.Fpdf, fontFamily string, style FontStyle, size float64) {
+
+	_fontFamily, _style := getFontFamilyAndStyle(fontFamily, style)
+
+	fpdf.SetFont(_fontFamily, _style, size)
+}
+
+func getFontFamilyAndStyle(fontFamily string, style FontStyle) (string, string) {
 
 	isStandard := true
 	switch fontFamily {
@@ -26,5 +37,10 @@ func setFont(fpdf *gofpdf.Fpdf, fontFamily string, style FontStyle, size float64
 		}
 	}
 
-	fpdf.SetFont(fontFamily, string(style), size)
+	if !isStandard {
+		fontFamily = fmt.Sprintf("%s!%s", fontFamily, style)
+		style = ""
+	}
+
+	return fontFamily, string(style)
 }

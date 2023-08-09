@@ -43,11 +43,16 @@ func (pdf *Pdf) Output(writer io.Writer) error {
 }
 
 func (pdf *Pdf) AddFont(family string, style FontStyle, filePath string) *Pdf {
-	pdf.fpdf.AddUTF8Font(family, string(style), filePath)
+
+	_family, _style := getFontFamilyAndStyle(family, style)
+
+	pdf.fpdf.AddUTF8Font(_family, _style, filePath)
 	return pdf
 }
 
 func (pdf *Pdf) AddFontFromBytes(family string, style FontStyle, bytes []byte) *Pdf {
-	pdf.fpdf.AddUTF8FontFromBytes(family, string(style), bytes)
+	_family, _style := getFontFamilyAndStyle(family, style)
+
+	pdf.fpdf.AddUTF8FontFromBytes(_family, _style, bytes)
 	return pdf
 }

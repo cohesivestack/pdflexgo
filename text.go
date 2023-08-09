@@ -130,6 +130,7 @@ func Text() *TextElement {
 		fpdf := text.preRenderPdf
 
 		setFont(fpdf, text.fontFamily, text.fontStyle, text.size)
+
 		_, fontSize := fpdf.GetFontSize()
 		fpdf.SetXY(0, 0)
 		pageWidth, _ := fpdf.GetPageSize()
