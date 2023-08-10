@@ -11,6 +11,7 @@ func setFont(fpdf *gofpdf.Fpdf, fontFamily string, style FontStyle, size float64
 	_fontFamily, _style := getFontFamilyAndStyle(fontFamily, style)
 
 	fpdf.SetFont(_fontFamily, _style, size)
+	fpdf.SetFontSize(size)
 }
 
 func getFontFamilyAndStyle(fontFamily string, style FontStyle) (string, string) {

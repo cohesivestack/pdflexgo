@@ -165,8 +165,8 @@ func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 			marginRight = 0
 		}
 		fpdf.SetMargins(0, 0, marginRight)
-		fpdf.Write(fontSize, text.content)
-		newHeight := fpdf.GetY() + fontSize
+		fpdf.Write(*text.lineHeight, text.content)
+		newHeight := fpdf.GetY() + *text.lineHeight
 
 		return flex.Size{Width: width, Height: float32(newHeight)}
 	}
@@ -185,8 +185,6 @@ func (text *TextElement) render(pdf *Pdf) {
 
 	setFont(fpdf, text.fontFamily, text.fontStyle, text.size)
 
-	_, fontSize := fpdf.GetFontSize()
-
 	fpdf.SetXY(
 		float64(text.X()),
 		float64(text.Y()))
@@ -196,5 +194,5 @@ func (text *TextElement) render(pdf *Pdf) {
 		marginRight = 0
 	}
 	fpdf.SetMargins(float64(text.X()), float64(text.Y()), marginRight)
-	fpdf.Write(fontSize, text.content)
+	fpdf.Write(*text.lineHeight, text.content)
 }

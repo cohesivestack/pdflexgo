@@ -70,7 +70,7 @@ func (element *TextMultiFormatElement) preRender(defaultProps *defaultProps, fpd
 			lineHeight := 0.0
 			element.lineHeight = &lineHeight
 			for _, part := range element.parts {
-				fpdf.SetFontSize(float64(part.size))
+				fpdf.SetFontSize(part.size)
 				_, fontHeight := fpdf.GetFontSize()
 				if fontHeight > *element.lineHeight {
 					element.lineHeight = &fontHeight
