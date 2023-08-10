@@ -75,8 +75,6 @@ func (block *BlockElement) render(pdf *Pdf) {
 
 func (block *BlockElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf) {
 
-	block.AbstractElement.preRender(defaultProps, fpdf)
-
 	for _, child := range block.children {
 		child.preRender(defaultProps, fpdf)
 	}

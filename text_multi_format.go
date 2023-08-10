@@ -29,8 +29,6 @@ type TextMultiFormatElement struct {
 }
 
 func (element *TextMultiFormatElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf) {
-	element.AbstractElement.preRender(defaultProps, fpdf)
-
 	if element.fontFamily == "" {
 		element.fontFamily = defaultProps.fontFamily
 	}
@@ -60,8 +58,6 @@ func (element *TextMultiFormatElement) preRender(defaultProps *defaultProps, fpd
 	}
 
 	var measureFunc = func(node *flex.Node, width float32, widthMode flex.MeasureMode, height float32, heightMode flex.MeasureMode) flex.Size {
-		fpdf := element.preRenderFpdf
-
 		fpdf.SetXY(0, 0)
 		pageWidth, _ := fpdf.GetPageSize()
 		marginRight := pageWidth - float64(width)

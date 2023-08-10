@@ -10,6 +10,8 @@ import (
 type TextElement struct {
 	AbstractElement
 
+	lineHeight *float64
+
 	content    string
 	size       float64
 	color      string
@@ -105,6 +107,11 @@ func (text *TextElement) BlackItalic() *TextElement {
 	return text
 }
 
+func (text *TextElement) LineHeight(height float64) *TextElement {
+	text.lineHeight = &height
+	return text
+}
+
 func (text *TextElement) FontFamily(family string) *TextElement {
 	text.fontFamily = family
 	return text
@@ -129,8 +136,6 @@ func Text() *TextElement {
 
 func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf) {
 
-	text.AbstractElement.preRender(defaultProps, fpdf)
-
 	if text.fontFamily == "" {
 		text.fontFamily = defaultProps.fontFamily
 	}
@@ -145,11 +150,14 @@ func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 	}
 
 	var measureFunc = func(node *flex.Node, width float32, widthMode flex.MeasureMode, height float32, heightMode flex.MeasureMode) flex.Size {
-		fpdf := text.preRenderFpdf
-
 		setFont(fpdf, text.fontFamily, text.fontStyle, text.size)
 
 		_, fontSize := fpdf.GetFontSize()
+
+		if text.lineHeight == nil {
+			text.lineHeight = &fontSize
+		}
+
 		fpdf.SetXY(0, 0)
 		pageWidth, _ := fpdf.GetPageSize()
 		marginRight := pageWidth - float64(width)
@@ -176,7 +184,9 @@ func (text *TextElement) render(pdf *Pdf) {
 	fpdf.SetTextColor(r, g, b)
 
 	setFont(fpdf, text.fontFamily, text.fontStyle, text.size)
+
 	_, fontSize := fpdf.GetFontSize()
+
 	fpdf.SetXY(
 		float64(text.X()),
 		float64(text.Y()))

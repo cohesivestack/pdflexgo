@@ -91,9 +91,6 @@ func (page *Page) render(pdf *Pdf) {
 	// Calculate Flex nodes
 	flex.CalculateLayout(page.root.getFlexNode(), flex.Undefined, flex.Undefined, flex.DirectionLTR)
 
-	// Set Nil since preRenderPdf is only used with the CalculateLayout process
-	page.root.setZeroFpdf()
-
 	page.root.render(pdf)
 }
 
