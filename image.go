@@ -34,7 +34,7 @@ func (image *ImageElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fp
 	var measureFunc = func(node *flex.Node, width float32, widthMode flex.MeasureMode, height float32, heightMode flex.MeasureMode) flex.Size {
 
 		fpdf.SetXY(0, 0)
-		fpdf.ImageOptions(image.filePath, 0, 0, float64(width), 0, true, gofpdf.ImageOptions{}, 0, "")
+		fpdf.Image(image.filePath, 0, 0, float64(width), 0, true, "", 0, "")
 		newHeight := fpdf.GetY()
 
 		return flex.Size{Width: width, Height: float32(newHeight)}
@@ -47,13 +47,13 @@ func (image *ImageElement) render(pdf *Pdf) {
 	fpdf := pdf.fpdf
 
 	if image.filePath != "" {
-		fpdf.ImageOptions(
+		fpdf.Image(
 			image.filePath,
 			float64(image.X()),
 			float64(image.Y()),
 			float64(image.getFlexNode().LayoutGetWidth()),
 			0,
-			true, gofpdf.ImageOptions{}, 0, "")
+			false, "", 0, "")
 	}
 
 }
