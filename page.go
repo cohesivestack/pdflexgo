@@ -46,11 +46,13 @@ func (page *Page) Unit(unit Unit) *Page {
 }
 
 func (page *Page) Width(width float64) *Page {
+	page.width = width
 	page.root.Width(width)
 	return page
 }
 
 func (page *Page) Height(height float64) *Page {
+	page.height = height
 	page.root.Height(height)
 	return page
 }
