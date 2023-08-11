@@ -62,6 +62,11 @@ func (page *Page) FlexDirection(direction FlexDirection) *Page {
 	return page
 }
 
+func (page *Page) BackgroundColor(color string) *Page {
+	page.root.backgrondColor = color
+	return page
+}
+
 func (page *Page) Children(children ...Element) *Page {
 	page.root.Children(children...)
 
