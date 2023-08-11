@@ -4,7 +4,6 @@ package pdflexgo
 
 import (
 	"log"
-	"math"
 
 	"github.com/jung-kurt/gofpdf"
 	"github.com/kjk/flex"
@@ -102,14 +101,14 @@ func (block *BlockElement) FlexAuto() *BlockElement {
 	return block.
 		FlexGrow(1).
 		FlexShrink(1).
-		FlexBasis(math.NaN())
+		FlexBasisAuto()
 }
 
 func (block *BlockElement) FlexNone() *BlockElement {
 	return block.
 		FlexGrow(0).
 		FlexShrink(0).
-		FlexBasis(math.NaN())
+		FlexBasisAuto()
 }
 
 func (block *BlockElement) FlexBasisAuto() *BlockElement {

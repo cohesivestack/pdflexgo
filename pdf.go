@@ -17,6 +17,7 @@ type Pdf struct {
 	fpdf  *gofpdf.Fpdf
 	pages []*Page
 
+	fontsLoaded  []FontLoadInformation
 	defaultProps *defaultProps
 }
 
@@ -59,6 +60,12 @@ func (pdf *Pdf) Output(writer io.Writer) error {
 }
 
 func (pdf *Pdf) AddFont(family string, style FontStyle, filePath string) *Pdf {
+
+	pdf.fontsLoaded = append(pdf.fontsLoaded, FontLoadInformation{
+		fontFamily: family,
+		style:      style,
+		filePath:   filePath,
+	})
 
 	_family, _style := getFontFamilyAndStyle(family, style)
 

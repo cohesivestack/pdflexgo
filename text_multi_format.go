@@ -58,6 +58,7 @@ func (element *TextMultiFormatElement) preRender(defaultProps *defaultProps, fpd
 	}
 
 	var measureFunc = func(node *flex.Node, width float32, widthMode flex.MeasureMode, height float32, heightMode flex.MeasureMode) flex.Size {
+
 		fpdf.SetXY(0, 0)
 		pageWidth, _ := fpdf.GetPageSize()
 		marginRight := pageWidth - float64(width)
@@ -70,18 +71,23 @@ func (element *TextMultiFormatElement) preRender(defaultProps *defaultProps, fpd
 			lineHeight := 0.0
 			element.lineHeight = &lineHeight
 			for _, part := range element.parts {
-				fpdf.SetFontSize(part.size)
+				setFont(fpdf, part.fontFamily, part.fontStyle, part.size)
 				_, fontHeight := fpdf.GetFontSize()
-				if fontHeight > *element.lineHeight {
-					element.lineHeight = &fontHeight
+				if fontHeight > lineHeight {
+					lineHeight = fontHeight
 				}
 			}
 		}
 
-		for _, part := range element.parts {
+		for i := range element.parts {
+			part := element.parts[i]
 			setFont(fpdf, part.fontFamily, part.fontStyle, part.size)
 			fpdf.Write(*element.lineHeight, part.content)
 		}
+
+		// if fpdf.GetY() == 0 && fpdf.GetX() < float64(width) {
+		// 	width = float32(fpdf.GetX())
+		// }
 
 		newHeight := fpdf.GetY() + *element.lineHeight
 

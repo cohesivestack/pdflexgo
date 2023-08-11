@@ -30,8 +30,6 @@ func (constructor *TextMultiFormatCreator) Create() *TextMultiFormatElement {
 	element.AbstractElement.setFlexNode(node)
 	element._flexNode.StyleSetMargin(flex.EdgeAll, 0)
 	element._flexNode.StyleSetPadding(flex.EdgeAll, 0)
-	element._flexNode.StyleSetHeightAuto()
-	element._flexNode.StyleSetWidthAuto()
 
 	return constructor.element
 }

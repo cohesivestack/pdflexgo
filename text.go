@@ -128,8 +128,6 @@ func Text() *TextElement {
 	text.AbstractElement.setFlexNode(node)
 	text._flexNode.StyleSetMargin(flex.EdgeAll, 0)
 	text._flexNode.StyleSetPadding(flex.EdgeAll, 0)
-	text._flexNode.StyleSetHeightAuto()
-	text._flexNode.StyleSetWidthAuto()
 
 	return text
 }
@@ -150,12 +148,14 @@ func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 	}
 
 	var measureFunc = func(node *flex.Node, width float32, widthMode flex.MeasureMode, height float32, heightMode flex.MeasureMode) flex.Size {
+
 		setFont(fpdf, text.fontFamily, text.fontStyle, text.size)
 
 		_, fontSize := fpdf.GetFontSize()
 
 		if text.lineHeight == nil {
-			text.lineHeight = &fontSize
+			_fontSize := fontSize
+			text.lineHeight = &_fontSize
 		}
 
 		fpdf.SetXY(0, 0)
@@ -167,6 +167,10 @@ func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 		fpdf.SetMargins(0, 0, marginRight)
 		fpdf.Write(*text.lineHeight, text.content)
 		newHeight := fpdf.GetY() + *text.lineHeight
+
+		// if fpdf.GetY() == 0 && fpdf.GetX() < float64(width) {
+		// 	width = float32(fpdf.GetX())
+		// }
 
 		return flex.Size{Width: width, Height: float32(newHeight)}
 	}

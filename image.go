@@ -19,8 +19,6 @@ func Image() *ImageElement {
 	image.AbstractElement.setFlexNode(node)
 	image._flexNode.StyleSetMargin(flex.EdgeAll, 0)
 	image._flexNode.StyleSetPadding(flex.EdgeAll, 0)
-	image._flexNode.StyleSetHeightAuto()
-	image._flexNode.StyleSetWidthAuto()
 
 	return image
 }

@@ -6,6 +6,12 @@ import (
 	"github.com/jung-kurt/gofpdf"
 )
 
+type FontLoadInformation struct {
+	fontFamily string
+	style      FontStyle
+	filePath   string
+}
+
 func setFont(fpdf *gofpdf.Fpdf, fontFamily string, style FontStyle, size float64) {
 
 	_fontFamily, _style := getFontFamilyAndStyle(fontFamily, style)

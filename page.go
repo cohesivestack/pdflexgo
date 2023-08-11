@@ -88,10 +88,16 @@ func (page *Page) render(pdf *Pdf) {
 	// CalculateLayout process
 	fpdfTemp := gofpdf.New(string(DefaultOrientation), string(DefaultUnit), string(DefaultSize), "")
 	initializeFpdf(fpdfTemp)
+
+	for _, fontLoaded := range pdf.fontsLoaded {
+		_family, _style := getFontFamilyAndStyle(fontLoaded.fontFamily, fontLoaded.style)
+		fpdfTemp.AddUTF8Font(_family, _style, fontLoaded.filePath)
+	}
+
 	page.root.preRender(pdf.defaultProps, fpdfTemp)
 
 	// Calculate Flex nodes
-	flex.CalculateLayout(page.root.getFlexNode(), flex.Undefined, flex.Undefined, flex.DirectionLTR)
+	flex.CalculateLayout(page.root.getFlexNode(), float32(page.width), float32(page.height), flex.DirectionLTR)
 
 	page.root.render(pdf)
 }
