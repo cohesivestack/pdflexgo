@@ -85,9 +85,9 @@ func (element *TextMultiFormatElement) preRender(defaultProps *defaultProps, fpd
 			fpdf.Write(*element.lineHeight, part.content)
 		}
 
-		// if fpdf.GetY() == 0 && fpdf.GetX() < float64(width) {
-		// 	width = float32(fpdf.GetX())
-		// }
+		if element._flexNode.Parent.StyleGetFlexShrink() == 0 && element._flexNode.Parent.StyleGetFlexGrow() == 0 && element._flexNode.Parent.Style.FlexBasis.Value != element._flexNode.Parent.Style.FlexBasis.Value && fpdf.GetY() == 0 && fpdf.GetX() < float64(width) {
+			width = float32(fpdf.GetX() + 7)
+		}
 
 		newHeight := fpdf.GetY() + *element.lineHeight
 

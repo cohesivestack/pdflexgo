@@ -128,6 +128,7 @@ func Text() *TextElement {
 	text.AbstractElement.setFlexNode(node)
 	text._flexNode.StyleSetMargin(flex.EdgeAll, 0)
 	text._flexNode.StyleSetPadding(flex.EdgeAll, 0)
+	text._flexNode.StyleSetBorder(flex.EdgeAll, 0)
 
 	return text
 }
@@ -168,9 +169,9 @@ func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 		fpdf.Write(*text.lineHeight, text.content)
 		newHeight := fpdf.GetY() + *text.lineHeight
 
-		// if fpdf.GetY() == 0 && fpdf.GetX() < float64(width) {
-		// 	width = float32(fpdf.GetX())
-		// }
+		if text._flexNode.Parent.StyleGetFlexShrink() == 0 && text._flexNode.Parent.StyleGetFlexGrow() == 0 && text._flexNode.Parent.Style.FlexBasis.Value != text._flexNode.Parent.Style.FlexBasis.Value && fpdf.GetY() == 0 && fpdf.GetX() < float64(width) {
+			width = float32(fpdf.GetX() + 7)
+		}
 
 		return flex.Size{Width: width, Height: float32(newHeight)}
 	}
@@ -189,9 +190,7 @@ func (text *TextElement) render(pdf *Pdf) {
 
 	setFont(fpdf, text.fontFamily, text.fontStyle, text.size)
 
-	fpdf.SetXY(
-		float64(text.X()),
-		float64(text.Y()))
+	fpdf.SetXY(float64(text.X()), float64(text.Y()))
 	pageWidth, _ := fpdf.GetPageSize()
 	marginRight := pageWidth - float64(text.X()+text._flexNode.LayoutGetWidth())
 	if marginRight < 0 {
