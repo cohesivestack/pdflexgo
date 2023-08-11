@@ -20,7 +20,7 @@ type Page struct {
 
 func NewPage() *Page {
 	page := &Page{
-		root: Block().BorderAll(0).MarginAll(0).PaddingAll(0),
+		root: Block(),
 	}
 
 	page.Size(DefaultSize)
@@ -75,7 +75,6 @@ func (page *Page) render(pdf *Pdf) {
 			string(page.orientation),
 			gofpdf.SizeType{Wd: page.width, Ht: page.height})
 		fpdf.SetFont("Arial", "", DefaultFontSize)
-		fpdf.SetMargins(0, 0, 0)
 	}
 
 	fpdf := pdf.fpdf
