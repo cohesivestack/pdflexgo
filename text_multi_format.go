@@ -16,7 +16,7 @@ type textMultiFormatPart struct {
 }
 
 type TextMultiFormatElement struct {
-	AbstractElement
+	AbstractNode
 
 	lineHeight *float64
 
@@ -97,19 +97,22 @@ func (element *TextMultiFormatElement) preRender(defaultProps *defaultProps, fpd
 	element.getFlexNode().SetMeasureFunc(measureFunc)
 }
 
+func (block *TextMultiFormatElement) markRequiredAsDirty() {
+}
+
 func (element *TextMultiFormatElement) render(pdf *Pdf) {
 	fpdf := pdf.fpdf
 
 	fpdf.SetXY(
-		float64(element.X()),
-		float64(element.Y()))
+		float64(element.x()),
+		float64(element.y()))
 
 	pageWidth, _ := fpdf.GetPageSize()
-	marginRight := pageWidth - float64(element.X()+element._flexNode.LayoutGetWidth())
+	marginRight := pageWidth - float64(element.x()+element.flexNode.LayoutGetWidth())
 	if marginRight < 0 {
 		marginRight = 0
 	}
-	fpdf.SetMargins(float64(element.X()), float64(element.Y()), marginRight)
+	fpdf.SetMargins(float64(element.x()), float64(element.y()), marginRight)
 
 	for _, part := range element.parts {
 		r, g, b, err := hexToRGB(part.color)

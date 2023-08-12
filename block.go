@@ -16,7 +16,7 @@ const edgeBottomIndex = 2
 const edgeLeftIndex = 3
 
 type BlockElement struct {
-	AbstractElement
+	AbstractNode
 	children       []Element
 	border         [edgeCount]*border
 	backgrondColor string
@@ -33,7 +33,7 @@ func Block() *BlockElement {
 
 	//node.StyleSetFlexShrink(1)
 
-	block.AbstractElement.setFlexNode(node)
+	block.AbstractNode.flexNode = node
 	block.MarginAll(0)
 	block.PaddingAll(0)
 	block.BorderAllWidth(0)
@@ -53,10 +53,9 @@ func (block *BlockElement) Children(children ...Element) *BlockElement {
 	return block
 }
 
-func (block *BlockElement) markDirty() {
-	block.AbstractElement.markDirty()
+func (block *BlockElement) markRequiredAsDirty() {
 	for _, child := range block.children {
-		child.markDirty()
+		child.markRequiredAsDirty()
 	}
 }
 
@@ -71,8 +70,8 @@ func (block *BlockElement) render(pdf *Pdf) {
 		}
 		pdf.fpdf.SetFillColor(r, g, b)
 		pdf.fpdf.Rect(
-			float64(block.X()+block.getFlexNode().LayoutGetBorder(flex.EdgeLeft)),
-			float64(block.Y()+block.getFlexNode().LayoutGetBorder(flex.EdgeTop)),
+			float64(block.x()+block.getFlexNode().LayoutGetBorder(flex.EdgeLeft)),
+			float64(block.y()+block.getFlexNode().LayoutGetBorder(flex.EdgeTop)),
 			float64(block.getFlexNode().LayoutGetWidth()-(block.getFlexNode().LayoutGetBorder(flex.EdgeLeft)+block.getFlexNode().LayoutGetBorder(flex.EdgeRight))),
 			float64(block.getFlexNode().LayoutGetHeight()-(block.getFlexNode().LayoutGetBorder(flex.EdgeTop)+block.getFlexNode().LayoutGetBorder(flex.EdgeBottom))), "F")
 

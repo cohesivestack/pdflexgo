@@ -8,7 +8,7 @@ import (
 )
 
 type TextElement struct {
-	AbstractElement
+	AbstractNode
 
 	lineHeight         float64
 	lineHeightAssigned bool
@@ -130,17 +130,16 @@ func Text() *TextElement {
 		size: -1,
 	}
 
-	text.AbstractElement.setFlexNode(node)
-	text._flexNode.StyleSetMargin(flex.EdgeAll, 0)
-	text._flexNode.StyleSetPadding(flex.EdgeAll, 0)
-	text._flexNode.StyleSetBorder(flex.EdgeAll, 0)
-	// text._flexNode.StyleSetFlexShrink(1)
+	text.AbstractNode.flexNode = node
+	text.flexNode.StyleSetMargin(flex.EdgeAll, 0)
+	text.flexNode.StyleSetPadding(flex.EdgeAll, 0)
+	text.flexNode.StyleSetBorder(flex.EdgeAll, 0)
 
 	return text
 }
 
-func (elem *TextElement) markDirty() {
-	elem._flexNode.MarkDirty()
+func (elem *TextElement) markRequiredAsDirty() {
+	elem.flexNode.MarkDirty()
 }
 
 func (text *TextElement) FlexAuto() *TextElement {
@@ -194,7 +193,7 @@ func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 		} else {
 			fpdf.SetXY(0, 0)
 			pageWidth, _ := fpdf.GetPageSize()
-			marginRight := pageWidth - float64(text._flexNode.LayoutGetWidth()-text._flexNode.LayoutGetPadding(flex.EdgeLeft)+text._flexNode.LayoutGetPadding(flex.EdgeRight))
+			marginRight := pageWidth - float64(text.flexNode.LayoutGetWidth()-text.flexNode.LayoutGetPadding(flex.EdgeLeft)+text.flexNode.LayoutGetPadding(flex.EdgeRight))
 			if marginRight < 0 {
 				marginRight = 0
 			}
@@ -202,7 +201,7 @@ func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 			fpdf.SetCellMargin(0)
 			fpdf.Write(text.lineHeight, text.content)
 			height = float32(fpdf.GetY() + text.lineHeight)
-			width = text._flexNode.LayoutGetWidth() - (text._flexNode.LayoutGetPadding(flex.EdgeLeft) + text._flexNode.LayoutGetPadding(flex.EdgeRight))
+			width = text.flexNode.LayoutGetWidth() - (text.flexNode.LayoutGetPadding(flex.EdgeLeft) + text.flexNode.LayoutGetPadding(flex.EdgeRight))
 		}
 
 		return flex.Size{Width: width, Height: float32(height)}
@@ -223,8 +222,8 @@ func (text *TextElement) render(pdf *Pdf) {
 	setFont(fpdf, text.fontFamily, text.fontStyle, text.size)
 
 	fpdf.SetXY(
-		float64(text.X()),
-		float64(text.Y()))
+		float64(text.x()),
+		float64(text.y()))
 
 	if text.backgroundColor != "" {
 		r, g, b, err := hexToRGB(text.backgroundColor)
@@ -233,20 +232,20 @@ func (text *TextElement) render(pdf *Pdf) {
 		}
 		pdf.fpdf.SetFillColor(r, g, b)
 		pdf.fpdf.Rect(
-			float64(text.X()+text.getFlexNode().LayoutGetBorder(flex.EdgeLeft)),
-			float64(text.Y()+text.getFlexNode().LayoutGetBorder(flex.EdgeTop)),
+			float64(text.x()+text.getFlexNode().LayoutGetBorder(flex.EdgeLeft)),
+			float64(text.y()+text.getFlexNode().LayoutGetBorder(flex.EdgeTop)),
 			float64(text.getFlexNode().LayoutGetWidth()-(text.getFlexNode().LayoutGetBorder(flex.EdgeLeft)+text.getFlexNode().LayoutGetBorder(flex.EdgeRight))),
 			float64(text.getFlexNode().LayoutGetHeight()-(text.getFlexNode().LayoutGetBorder(flex.EdgeTop)+text.getFlexNode().LayoutGetBorder(flex.EdgeBottom))), "F")
 
 	}
 
 	pageWidth, _ := fpdf.GetPageSize()
-	marginRight := pageWidth - float64(text.X()+text._flexNode.LayoutGetWidth()+text._flexNode.LayoutGetPadding(flex.EdgeLeft)+text._flexNode.LayoutGetPadding(flex.EdgeRight))
+	marginRight := pageWidth - float64(text.x()+text.flexNode.LayoutGetWidth()+text.flexNode.LayoutGetPadding(flex.EdgeLeft)+text.flexNode.LayoutGetPadding(flex.EdgeRight))
 	if marginRight < 0 {
 		marginRight = 0
 	}
 	fpdf.SetCellMargin(0)
-	fpdf.SetXY(float64(text.X()+text._flexNode.LayoutGetPadding(flex.EdgeLeft)), float64(text.Y()+text._flexNode.LayoutGetPadding(flex.EdgeTop)))
-	fpdf.SetMargins(float64(text.X()+text._flexNode.LayoutGetPadding(flex.EdgeLeft)), float64(text.Y()+text._flexNode.LayoutGetPadding(flex.EdgeTop)), marginRight)
+	fpdf.SetXY(float64(text.x()+text.flexNode.LayoutGetPadding(flex.EdgeLeft)), float64(text.y()+text.flexNode.LayoutGetPadding(flex.EdgeTop)))
+	fpdf.SetMargins(float64(text.x()+text.flexNode.LayoutGetPadding(flex.EdgeLeft)), float64(text.y()+text.flexNode.LayoutGetPadding(flex.EdgeTop)), marginRight)
 	fpdf.Write(text.lineHeight, text.content)
 }

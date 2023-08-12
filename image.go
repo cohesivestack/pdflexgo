@@ -6,7 +6,7 @@ import (
 )
 
 type ImageElement struct {
-	AbstractElement
+	AbstractNode
 	filePath string
 }
 
@@ -17,7 +17,7 @@ func Image() *ImageElement {
 
 	image := &ImageElement{}
 
-	image.AbstractElement.setFlexNode(node)
+	image.AbstractNode.flexNode = node
 	// image._flexNode.StyleSetMargin(flex.EdgeAll, 0)
 	// image._flexNode.StyleSetPadding(flex.EdgeAll, 0)
 
@@ -29,6 +29,10 @@ func (image *ImageElement) FromFile(filePath string) *ImageElement {
 	image.filePath = filePath
 
 	return image
+}
+
+func (image *ImageElement) markRequiredAsDirty() {
+
 }
 
 func (image *ImageElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf) {
@@ -50,8 +54,8 @@ func (image *ImageElement) render(pdf *Pdf) {
 	if image.filePath != "" {
 		fpdf.Image(
 			image.filePath,
-			float64(image.X()),
-			float64(image.Y()),
+			float64(image.x()),
+			float64(image.y()),
 			float64(image.getFlexNode().LayoutGetWidth()),
 			0,
 			false, "", 0, "")

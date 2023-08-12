@@ -109,7 +109,7 @@ func (page *Page) render(pdf *Pdf) {
 	// Calculate Flex nodes
 	flex.CalculateLayout(page.root.getFlexNode(), float32(page.width), float32(page.height), flex.DirectionLTR)
 
-	page.root.markDirty()
+	page.root.markRequiredAsDirty()
 
 	flex.CalculateLayout(page.root.getFlexNode(), float32(page.width), float32(page.height), flex.DirectionLTR)
 

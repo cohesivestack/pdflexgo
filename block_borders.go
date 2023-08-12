@@ -108,10 +108,10 @@ func (block *BlockElement) renderBorderTop(pdf *Pdf) *BlockElement {
 		width := float64(block.getFlexNode().LayoutGetBorder(flex.EdgeTop))
 		pdf.fpdf.SetLineWidth(width)
 		pdf.fpdf.Line(
-			float64(block.X()),
-			float64(block.Y())+(width/2),
-			float64(block.X()+block.getFlexNode().LayoutGetWidth()),
-			float64(block.Y())+(width/2))
+			float64(block.x()),
+			float64(block.y())+(width/2),
+			float64(block.x()+block.getFlexNode().LayoutGetWidth()),
+			float64(block.y())+(width/2))
 	}
 
 	return block
@@ -132,10 +132,10 @@ func (block *BlockElement) renderBorderRight(pdf *Pdf) *BlockElement {
 		pdf.fpdf.SetLineWidth(width)
 
 		pdf.fpdf.Line(
-			float64(block.X()+block.getFlexNode().LayoutGetWidth())-(width/2),
-			float64(block.Y()),
-			float64(block.X()+block.getFlexNode().LayoutGetWidth())-(width/2),
-			float64(block.Y()+block.getFlexNode().LayoutGetHeight()))
+			float64(block.x()+block.getFlexNode().LayoutGetWidth())-(width/2),
+			float64(block.y()),
+			float64(block.x()+block.getFlexNode().LayoutGetWidth())-(width/2),
+			float64(block.y()+block.getFlexNode().LayoutGetHeight()))
 	}
 
 	return block
@@ -155,10 +155,10 @@ func (block *BlockElement) renderBorderBottom(pdf *Pdf) *BlockElement {
 		width := float64(block.getFlexNode().LayoutGetBorder(flex.EdgeBottom))
 		pdf.fpdf.SetLineWidth(width)
 		pdf.fpdf.Line(
-			float64(block.X()),
-			float64(block.Y()+block.getFlexNode().LayoutGetHeight())-(width/2),
-			float64(block.X()+block.getFlexNode().LayoutGetWidth()),
-			float64(block.Y()+block.getFlexNode().LayoutGetHeight())-(width/2))
+			float64(block.x()),
+			float64(block.y()+block.getFlexNode().LayoutGetHeight())-(width/2),
+			float64(block.x()+block.getFlexNode().LayoutGetWidth()),
+			float64(block.y()+block.getFlexNode().LayoutGetHeight())-(width/2))
 	}
 
 	return block
@@ -179,10 +179,10 @@ func (block *BlockElement) renderBorderLeft(pdf *Pdf) *BlockElement {
 		width := float64(block.getFlexNode().LayoutGetBorder(flex.EdgeLeft))
 		pdf.fpdf.SetLineWidth(width)
 		pdf.fpdf.Line(
-			float64(block.X())+(width/2),
-			float64(block.Y()),
-			float64(block.X())+(width/2),
-			float64(block.Y()+block.getFlexNode().LayoutGetHeight()))
+			float64(block.x())+(width/2),
+			float64(block.y()),
+			float64(block.x())+(width/2),
+			float64(block.y()+block.getFlexNode().LayoutGetHeight()))
 	}
 
 	return block
