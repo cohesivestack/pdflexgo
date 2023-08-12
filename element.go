@@ -8,6 +8,7 @@ import (
 type Element interface {
 	setFlexNode(*flex.Node)
 	getFlexNode() *flex.Node
+	markDirty()
 	render(*Pdf)
 	preRender(*defaultProps, *gofpdf.Fpdf)
 	X() float32
@@ -25,6 +26,10 @@ func (elem *AbstractElement) setFlexNode(flexNode *flex.Node) {
 
 func (elem *AbstractElement) getFlexNode() *flex.Node {
 	return elem._flexNode
+}
+
+func (elem *AbstractElement) markDirty() {
+	//elem._flexNode.MarkDirty()
 }
 
 func (elem *AbstractElement) X() float32 {

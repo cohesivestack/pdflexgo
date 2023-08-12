@@ -12,13 +12,14 @@ type ImageElement struct {
 
 func Image() *ImageElement {
 	config := flex.NewConfig()
+	config.UseWebDefaults = true
 	node := flex.NewNodeWithConfig(config)
 
 	image := &ImageElement{}
 
 	image.AbstractElement.setFlexNode(node)
-	image._flexNode.StyleSetMargin(flex.EdgeAll, 0)
-	image._flexNode.StyleSetPadding(flex.EdgeAll, 0)
+	// image._flexNode.StyleSetMargin(flex.EdgeAll, 0)
+	// image._flexNode.StyleSetPadding(flex.EdgeAll, 0)
 
 	return image
 }

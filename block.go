@@ -24,14 +24,18 @@ type BlockElement struct {
 
 func Block() *BlockElement {
 	config := flex.NewConfig()
+	config.UseWebDefaults = true
 	node := flex.NewNodeWithConfig(config)
 
 	block := &BlockElement{
 		border: [edgeCount]*border{{}, {}, {}, {}},
 	}
 
+	//node.StyleSetFlexShrink(1)
+
 	block.AbstractElement.setFlexNode(node)
 	block.MarginAll(0)
+	block.PaddingAll(0)
 	block.BorderAllWidth(0)
 	block.BorderAllColor("#000000")
 	block.FlexDirection(DefaultFlexDirection)
@@ -47,6 +51,13 @@ func (block *BlockElement) Children(children ...Element) *BlockElement {
 	}
 
 	return block
+}
+
+func (block *BlockElement) markDirty() {
+	block.AbstractElement.markDirty()
+	for _, child := range block.children {
+		child.markDirty()
+	}
 }
 
 func (block *BlockElement) render(pdf *Pdf) {

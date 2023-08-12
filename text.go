@@ -10,13 +10,16 @@ import (
 type TextElement struct {
 	AbstractElement
 
-	lineHeight *float64
+	lineHeight         float64
+	lineHeightAssigned bool
+	firstRequestMade   bool
 
-	content    string
-	size       float64
-	color      string
-	fontStyle  FontStyle
-	fontFamily string
+	content         string
+	size            float64
+	color           string
+	fontStyle       FontStyle
+	fontFamily      string
+	backgroundColor string
 }
 
 func (text *TextElement) Content(content string) *TextElement {
@@ -108,7 +111,8 @@ func (text *TextElement) BlackItalic() *TextElement {
 }
 
 func (text *TextElement) LineHeight(height float64) *TextElement {
-	text.lineHeight = &height
+	text.lineHeight = height
+	text.lineHeightAssigned = true
 	return text
 }
 
@@ -119,6 +123,7 @@ func (text *TextElement) FontFamily(family string) *TextElement {
 
 func Text() *TextElement {
 	config := flex.NewConfig()
+	config.UseWebDefaults = true
 	node := flex.NewNodeWithConfig(config)
 
 	text := &TextElement{
@@ -128,8 +133,33 @@ func Text() *TextElement {
 	text.AbstractElement.setFlexNode(node)
 	text._flexNode.StyleSetMargin(flex.EdgeAll, 0)
 	text._flexNode.StyleSetPadding(flex.EdgeAll, 0)
+	text._flexNode.StyleSetBorder(flex.EdgeAll, 0)
+	// text._flexNode.StyleSetFlexShrink(1)
 
 	return text
+}
+
+func (elem *TextElement) markDirty() {
+	elem._flexNode.MarkDirty()
+}
+
+func (text *TextElement) FlexAuto() *TextElement {
+	return text.
+		FlexGrow(1).
+		FlexShrink(1).
+		FlexBasisAuto()
+}
+
+func (text *TextElement) FlexNone() *TextElement {
+	return text.
+		FlexGrow(0).
+		FlexShrink(0).
+		FlexBasisAuto()
+}
+
+func (block *TextElement) FlexBasisAuto() *TextElement {
+	flex.NodeStyleSetFlexBasisAuto(block.getFlexNode())
+	return block
 }
 
 func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf) {
@@ -153,26 +183,29 @@ func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 
 		_, fontSize := fpdf.GetFontSize()
 
-		if text.lineHeight == nil {
-			_fontSize := fontSize
-			text.lineHeight = &_fontSize
+		if !text.lineHeightAssigned {
+			text.lineHeight = fontSize
 		}
 
-		fpdf.SetXY(0, 0)
-		pageWidth, _ := fpdf.GetPageSize()
-		marginRight := pageWidth - float64(width)
-		if marginRight < 0 {
-			marginRight = 0
+		if !text.firstRequestMade {
+			width = float32(fpdf.GetStringWidth(text.content))
+			height = float32(text.lineHeight)
+			text.firstRequestMade = true
+		} else {
+			fpdf.SetXY(0, 0)
+			pageWidth, _ := fpdf.GetPageSize()
+			marginRight := pageWidth - float64(text._flexNode.LayoutGetWidth()-text._flexNode.LayoutGetPadding(flex.EdgeLeft)+text._flexNode.LayoutGetPadding(flex.EdgeRight))
+			if marginRight < 0 {
+				marginRight = 0
+			}
+			fpdf.SetMargins(0, 0, marginRight)
+			fpdf.SetCellMargin(0)
+			fpdf.Write(text.lineHeight, text.content)
+			height = float32(fpdf.GetY() + text.lineHeight)
+			width = text._flexNode.LayoutGetWidth() - (text._flexNode.LayoutGetPadding(flex.EdgeLeft) + text._flexNode.LayoutGetPadding(flex.EdgeRight))
 		}
-		fpdf.SetMargins(0, 0, marginRight)
-		fpdf.Write(*text.lineHeight, text.content)
-		newHeight := fpdf.GetY() + *text.lineHeight
 
-		// if fpdf.GetY() == 0 && fpdf.GetX() < float64(width) {
-		// 	width = float32(fpdf.GetX())
-		// }
-
-		return flex.Size{Width: width, Height: float32(newHeight)}
+		return flex.Size{Width: width, Height: float32(height)}
 	}
 
 	text.getFlexNode().SetMeasureFunc(measureFunc)
@@ -192,11 +225,28 @@ func (text *TextElement) render(pdf *Pdf) {
 	fpdf.SetXY(
 		float64(text.X()),
 		float64(text.Y()))
+
+	if text.backgroundColor != "" {
+		r, g, b, err := hexToRGB(text.backgroundColor)
+		if err != nil {
+			log.Fatal(err)
+		}
+		pdf.fpdf.SetFillColor(r, g, b)
+		pdf.fpdf.Rect(
+			float64(text.X()+text.getFlexNode().LayoutGetBorder(flex.EdgeLeft)),
+			float64(text.Y()+text.getFlexNode().LayoutGetBorder(flex.EdgeTop)),
+			float64(text.getFlexNode().LayoutGetWidth()-(text.getFlexNode().LayoutGetBorder(flex.EdgeLeft)+text.getFlexNode().LayoutGetBorder(flex.EdgeRight))),
+			float64(text.getFlexNode().LayoutGetHeight()-(text.getFlexNode().LayoutGetBorder(flex.EdgeTop)+text.getFlexNode().LayoutGetBorder(flex.EdgeBottom))), "F")
+
+	}
+
 	pageWidth, _ := fpdf.GetPageSize()
-	marginRight := pageWidth - float64(text.X()+text._flexNode.LayoutGetWidth())
+	marginRight := pageWidth - float64(text.X()+text._flexNode.LayoutGetWidth()+text._flexNode.LayoutGetPadding(flex.EdgeLeft)+text._flexNode.LayoutGetPadding(flex.EdgeRight))
 	if marginRight < 0 {
 		marginRight = 0
 	}
-	fpdf.SetMargins(float64(text.X()), float64(text.Y()), marginRight)
-	fpdf.Write(*text.lineHeight, text.content)
+	fpdf.SetCellMargin(0)
+	fpdf.SetXY(float64(text.X()+text._flexNode.LayoutGetPadding(flex.EdgeLeft)), float64(text.Y()+text._flexNode.LayoutGetPadding(flex.EdgeTop)))
+	fpdf.SetMargins(float64(text.X()+text._flexNode.LayoutGetPadding(flex.EdgeLeft)), float64(text.Y()+text._flexNode.LayoutGetPadding(flex.EdgeTop)), marginRight)
+	fpdf.Write(text.lineHeight, text.content)
 }

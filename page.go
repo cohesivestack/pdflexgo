@@ -62,6 +62,11 @@ func (page *Page) FlexDirection(direction FlexDirection) *Page {
 	return page
 }
 
+func (page *Page) JustifyContent(justify Justify) *Page {
+	page.root.JustifyContent(justify)
+	return page
+}
+
 func (page *Page) BackgroundColor(color string) *Page {
 	page.root.backgrondColor = color
 	return page
@@ -102,6 +107,10 @@ func (page *Page) render(pdf *Pdf) {
 	page.root.preRender(pdf.defaultProps, fpdfTemp)
 
 	// Calculate Flex nodes
+	flex.CalculateLayout(page.root.getFlexNode(), float32(page.width), float32(page.height), flex.DirectionLTR)
+
+	page.root.markDirty()
+
 	flex.CalculateLayout(page.root.getFlexNode(), float32(page.width), float32(page.height), flex.DirectionLTR)
 
 	page.root.render(pdf)
