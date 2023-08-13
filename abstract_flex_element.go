@@ -2,20 +2,20 @@ package pdflexgo
 
 import "github.com/kjk/flex"
 
-type abstractFlexNode struct {
+type abstractFlexElement struct {
 	flexNode *flex.Node
 }
 
-func (elem *abstractFlexNode) getFlexNode() *flex.Node {
-	return elem.flexNode
+func (element *abstractFlexElement) getFlexNode() *flex.Node {
+	return element.flexNode
 }
 
-func (elem *abstractFlexNode) x() float32 {
-	return getXParent(elem.getFlexNode())
+func (element *abstractFlexElement) x() float32 {
+	return getXParent(element.getFlexNode())
 }
 
-func (elem *abstractFlexNode) y() float32 {
-	return getYParent(elem.getFlexNode())
+func (element *abstractFlexElement) y() float32 {
+	return getYParent(element.getFlexNode())
 }
 
 func getYParent(flexNode *flex.Node) float32 {

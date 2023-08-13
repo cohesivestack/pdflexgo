@@ -5,7 +5,7 @@ import (
 	"github.com/kjk/flex"
 )
 
-type Element interface {
+type Node interface {
 	getFlexNode() *flex.Node
 	markRequiredAsDirty()
 	render(*Pdf)

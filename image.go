@@ -6,7 +6,7 @@ import (
 )
 
 type ImageElement struct {
-	abstractFlexNode
+	abstractFlexElement
 	filePath string
 }
 
@@ -17,7 +17,7 @@ func Image() *ImageElement {
 
 	image := &ImageElement{}
 
-	image.abstractFlexNode.flexNode = node
+	image.abstractFlexElement.flexNode = node
 	// image._flexNode.StyleSetMargin(flex.EdgeAll, 0)
 	// image._flexNode.StyleSetPadding(flex.EdgeAll, 0)
 

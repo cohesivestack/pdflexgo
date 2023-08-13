@@ -72,7 +72,7 @@ func (page *Page) BackgroundColor(color string) *Page {
 	return page
 }
 
-func (page *Page) Children(children ...Element) *Page {
+func (page *Page) Children(children ...Node) *Page {
 	page.root.Children(children...)
 
 	return page

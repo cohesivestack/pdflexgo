@@ -8,7 +8,7 @@ import (
 )
 
 type TextElement struct {
-	abstractFlexNode
+	abstractFlexElement
 
 	lineHeight         float64
 	lineHeightAssigned bool
@@ -130,7 +130,7 @@ func Text() *TextElement {
 		size: -1,
 	}
 
-	text.abstractFlexNode.flexNode = node
+	text.abstractFlexElement.flexNode = node
 	text.flexNode.StyleSetMargin(flex.EdgeAll, 0)
 	text.flexNode.StyleSetPadding(flex.EdgeAll, 0)
 	text.flexNode.StyleSetBorder(flex.EdgeAll, 0)
