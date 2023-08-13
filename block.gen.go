@@ -64,6 +64,7 @@ func (block *BlockElement) GetFlexDirection() FlexDirection {
 
 func (block *BlockElement) JustifyContent(justifyContent Justify) *BlockElement {
 	block.getFlexNode().StyleSetJustifyContent(flex.Justify(justifyContent))
+
 	return block
 }
 
@@ -119,6 +120,11 @@ func (block *BlockElement) GetFlexWrap() Wrap {
 
 func (block *BlockElement) Overflow(overflow Overflow) *BlockElement {
 	block.getFlexNode().StyleSetOverflow(flex.Overflow(overflow))
+	return block
+}
+
+func (block *BlockElement) OverflowVisible() *BlockElement {
+	block.getFlexNode().StyleSetOverflow(flex.OverflowVisible)
 	return block
 }
 

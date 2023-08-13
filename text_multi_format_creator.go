@@ -28,7 +28,7 @@ func (constructor *TextMultiFormatCreator) Create() *TextMultiFormatElement {
 	node := flex.NewNodeWithConfig(config)
 	element := constructor.element
 
-	element.AbstractNode.flexNode = node
+	element.abstractFlexNode.flexNode = node
 
 	return constructor.element
 }

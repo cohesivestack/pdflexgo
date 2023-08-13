@@ -16,7 +16,7 @@ const edgeBottomIndex = 2
 const edgeLeftIndex = 3
 
 type BlockElement struct {
-	AbstractNode
+	abstractFlexNode
 	children       []Element
 	border         [edgeCount]*border
 	backgrondColor string
@@ -33,7 +33,7 @@ func Block() *BlockElement {
 
 	//node.StyleSetFlexShrink(1)
 
-	block.AbstractNode.flexNode = node
+	block.abstractFlexNode.flexNode = node
 	block.MarginAll(0)
 	block.PaddingAll(0)
 	block.BorderAllWidth(0)

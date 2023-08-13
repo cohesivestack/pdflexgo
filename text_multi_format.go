@@ -16,7 +16,7 @@ type textMultiFormatPart struct {
 }
 
 type TextMultiFormatElement struct {
-	AbstractNode
+	abstractFlexNode
 
 	lineHeight *float64
 
