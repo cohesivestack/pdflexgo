@@ -28,6 +28,7 @@ func Text() *TextElement {
 	}
 
 	text.abstractElement.initialize()
+	text.color = DefaultFontColor
 
 	return text
 }
@@ -189,18 +190,6 @@ func (text *TextElement) render(pdf *Pdf) {
 	fpdf.SetXY(
 		float64(text.x()),
 		float64(text.y()))
-
-	if !equalColor(text.backgroundColor, defaultBackgroundColor) {
-		pdf.fpdf.SetFillColor(text.backgroundColor.red, text.backgroundColor.green, text.backgroundColor.blue)
-		pdf.fpdf.SetAlpha(text.backgroundColor.alpha, "")
-		pdf.fpdf.Rect(
-			float64(text.x()+text.getFlexNode().LayoutGetBorder(flex.EdgeLeft)),
-			float64(text.y()+text.getFlexNode().LayoutGetBorder(flex.EdgeTop)),
-			float64(text.getFlexNode().LayoutGetWidth()-(text.getFlexNode().LayoutGetBorder(flex.EdgeLeft)+text.getFlexNode().LayoutGetBorder(flex.EdgeRight))),
-			float64(text.getFlexNode().LayoutGetHeight()-(text.getFlexNode().LayoutGetBorder(flex.EdgeTop)+text.getFlexNode().LayoutGetBorder(flex.EdgeBottom))), "F")
-		pdf.fpdf.SetAlpha(1.0, "")
-
-	}
 
 	pageWidth, _ := fpdf.GetPageSize()
 	marginRight := pageWidth - float64(text.x()+text.flexNode.LayoutGetWidth()+text.flexNode.LayoutGetPadding(flex.EdgeLeft)+text.flexNode.LayoutGetPadding(flex.EdgeRight))

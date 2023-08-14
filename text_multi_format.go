@@ -122,7 +122,9 @@ func (element *TextMultiFormatElement) render(pdf *Pdf) {
 }
 
 func (element *TextMultiFormatElement) addPart() {
-	element.parts = append(element.parts, &textMultiFormatPart{})
+	element.parts = append(element.parts, &textMultiFormatPart{
+		color: DefaultFontColor,
+	})
 }
 
 func (element *TextMultiFormatElement) Size(size float64) *TextMultiFormatElement {
