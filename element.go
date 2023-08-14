@@ -1,6 +1,8 @@
 package pdflexgo
 
-import "github.com/kjk/flex"
+import (
+	"github.com/kjk/flex"
+)
 
 type abstractElement struct {
 	flexNode *flex.Node
@@ -140,16 +142,16 @@ func (element *abstractElement) renderBorderLeft(pdf *Pdf) *abstractElement {
 
 func (element *abstractElement) renderBackground(pdf *Pdf) *abstractElement {
 
-	element.renderBorders(pdf)
-
-	pdf.fpdf.SetFillColor(element.backgroundColor.red, element.backgroundColor.green, element.backgroundColor.blue)
-	pdf.fpdf.SetAlpha(element.backgroundColor.alpha, "")
-	pdf.fpdf.Rect(
-		float64(element.x()+element.getFlexNode().LayoutGetBorder(flex.EdgeLeft)),
-		float64(element.y()+element.getFlexNode().LayoutGetBorder(flex.EdgeTop)),
-		float64(element.getFlexNode().LayoutGetWidth()-(element.getFlexNode().LayoutGetBorder(flex.EdgeLeft)+element.getFlexNode().LayoutGetBorder(flex.EdgeRight))),
-		float64(element.getFlexNode().LayoutGetHeight()-(element.getFlexNode().LayoutGetBorder(flex.EdgeTop)+element.getFlexNode().LayoutGetBorder(flex.EdgeBottom))), "F")
-	pdf.fpdf.SetAlpha(1.0, "")
+	if !equalColor(element.backgroundColor, defaultBackgroundColor) {
+		pdf.fpdf.SetFillColor(element.backgroundColor.red, element.backgroundColor.green, element.backgroundColor.blue)
+		pdf.fpdf.SetAlpha(element.backgroundColor.alpha, "")
+		pdf.fpdf.Rect(
+			float64(element.x()+element.getFlexNode().LayoutGetBorder(flex.EdgeLeft)),
+			float64(element.y()+element.getFlexNode().LayoutGetBorder(flex.EdgeTop)),
+			float64(element.getFlexNode().LayoutGetWidth()-(element.getFlexNode().LayoutGetBorder(flex.EdgeLeft)+element.getFlexNode().LayoutGetBorder(flex.EdgeRight))),
+			float64(element.getFlexNode().LayoutGetHeight()-(element.getFlexNode().LayoutGetBorder(flex.EdgeTop)+element.getFlexNode().LayoutGetBorder(flex.EdgeBottom))), "F")
+		pdf.fpdf.SetAlpha(1.0, "")
+	}
 
 	return element
 }
