@@ -47,6 +47,8 @@ func (image *ImageElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fp
 }
 
 func (image *ImageElement) render(pdf *Pdf) {
+	image.renderElement(pdf)
+
 	fpdf := pdf.fpdf
 
 	if image.filePath != "" {
