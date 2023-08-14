@@ -67,8 +67,8 @@ func (page *PageElement) render(pdf *Pdf) {
 		fpdf.AddPageFormat(
 			string(page.orientation),
 			gofpdf.SizeType{
-				Wd: float64(page.getFlexNode().LayoutGetWidth()),
-				Ht: float64(page.getFlexNode().LayoutGetHeight())})
+				Wd: float64(page.getFlexNode().StyleGetWidth().Value),
+				Ht: float64(page.getFlexNode().StyleGetHeight().Value)})
 		fpdf.SetFont("Arial", "", DefaultFontSize)
 	}
 
@@ -96,6 +96,10 @@ func (page *PageElement) render(pdf *Pdf) {
 	flex.CalculateLayout(page.getFlexNode(), flex.Undefined, flex.Undefined, page.getFlexNode().Style.Direction)
 
 	page.renderElement(pdf)
+
+	for _, child := range page.children {
+		child.render(pdf)
+	}
 }
 
 func sizeToWidthHeight(size Size) (float64, float64) {
