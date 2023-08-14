@@ -58,29 +58,29 @@ func (page *PageElement) FlexDirectionRowReverse() *PageElement {
 }
 
 // JustifyContent
-func (page *PageElement) Justify(justification Justify) *PageElement {
+func (page *PageElement) JustifyContent(justification Justify) *PageElement {
 	page.getFlexNode().StyleSetJustifyContent(flex.Justify(justification))
 	return page
 }
 
-func (page *PageElement) JustifyStart() *PageElement {
-	return page.Justify(JustifyStart)
+func (page *PageElement) JustifyContentStart() *PageElement {
+	return page.JustifyContent(JustifyStart)
 }
 
-func (page *PageElement) JustifyCenter() *PageElement {
-	return page.Justify(JustifyCenter)
+func (page *PageElement) JustifyContentCenter() *PageElement {
+	return page.JustifyContent(JustifyCenter)
 }
 
-func (page *PageElement) JustifyEnd() *PageElement {
-	return page.Justify(JustifyEnd)
+func (page *PageElement) JustifyContentEnd() *PageElement {
+	return page.JustifyContent(JustifyEnd)
 }
 
-func (page *PageElement) JustifySpaceBetween() *PageElement {
-	return page.Justify(JustifySpaceBetween)
+func (page *PageElement) JustifyContentSpaceBetween() *PageElement {
+	return page.JustifyContent(JustifySpaceBetween)
 }
 
-func (page *PageElement) JustifySpaceAround() *PageElement {
-	return page.Justify(JustifySpaceAround)
+func (page *PageElement) JustifyContentSpaceAround() *PageElement {
+	return page.JustifyContent(JustifySpaceAround)
 }
 
 // ALIGN CONTENT

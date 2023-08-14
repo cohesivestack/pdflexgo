@@ -58,29 +58,29 @@ func (block *BlockElement) FlexDirectionRowReverse() *BlockElement {
 }
 
 // JustifyContent
-func (block *BlockElement) Justify(justification Justify) *BlockElement {
+func (block *BlockElement) JustifyContent(justification Justify) *BlockElement {
 	block.getFlexNode().StyleSetJustifyContent(flex.Justify(justification))
 	return block
 }
 
-func (block *BlockElement) JustifyStart() *BlockElement {
-	return block.Justify(JustifyStart)
+func (block *BlockElement) JustifyContentStart() *BlockElement {
+	return block.JustifyContent(JustifyStart)
 }
 
-func (block *BlockElement) JustifyCenter() *BlockElement {
-	return block.Justify(JustifyCenter)
+func (block *BlockElement) JustifyContentCenter() *BlockElement {
+	return block.JustifyContent(JustifyCenter)
 }
 
-func (block *BlockElement) JustifyEnd() *BlockElement {
-	return block.Justify(JustifyEnd)
+func (block *BlockElement) JustifyContentEnd() *BlockElement {
+	return block.JustifyContent(JustifyEnd)
 }
 
-func (block *BlockElement) JustifySpaceBetween() *BlockElement {
-	return block.Justify(JustifySpaceBetween)
+func (block *BlockElement) JustifyContentSpaceBetween() *BlockElement {
+	return block.JustifyContent(JustifySpaceBetween)
 }
 
-func (block *BlockElement) JustifySpaceAround() *BlockElement {
-	return block.Justify(JustifySpaceAround)
+func (block *BlockElement) JustifyContentSpaceAround() *BlockElement {
+	return block.JustifyContent(JustifySpaceAround)
 }
 
 // ALIGN CONTENT

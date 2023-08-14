@@ -58,29 +58,29 @@ func ({{ .Name }} *{{ .Type }}) FlexDirectionRowReverse() *{{ .Type }} {
 }
 
 // JustifyContent
-func ({{ .Name }} *{{ .Type }}) Justify(justification Justify) *{{ .Type }} {
+func ({{ .Name }} *{{ .Type }}) JustifyContent(justification Justify) *{{ .Type }} {
 	{{ .Name }}.getFlexNode().StyleSetJustifyContent(flex.Justify(justification))
 	return {{ .Name }}
 }
 
-func ({{ .Name }} *{{ .Type }}) JustifyStart() *{{ .Type }} {
-	return {{ .Name }}.Justify(JustifyStart)
+func ({{ .Name }} *{{ .Type }}) JustifyContentStart() *{{ .Type }} {
+	return {{ .Name }}.JustifyContent(JustifyStart)
 }
 
-func ({{ .Name }} *{{ .Type }}) JustifyCenter() *{{ .Type }} {
-	return {{ .Name }}.Justify(JustifyCenter)
+func ({{ .Name }} *{{ .Type }}) JustifyContentCenter() *{{ .Type }} {
+	return {{ .Name }}.JustifyContent(JustifyCenter)
 }
 
-func ({{ .Name }} *{{ .Type }}) JustifyEnd() *{{ .Type }} {
-	return {{ .Name }}.Justify(JustifyEnd)
+func ({{ .Name }} *{{ .Type }}) JustifyContentEnd() *{{ .Type }} {
+	return {{ .Name }}.JustifyContent(JustifyEnd)
 }
 
-func ({{ .Name }} *{{ .Type }}) JustifySpaceBetween() *{{ .Type }} {
-	return {{ .Name }}.Justify(JustifySpaceBetween)
+func ({{ .Name }} *{{ .Type }}) JustifyContentSpaceBetween() *{{ .Type }} {
+	return {{ .Name }}.JustifyContent(JustifySpaceBetween)
 }
 
-func ({{ .Name }} *{{ .Type }}) JustifySpaceAround() *{{ .Type }} {
-	return {{ .Name }}.Justify(JustifySpaceAround)
+func ({{ .Name }} *{{ .Type }}) JustifyContentSpaceAround() *{{ .Type }} {
+	return {{ .Name }}.JustifyContent(JustifySpaceAround)
 }
 
 // ALIGN CONTENT
