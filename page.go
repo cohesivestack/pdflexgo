@@ -8,20 +8,20 @@ import (
 	"github.com/kjk/flex"
 )
 
-type Page struct {
-	root *BlockElement
+type PageElement struct {
+	abstractElement
+
+	children []Node
 
 	// Public attributes
 	orientation Orientation
 	unit        Unit
-	width       float64
-	height      float64
 }
 
-func NewPage() *Page {
-	page := &Page{
-		root: Block(),
-	}
+func Page() *PageElement {
+	page := &PageElement{}
+
+	page.abstractElement.initialize()
 
 	page.Size(DefaultSize)
 	page.FlexDirection(FlexDirectionColumn)
@@ -29,70 +29,52 @@ func NewPage() *Page {
 	return page
 }
 
-func (page *Page) Size(size Size) *Page {
-	page.width, page.height = sizeToWidthHeight(size)
+func (page *PageElement) Size(size Size) *PageElement {
+	width, height := sizeToWidthHeight(size)
+
+	page.Width(width)
+	page.Height(height)
 
 	return page
 }
 
-func (page *Page) Orientation(orientation Orientation) *Page {
+func (page *PageElement) Orientation(orientation Orientation) *PageElement {
 	page.orientation = orientation
 	return page
 }
 
-func (page *Page) Unit(unit Unit) *Page {
+func (page *PageElement) Unit(unit Unit) *PageElement {
 	page.unit = unit
 	return page
 }
 
-func (page *Page) Width(width float64) *Page {
-	page.width = width
-	page.root.Width(width)
-	return page
+func (page *PageElement) markRequiredAsDirty() {
+	for _, child := range page.children {
+		child.markRequiredAsDirty()
+	}
 }
 
-func (page *Page) Height(height float64) *Page {
-	page.height = height
-	page.root.Height(height)
-	return page
+func (page *PageElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf) {
+
+	for _, child := range page.children {
+		child.preRender(defaultProps, fpdf)
+	}
 }
 
-func (page *Page) FlexDirection(direction FlexDirection) *Page {
-	page.root.FlexDirection(direction)
-	return page
-}
-
-func (page *Page) JustifyContent(justify Justify) *Page {
-	page.root.JustifyContent(justify)
-	return page
-}
-
-func (page *Page) BackgroundColor(color string) *Page {
-	page.root.backgrondColor = color
-	return page
-}
-
-func (page *Page) Children(children ...Node) *Page {
-	page.root.Children(children...)
-
-	return page
-}
-
-func (page *Page) render(pdf *Pdf) {
+func (page *PageElement) render(pdf *Pdf) {
 
 	initializeFpdf := func(fpdf *gofpdf.Fpdf) {
 		fpdf.AddPageFormat(
 			string(page.orientation),
-			gofpdf.SizeType{Wd: page.width, Ht: page.height})
+			gofpdf.SizeType{
+				Wd: float64(page.getFlexNode().LayoutGetWidth()),
+				Ht: float64(page.getFlexNode().LayoutGetHeight())})
 		fpdf.SetFont("Arial", "", DefaultFontSize)
 	}
 
 	fpdf := pdf.fpdf
 
 	initializeFpdf(fpdf)
-
-	page.root.Width(page.width - (page.root.GetMarginLeft() + page.root.GetMarginRight()))
-	page.root.Height(page.height - (page.root.GetMarginTop() + page.root.GetMarginBottom()))
 
 	// Prerender is used to calculate the size of the elements with the
 	// CalculateLayout process
@@ -104,16 +86,16 @@ func (page *Page) render(pdf *Pdf) {
 		fpdfTemp.AddUTF8Font(_family, _style, fontLoaded.filePath)
 	}
 
-	page.root.preRender(pdf.defaultProps, fpdfTemp)
+	page.preRender(pdf.defaultProps, fpdfTemp)
 
 	// Calculate Flex nodes
-	flex.CalculateLayout(page.root.getFlexNode(), float32(page.width), float32(page.height), flex.DirectionLTR)
+	flex.CalculateLayout(page.getFlexNode(), flex.Undefined, flex.Undefined, page.getFlexNode().Style.Direction)
 
-	page.root.markRequiredAsDirty()
+	page.markRequiredAsDirty()
 
-	flex.CalculateLayout(page.root.getFlexNode(), float32(page.width), float32(page.height), flex.DirectionLTR)
+	flex.CalculateLayout(page.getFlexNode(), flex.Undefined, flex.Undefined, page.getFlexNode().Style.Direction)
 
-	page.root.render(pdf)
+	page.renderElement(pdf)
 }
 
 func sizeToWidthHeight(size Size) (float64, float64) {

@@ -28,7 +28,7 @@ func (constructor *TextMultiFormatCreator) Create() *TextMultiFormatElement {
 	node := flex.NewNodeWithConfig(config)
 	element := constructor.element
 
-	element.abstractFlexElement.flexNode = node
+	element.abstractElement.flexNode = node
 
 	return constructor.element
 }
@@ -43,8 +43,8 @@ func (creator *TextMultiFormatCreator) Size(size float64) *TextMultiFormatCreato
 	return creator
 }
 
-func (creator *TextMultiFormatCreator) Color(color string) *TextMultiFormatCreator {
-	creator.element.color = color
+func (creator *TextMultiFormatCreator) Color(red int, green int, blue int, alpha ...float64) *TextMultiFormatCreator {
+	creator.element.color = getRgba(red, green, blue, alpha...)
 	return creator
 }
 

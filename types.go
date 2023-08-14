@@ -2,12 +2,6 @@ package pdflexgo
 
 import "github.com/kjk/flex"
 
-// Font Size
-const DefaultFontSize = 11.0
-
-// Font Color
-const DefaultFontColor = "#000000"
-
 // Font Style
 type FontStyle string
 
@@ -113,21 +107,26 @@ const (
 )
 
 // Align
-type Align string
+type Align int
 
 const (
-	AlignStart  Align = "start"
-	AlignEnd    Align = "end"
-	AlignCenter Align = "center"
+	AlignAuto Align = iota
+	AlignStart
+	AlignCenter
+	AlignEnd
+	AlignStretch
+	AlignBaseline
+	AlignSpaceBetween
+	AlignSpaceAround
 )
 
 // Justify
 type Justify int
 
 const (
-	JustifyFlexStart Justify = iota
+	JustifyStart Justify = iota
 	JustifyCenter
-	JustifyFlexEnd
+	JustifyEnd
 	JustifySpaceBetween
 	JustifySpaceAround
 )

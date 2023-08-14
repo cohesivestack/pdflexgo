@@ -1,14 +1,14 @@
 package pdflexgo
 
 import (
-	"log"
-
 	"github.com/jung-kurt/gofpdf"
 	"github.com/kjk/flex"
 )
 
+var defaultBackgroundColor = rgba{0, 0, 0, 0}
+
 type TextElement struct {
-	abstractFlexElement
+	abstractElement
 
 	lineHeight         float64
 	lineHeightAssigned bool
@@ -16,10 +16,20 @@ type TextElement struct {
 
 	content         string
 	size            float64
-	color           string
 	fontStyle       FontStyle
 	fontFamily      string
-	backgroundColor string
+	color           rgba
+	backgroundColor rgba
+}
+
+func Text() *TextElement {
+	text := &TextElement{
+		size: -1,
+	}
+
+	text.abstractElement.initialize()
+
+	return text
 }
 
 func (text *TextElement) Content(content string) *TextElement {
@@ -29,11 +39,6 @@ func (text *TextElement) Content(content string) *TextElement {
 
 func (text *TextElement) Size(size float64) *TextElement {
 	text.size = size
-	return text
-}
-
-func (text *TextElement) Color(color string) *TextElement {
-	text.color = color
 	return text
 }
 
@@ -121,44 +126,8 @@ func (text *TextElement) FontFamily(family string) *TextElement {
 	return text
 }
 
-func Text() *TextElement {
-	config := flex.NewConfig()
-	config.UseWebDefaults = true
-	node := flex.NewNodeWithConfig(config)
-
-	text := &TextElement{
-		size: -1,
-	}
-
-	text.abstractFlexElement.flexNode = node
-	text.flexNode.StyleSetMargin(flex.EdgeAll, 0)
-	text.flexNode.StyleSetPadding(flex.EdgeAll, 0)
-	text.flexNode.StyleSetBorder(flex.EdgeAll, 0)
-
-	return text
-}
-
 func (elem *TextElement) markRequiredAsDirty() {
 	elem.flexNode.MarkDirty()
-}
-
-func (text *TextElement) FlexAuto() *TextElement {
-	return text.
-		FlexGrow(1).
-		FlexShrink(1).
-		FlexBasisAuto()
-}
-
-func (text *TextElement) FlexNone() *TextElement {
-	return text.
-		FlexGrow(0).
-		FlexShrink(0).
-		FlexBasisAuto()
-}
-
-func (block *TextElement) FlexBasisAuto() *TextElement {
-	flex.NodeStyleSetFlexBasisAuto(block.getFlexNode())
-	return block
 }
 
 func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf) {
@@ -169,11 +138,11 @@ func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 	if text.fontStyle == "" {
 		text.fontStyle = defaultProps.fontStyle
 	}
-	if text.color == "" {
-		text.color = defaultProps.fontColor
-	}
 	if text.size == -1 {
 		text.size = defaultProps.fontSize
+	}
+	if equalColor(text.color, DefaultFontColor) {
+		text.color = defaultProps.fontColor
 	}
 
 	var measureFunc = func(node *flex.Node, width float32, widthMode flex.MeasureMode, height float32, heightMode flex.MeasureMode) flex.Size {
@@ -211,13 +180,9 @@ func (text *TextElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 }
 
 func (text *TextElement) render(pdf *Pdf) {
-	fpdf := pdf.fpdf
+	text.renderElement(pdf)
 
-	r, g, b, err := hexToRGB(text.color)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fpdf.SetTextColor(r, g, b)
+	fpdf := pdf.fpdf
 
 	setFont(fpdf, text.fontFamily, text.fontStyle, text.size)
 
@@ -225,17 +190,15 @@ func (text *TextElement) render(pdf *Pdf) {
 		float64(text.x()),
 		float64(text.y()))
 
-	if text.backgroundColor != "" {
-		r, g, b, err := hexToRGB(text.backgroundColor)
-		if err != nil {
-			log.Fatal(err)
-		}
-		pdf.fpdf.SetFillColor(r, g, b)
+	if !equalColor(text.backgroundColor, defaultBackgroundColor) {
+		pdf.fpdf.SetFillColor(text.backgroundColor.red, text.backgroundColor.green, text.backgroundColor.blue)
+		pdf.fpdf.SetAlpha(text.backgroundColor.alpha, "")
 		pdf.fpdf.Rect(
 			float64(text.x()+text.getFlexNode().LayoutGetBorder(flex.EdgeLeft)),
 			float64(text.y()+text.getFlexNode().LayoutGetBorder(flex.EdgeTop)),
 			float64(text.getFlexNode().LayoutGetWidth()-(text.getFlexNode().LayoutGetBorder(flex.EdgeLeft)+text.getFlexNode().LayoutGetBorder(flex.EdgeRight))),
 			float64(text.getFlexNode().LayoutGetHeight()-(text.getFlexNode().LayoutGetBorder(flex.EdgeTop)+text.getFlexNode().LayoutGetBorder(flex.EdgeBottom))), "F")
+		pdf.fpdf.SetAlpha(1.0, "")
 
 	}
 
@@ -247,5 +210,10 @@ func (text *TextElement) render(pdf *Pdf) {
 	fpdf.SetCellMargin(0)
 	fpdf.SetXY(float64(text.x()+text.flexNode.LayoutGetPadding(flex.EdgeLeft)), float64(text.y()+text.flexNode.LayoutGetPadding(flex.EdgeTop)))
 	fpdf.SetMargins(float64(text.x()+text.flexNode.LayoutGetPadding(flex.EdgeLeft)), float64(text.y()+text.flexNode.LayoutGetPadding(flex.EdgeTop)), marginRight)
+
+	fpdf.SetTextColor(text.color.red, text.color.green, text.color.blue)
+	fpdf.SetAlpha(text.color.alpha, "")
+
 	fpdf.Write(text.lineHeight, text.content)
+	fpdf.SetAlpha(1, "")
 }

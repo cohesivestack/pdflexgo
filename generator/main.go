@@ -4,100 +4,86 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
+	"unicode"
 )
 
-type GetFunctionType string
-
-const (
-	GetFunctionTypeNone     GetFunctionType = "none"
-	GetFunctionTypeWithGet  GetFunctionType = "withGet"
-	GetFunctionTypeWithProp GetFunctionType = "withProp"
-)
-
-type Prop struct {
-	Name            string
-	NameInternal    string
-	Param           string
-	Type            string
-	TypeInternal    string
-	GetFunctionType GetFunctionType
+type data struct {
+	Name string
+	Type string
 }
 
 func main() {
-
-	props := []Prop{
-		{"Width", "Width", "width", "float64", "float32", GetFunctionTypeNone},
-		{"WidthPercent", "WidthPercent", "percent", "float64", "float32", GetFunctionTypeNone},
-		{"Height", "Height", "height", "float64", "float32", GetFunctionTypeNone},
-		{"HeightPercent", "HeightPercent", "percent", "float64", "float32", GetFunctionTypeNone},
-		{"PositionType", "PositionType", "position", "PositionType", "flex.PositionType", GetFunctionTypeWithProp},
-		{"Direction", "Direction", "direction", "Direction", "flex.Direction", GetFunctionTypeWithProp},
-		{"FlexDirection", "FlexDirection", "direction", "FlexDirection", "flex.FlexDirection", GetFunctionTypeWithProp},
-		{"JustifyContent", "JustifyContent", "justifyContent", "Justify", "flex.Justify", GetFunctionTypeWithProp},
-		{"AlignContent", "AlignContent", "alignContent", "flex.Align", "flex.Align", GetFunctionTypeWithProp},
-		{"AlignItems", "AlignItems", "alignItems", "flex.Align", "flex.Align", GetFunctionTypeWithProp},
-		{"AlignSelf", "AlignSelf", "alignSelf", "flex.Align", "flex.Align", GetFunctionTypeWithProp},
-		{"FlexWrap", "FlexWrap", "wrap", "Wrap", "flex.Wrap", GetFunctionTypeWithProp},
-		{"Overflow", "Overflow", "overflow", "Overflow", "flex.Overflow", GetFunctionTypeWithProp},
-		{"Display", "Display", "overflow", "Display", "flex.Display", GetFunctionTypeWithProp},
-		{"Flex", "Flex", "flex", "float64", "float32", GetFunctionTypeWithProp},
-		{"FlexGrow", "FlexGrow", "grow", "float64", "float32", GetFunctionTypeWithGet},
-		{"FlexShrink", "FlexShrink", "shrink", "float64", "float32", GetFunctionTypeWithGet},
-		{"FlexBasis", "FlexBasis", "basis", "float64", "float32", GetFunctionTypeNone},
-		{"FlexBasisPercent", "FlexBasisPercent", "percent", "float64", "float32", GetFunctionTypeNone},
-		{"MinWidth", "MinWidth", "minWidth", "float64", "float32", GetFunctionTypeNone},
-		{"MinWidthPercent", "MinWidthPercent", "percent", "float64", "float32", GetFunctionTypeNone},
-		{"MinHeight", "MinHeight", "minHeight", "float64", "float32", GetFunctionTypeNone},
-		{"MinHeightPercent", "MinHeightPercent", "percent", "float64", "float32", GetFunctionTypeNone},
-		{"MaxWidth", "MaxWidth", "maxWidth", "float64", "float32", GetFunctionTypeNone},
-		{"MaxWidthPercent", "MaxWidthPercent", "percent", "float64", "float32", GetFunctionTypeNone},
-		{"MaxHeight", "MaxHeight", "maxHeight", "float64", "float32", GetFunctionTypeNone},
-		{"MaxHeightPercent", "MaxHeightPercent", "percent", "float64", "float32", GetFunctionTypeNone},
-		{"AspectRatio", "AspectRatio", "aspectRatio", "float64", "float32", GetFunctionTypeNone},
-	}
-
-	propsWithEdge := []Prop{
-		{"Margin", "Margin", "margin", "float64", "float32", GetFunctionTypeWithGet},
-		{"MarginPercent", "MarginPercent", "percent", "float64", "float32", GetFunctionTypeNone},
-		{"Padding", "Padding", "padding", "float64", "float32", GetFunctionTypeWithGet},
-		{"PaddingPercent", "PaddingPercent", "percent", "float64", "float32", GetFunctionTypeNone},
-		{"Border", "Border", "border", "float64", "float32", GetFunctionTypeNone},
-		{"Position", "Position", "position", "float64", "float32", GetFunctionTypeWithGet},
-		{"PositionPercent", "PositionPercent", "percent", "float64", "float32", GetFunctionTypeNone},
-	}
 
 	tmpl, err := template.ParseGlob(filepath.Join("generator", "*.tpl"))
 	if err != nil {
 		panic(err)
 	}
 
-	// Without Edge
-	for _, fileName := range []string{
-		"block.gen.go",
+	for _, name := range []string{
+		"block",
+		"page",
 	} {
-		renderTemplate(tmpl, fileName, props)
+		renderTemplate(tmpl, "container", name)
 	}
 
-	// With Edge
-	for _, fileName := range []string{
-		"block_edge.gen.go",
+	for _, name := range []string{
+		"block",
+		"text",
+		"text_multi_format",
+		"image",
 	} {
-		renderTemplate(tmpl, fileName, propsWithEdge)
+		renderTemplate(tmpl, "node", name)
 	}
 
+	for _, name := range []string{
+		"page",
+		"block",
+		"text",
+		"text_multi_format",
+		"image",
+	} {
+		renderTemplate(tmpl, "element", name)
+	}
 }
 
-func renderTemplate(tmpl *template.Template, fileName string, accessors []Prop) {
-	templateName := fmt.Sprintf("%s.tpl", fileName)
+func renderTemplate(tmpl *template.Template, group string, name string) {
+	templateName := fmt.Sprintf("%s.gen.go.tpl", group)
 
-	output, err := os.Create(fileName)
+	output, err := os.Create(fmt.Sprintf("%s_%s.gen.go", name, group))
 	if err != nil {
 		panic(err)
 	}
 
-	err = tmpl.ExecuteTemplate(output, templateName, accessors)
+	err = tmpl.ExecuteTemplate(
+		output,
+		templateName,
+		data{
+			Name: snakeToCamel(name),
+			Type: fmt.Sprintf("%s%s", upperFirst(snakeToCamel(name)), "Element")})
 	if err != nil {
 		panic(err)
 	}
+}
+
+func upperFirst(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return strings.ToUpper(string(s[0])) + s[1:]
+}
+
+func snakeToCamel(s string) string {
+	words := strings.Split(s, "_")
+
+	for i := 1; i < len(words); i++ {
+		if len(words[i]) > 0 {
+			r := []rune(words[i])
+			r[0] = unicode.ToTitle(r[0])
+			words[i] = string(r)
+		}
+	}
+
+	return strings.Join(words, "")
 }

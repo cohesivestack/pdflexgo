@@ -10,12 +10,12 @@ type defaultProps struct {
 	fontFamily string
 	fontStyle  FontStyle
 	fontSize   float64
-	fontColor  string
+	fontColor  rgba
 }
 
 type Pdf struct {
 	fpdf  *gofpdf.Fpdf
-	pages []*Page
+	pages []*PageElement
 
 	fontsLoaded  []FontLoadInformation
 	defaultProps *defaultProps
@@ -37,7 +37,7 @@ func NewPdf() *Pdf {
 	return pdf
 }
 
-func (pdf *Pdf) Pages(pages ...*Page) *Pdf {
+func (pdf *Pdf) Pages(pages ...*PageElement) *Pdf {
 	pdf.pages = append(pdf.pages, pages...)
 	return pdf
 }
@@ -163,7 +163,7 @@ func (pdf *Pdf) FontSize(size float64) *Pdf {
 	return pdf
 }
 
-func (pdf *Pdf) FontColor(color string) *Pdf {
-	pdf.defaultProps.fontColor = color
+func (pdf *Pdf) FontColor(red int, green int, blue int, alpha ...float64) *Pdf {
+	pdf.defaultProps.fontColor = getRgba(red, green, blue, alpha...)
 	return pdf
 }

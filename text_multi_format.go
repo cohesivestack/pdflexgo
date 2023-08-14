@@ -1,8 +1,6 @@
 package pdflexgo
 
 import (
-	"log"
-
 	"github.com/jung-kurt/gofpdf"
 	"github.com/kjk/flex"
 )
@@ -10,18 +8,18 @@ import (
 type textMultiFormatPart struct {
 	content    string
 	size       float64
-	color      string
+	color      rgba
 	fontStyle  FontStyle
 	fontFamily string
 }
 
 type TextMultiFormatElement struct {
-	abstractFlexElement
+	abstractElement
 
 	lineHeight *float64
 
 	size       float64
-	color      string
+	color      rgba
 	fontStyle  FontStyle
 	fontFamily string
 
@@ -35,11 +33,11 @@ func (element *TextMultiFormatElement) preRender(defaultProps *defaultProps, fpd
 	if element.fontStyle == "" {
 		element.fontStyle = defaultProps.fontStyle
 	}
-	if element.color == "" {
-		element.color = defaultProps.fontColor
-	}
 	if element.size == -1 {
 		element.size = defaultProps.fontSize
+	}
+	if equalColor(element.color, DefaultFontColor) {
+		element.color = defaultProps.fontColor
 	}
 
 	for _, part := range element.parts {
@@ -49,11 +47,11 @@ func (element *TextMultiFormatElement) preRender(defaultProps *defaultProps, fpd
 		if part.fontStyle == "" {
 			part.fontStyle = defaultProps.fontStyle
 		}
-		if part.color == "" {
-			part.color = defaultProps.fontColor
-		}
 		if part.size == -1 {
 			part.size = defaultProps.fontSize
+		}
+		if equalColor(part.color, DefaultFontColor) {
+			part.color = defaultProps.fontColor
 		}
 	}
 
@@ -85,10 +83,6 @@ func (element *TextMultiFormatElement) preRender(defaultProps *defaultProps, fpd
 			fpdf.Write(*element.lineHeight, part.content)
 		}
 
-		// if fpdf.GetY() == 0 && fpdf.GetX() < float64(width) {
-		// 	width = float32(fpdf.GetX())
-		// }
-
 		newHeight := fpdf.GetY() + *element.lineHeight
 
 		return flex.Size{Width: width, Height: float32(newHeight)}
@@ -101,6 +95,8 @@ func (block *TextMultiFormatElement) markRequiredAsDirty() {
 }
 
 func (element *TextMultiFormatElement) render(pdf *Pdf) {
+	element.renderElement(pdf)
+
 	fpdf := pdf.fpdf
 
 	fpdf.SetXY(
@@ -115,13 +111,13 @@ func (element *TextMultiFormatElement) render(pdf *Pdf) {
 	fpdf.SetMargins(float64(element.x()), float64(element.y()), marginRight)
 
 	for _, part := range element.parts {
-		r, g, b, err := hexToRGB(part.color)
-		if err != nil {
-			log.Fatal(err)
-		}
-		fpdf.SetTextColor(r, g, b)
+
+		fpdf.SetTextColor(part.color.red, part.color.green, part.color.blue)
+		fpdf.SetAlpha(part.color.alpha, "")
+
 		setFont(fpdf, part.fontFamily, part.fontStyle, part.size)
 		fpdf.Write(*element.lineHeight, part.content)
+		fpdf.SetAlpha(1, "")
 	}
 }
 
@@ -131,11 +127,6 @@ func (element *TextMultiFormatElement) addPart() {
 
 func (element *TextMultiFormatElement) Size(size float64) *TextMultiFormatElement {
 	element.parts[len(element.parts)-1].size = size
-	return element
-}
-
-func (element *TextMultiFormatElement) Color(color string) *TextMultiFormatElement {
-	element.parts[len(element.parts)-1].color = color
 	return element
 }
 

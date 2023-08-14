@@ -6,6 +6,8 @@ import (
 	"github.com/jung-kurt/gofpdf"
 )
 
+const DefaultFontSize = 11.0
+
 type FontLoadInformation struct {
 	fontFamily string
 	style      FontStyle
