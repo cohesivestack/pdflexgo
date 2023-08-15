@@ -42,6 +42,11 @@ func (text *TextElement) Size(size float64) *TextElement {
 	return text
 }
 
+func (text *TextElement) Color(red int, green int, blue int, alpha ...float64) *TextElement {
+	text.color = getRgba(red, green, blue, alpha...)
+	return text
+}
+
 func (text *TextElement) Thin() *TextElement {
 	text.fontStyle = FontStyleThin
 	return text
