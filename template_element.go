@@ -245,22 +245,22 @@ func (templateElement *TemplateElement) BackgroundColor(red int, green int, blue
 // BORDER COLOR
 
 func (templateElement *TemplateElement) BorderColorTop(red int, green int, blue int, alpha ...float64) *TemplateElement {
-	templateElement.borderColor[edgeTopIndex] = getRgba(red, green, blue, alpha...)
+	templateElement.borderColor[EdgeTop] = getRgba(red, green, blue, alpha...)
 	return templateElement
 }
 
 func (templateElement *TemplateElement) BorderColorRight(red int, green int, blue int, alpha ...float64) *TemplateElement {
-	templateElement.borderColor[edgeRightIndex] = getRgba(red, green, blue, alpha...)
+	templateElement.borderColor[EdgeRight] = getRgba(red, green, blue, alpha...)
 	return templateElement
 }
 
 func (templateElement *TemplateElement) BorderColorBottom(red int, green int, blue int, alpha ...float64) *TemplateElement {
-	templateElement.borderColor[edgeBottomIndex] = getRgba(red, green, blue, alpha...)
+	templateElement.borderColor[EdgeBottom] = getRgba(red, green, blue, alpha...)
 	return templateElement
 }
 
 func (templateElement *TemplateElement) BorderColorLeft(red int, green int, blue int, alpha ...float64) *TemplateElement {
-	templateElement.borderColor[edgeLeftIndex] = getRgba(red, green, blue, alpha...)
+	templateElement.borderColor[EdgeLeft] = getRgba(red, green, blue, alpha...)
 	return templateElement
 }
 

@@ -240,22 +240,22 @@ func (page *PageElement) BackgroundColor(red int, green int, blue int, alpha ...
 // BORDER COLOR
 
 func (page *PageElement) BorderColorTop(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.borderColor[edgeTopIndex] = getRgba(red, green, blue, alpha...)
+	page.borderColor[EdgeTop] = getRgba(red, green, blue, alpha...)
 	return page
 }
 
 func (page *PageElement) BorderColorRight(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.borderColor[edgeRightIndex] = getRgba(red, green, blue, alpha...)
+	page.borderColor[EdgeRight] = getRgba(red, green, blue, alpha...)
 	return page
 }
 
 func (page *PageElement) BorderColorBottom(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.borderColor[edgeBottomIndex] = getRgba(red, green, blue, alpha...)
+	page.borderColor[EdgeBottom] = getRgba(red, green, blue, alpha...)
 	return page
 }
 
 func (page *PageElement) BorderColorLeft(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.borderColor[edgeLeftIndex] = getRgba(red, green, blue, alpha...)
+	page.borderColor[EdgeLeft] = getRgba(red, green, blue, alpha...)
 	return page
 }
 

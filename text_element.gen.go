@@ -240,22 +240,22 @@ func (text *TextElement) BackgroundColor(red int, green int, blue int, alpha ...
 // BORDER COLOR
 
 func (text *TextElement) BorderColorTop(red int, green int, blue int, alpha ...float64) *TextElement {
-	text.borderColor[edgeTopIndex] = getRgba(red, green, blue, alpha...)
+	text.borderColor[EdgeTop] = getRgba(red, green, blue, alpha...)
 	return text
 }
 
 func (text *TextElement) BorderColorRight(red int, green int, blue int, alpha ...float64) *TextElement {
-	text.borderColor[edgeRightIndex] = getRgba(red, green, blue, alpha...)
+	text.borderColor[EdgeRight] = getRgba(red, green, blue, alpha...)
 	return text
 }
 
 func (text *TextElement) BorderColorBottom(red int, green int, blue int, alpha ...float64) *TextElement {
-	text.borderColor[edgeBottomIndex] = getRgba(red, green, blue, alpha...)
+	text.borderColor[EdgeBottom] = getRgba(red, green, blue, alpha...)
 	return text
 }
 
 func (text *TextElement) BorderColorLeft(red int, green int, blue int, alpha ...float64) *TextElement {
-	text.borderColor[edgeLeftIndex] = getRgba(red, green, blue, alpha...)
+	text.borderColor[EdgeLeft] = getRgba(red, green, blue, alpha...)
 	return text
 }
 

@@ -240,22 +240,22 @@ func (image *ImageElement) BackgroundColor(red int, green int, blue int, alpha .
 // BORDER COLOR
 
 func (image *ImageElement) BorderColorTop(red int, green int, blue int, alpha ...float64) *ImageElement {
-	image.borderColor[edgeTopIndex] = getRgba(red, green, blue, alpha...)
+	image.borderColor[EdgeTop] = getRgba(red, green, blue, alpha...)
 	return image
 }
 
 func (image *ImageElement) BorderColorRight(red int, green int, blue int, alpha ...float64) *ImageElement {
-	image.borderColor[edgeRightIndex] = getRgba(red, green, blue, alpha...)
+	image.borderColor[EdgeRight] = getRgba(red, green, blue, alpha...)
 	return image
 }
 
 func (image *ImageElement) BorderColorBottom(red int, green int, blue int, alpha ...float64) *ImageElement {
-	image.borderColor[edgeBottomIndex] = getRgba(red, green, blue, alpha...)
+	image.borderColor[EdgeBottom] = getRgba(red, green, blue, alpha...)
 	return image
 }
 
 func (image *ImageElement) BorderColorLeft(red int, green int, blue int, alpha ...float64) *ImageElement {
-	image.borderColor[edgeLeftIndex] = getRgba(red, green, blue, alpha...)
+	image.borderColor[EdgeLeft] = getRgba(red, green, blue, alpha...)
 	return image
 }
 

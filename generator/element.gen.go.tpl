@@ -240,22 +240,22 @@ func ({{ .Name }} *{{ .Type }}) BackgroundColor(red int, green int, blue int, al
 // BORDER COLOR
 
 func ({{ .Name }} *{{ .Type }}) BorderColorTop(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.borderColor[edgeTopIndex] = getRgba(red, green, blue, alpha...)
+	{{ .Name }}.borderColor[EdgeTop] = getRgba(red, green, blue, alpha...)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderColorRight(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.borderColor[edgeRightIndex] = getRgba(red, green, blue, alpha...)
+	{{ .Name }}.borderColor[EdgeRight] = getRgba(red, green, blue, alpha...)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderColorBottom(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.borderColor[edgeBottomIndex] = getRgba(red, green, blue, alpha...)
+	{{ .Name }}.borderColor[EdgeBottom] = getRgba(red, green, blue, alpha...)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderColorLeft(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.borderColor[edgeLeftIndex] = getRgba(red, green, blue, alpha...)
+	{{ .Name }}.borderColor[EdgeLeft] = getRgba(red, green, blue, alpha...)
 	return {{ .Name }}
 }
 

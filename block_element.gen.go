@@ -240,22 +240,22 @@ func (block *BlockElement) BackgroundColor(red int, green int, blue int, alpha .
 // BORDER COLOR
 
 func (block *BlockElement) BorderColorTop(red int, green int, blue int, alpha ...float64) *BlockElement {
-	block.borderColor[edgeTopIndex] = getRgba(red, green, blue, alpha...)
+	block.borderColor[EdgeTop] = getRgba(red, green, blue, alpha...)
 	return block
 }
 
 func (block *BlockElement) BorderColorRight(red int, green int, blue int, alpha ...float64) *BlockElement {
-	block.borderColor[edgeRightIndex] = getRgba(red, green, blue, alpha...)
+	block.borderColor[EdgeRight] = getRgba(red, green, blue, alpha...)
 	return block
 }
 
 func (block *BlockElement) BorderColorBottom(red int, green int, blue int, alpha ...float64) *BlockElement {
-	block.borderColor[edgeBottomIndex] = getRgba(red, green, blue, alpha...)
+	block.borderColor[EdgeBottom] = getRgba(red, green, blue, alpha...)
 	return block
 }
 
 func (block *BlockElement) BorderColorLeft(red int, green int, blue int, alpha ...float64) *BlockElement {
-	block.borderColor[edgeLeftIndex] = getRgba(red, green, blue, alpha...)
+	block.borderColor[EdgeLeft] = getRgba(red, green, blue, alpha...)
 	return block
 }
 

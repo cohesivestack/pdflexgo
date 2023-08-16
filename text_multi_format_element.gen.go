@@ -240,22 +240,22 @@ func (textMultiFormat *TextMultiFormatElement) BackgroundColor(red int, green in
 // BORDER COLOR
 
 func (textMultiFormat *TextMultiFormatElement) BorderColorTop(red int, green int, blue int, alpha ...float64) *TextMultiFormatElement {
-	textMultiFormat.borderColor[edgeTopIndex] = getRgba(red, green, blue, alpha...)
+	textMultiFormat.borderColor[EdgeTop] = getRgba(red, green, blue, alpha...)
 	return textMultiFormat
 }
 
 func (textMultiFormat *TextMultiFormatElement) BorderColorRight(red int, green int, blue int, alpha ...float64) *TextMultiFormatElement {
-	textMultiFormat.borderColor[edgeRightIndex] = getRgba(red, green, blue, alpha...)
+	textMultiFormat.borderColor[EdgeRight] = getRgba(red, green, blue, alpha...)
 	return textMultiFormat
 }
 
 func (textMultiFormat *TextMultiFormatElement) BorderColorBottom(red int, green int, blue int, alpha ...float64) *TextMultiFormatElement {
-	textMultiFormat.borderColor[edgeBottomIndex] = getRgba(red, green, blue, alpha...)
+	textMultiFormat.borderColor[EdgeBottom] = getRgba(red, green, blue, alpha...)
 	return textMultiFormat
 }
 
 func (textMultiFormat *TextMultiFormatElement) BorderColorLeft(red int, green int, blue int, alpha ...float64) *TextMultiFormatElement {
-	textMultiFormat.borderColor[edgeLeftIndex] = getRgba(red, green, blue, alpha...)
+	textMultiFormat.borderColor[EdgeLeft] = getRgba(red, green, blue, alpha...)
 	return textMultiFormat
 }
 

@@ -7,10 +7,6 @@ import (
 )
 
 const edgeCount = 4
-const edgeTopIndex = 0
-const edgeRightIndex = 1
-const edgeBottomIndex = 2
-const edgeLeftIndex = 3
 
 type BlockElement struct {
 	abstractElement
