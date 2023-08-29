@@ -3,6 +3,16 @@ package pdflexgo
 
 import "github.com/kjk/flex"
 
+func (text *TextElement) Width(width float64) *TextElement {
+	text.getFlexNode().StyleSetWidth(float32(width))
+	return text
+}
+
+func (text *TextElement) Height(height float64) *TextElement {
+	text.getFlexNode().StyleSetHeight(float32(height))
+	return text
+}
+
 func (text *TextElement) WidthPercent(width float64) *TextElement {
 	text.getFlexNode().StyleSetWidthPercent(float32(width))
 	return text

@@ -10,8 +10,9 @@ import (
 )
 
 type data struct {
-	Name string
-	Type string
+	Name      string
+	Type      string
+	Delegated string // Used only for page
 }
 
 func main() {
@@ -55,13 +56,18 @@ func renderTemplate(tmpl *template.Template, group string, name string) {
 	if err != nil {
 		panic(err)
 	}
+	_data := data{
+		Name: snakeToCamel(name),
+		Type: fmt.Sprintf("%s%s", upperFirst(snakeToCamel(name)), "Element")}
+
+	if name == "page" {
+		_data.Delegated = ".body"
+	}
 
 	err = tmpl.ExecuteTemplate(
 		output,
 		templateName,
-		data{
-			Name: snakeToCamel(name),
-			Type: fmt.Sprintf("%s%s", upperFirst(snakeToCamel(name)), "Element")})
+		_data)
 	if err != nil {
 		panic(err)
 	}

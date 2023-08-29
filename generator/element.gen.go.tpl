@@ -5,31 +5,22 @@ import (
 	"github.com/kjk/flex"
 )
 
-func ({{ .Name }} *{{ .Type }}) Width(width float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetWidth(float32(width))
-	return {{ .Name }}
-}
-func ({{ .Name }} *{{ .Type }}) Height(height float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetHeight(float32(height))
-	return {{ .Name }}
-}
-
 // MARGIN
 
 func ({{ .Name }} *{{ .Type }}) MarginTop(margin float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMargin(flex.EdgeTop, float32(margin))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMargin(flex.EdgeTop, float32(margin))
 	return {{ .Name }}
 }
 func ({{ .Name }} *{{ .Type }}) MarginRight(margin float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMargin(flex.EdgeRight, float32(margin))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMargin(flex.EdgeRight, float32(margin))
 	return {{ .Name }}
 }
 func ({{ .Name }} *{{ .Type }}) MarginBottom(margin float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMargin(flex.EdgeBottom, float32(margin))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMargin(flex.EdgeBottom, float32(margin))
 	return {{ .Name }}
 }
 func ({{ .Name }} *{{ .Type }}) MarginLeft(margin float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMargin(flex.EdgeLeft, float32(margin))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMargin(flex.EdgeLeft, float32(margin))
 	return {{ .Name }}
 }
 func ({{ .Name }} *{{ .Type }}) MarginHorizontal(margin float64) *{{ .Type }} {
@@ -37,15 +28,15 @@ func ({{ .Name }} *{{ .Type }}) MarginHorizontal(margin float64) *{{ .Type }} {
 	return {{ .Name }}
 }
 func ({{ .Name }} *{{ .Type }}) MarginVertical(margin float64) *{{ .Type }} {
-	{{ .Name }}.MarginTop(margin).MarginBottom(margin)
+	{{ .Name }}{{ .Delegated }}.MarginTop(margin).MarginBottom(margin)
 	return {{ .Name }}
 }
 func ({{ .Name }} *{{ .Type }}) MarginAll(margin float64) *{{ .Type }} {
-	{{ .Name }}.MarginHorizontal(margin).MarginVertical(margin)
+	{{ .Name }}{{ .Delegated }}.MarginHorizontal(margin).MarginVertical(margin)
 	return {{ .Name }}
 }
 func ({{ .Name }} *{{ .Type }}) Margin(top float64, right float64, bottom float64, left float64) *{{ .Type }} {
-	{{ .Name }}.
+	{{ .Name }}{{ .Delegated }}.
 		MarginTop(top).
 		MarginRight(right).
 		MarginBottom(bottom).
@@ -56,37 +47,37 @@ func ({{ .Name }} *{{ .Type }}) Margin(top float64, right float64, bottom float6
 // MARGIN PERCENT
 
 func ({{ .Name }} *{{ .Type }}) MarginPercentTop(margin float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMarginPercent(flex.EdgeTop, float32(margin))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMarginPercent(flex.EdgeTop, float32(margin))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MarginPercentRight(margin float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMarginPercent(flex.EdgeRight, float32(margin))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMarginPercent(flex.EdgeRight, float32(margin))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MarginPercentBottom(margin float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMarginPercent(flex.EdgeBottom, float32(margin))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMarginPercent(flex.EdgeBottom, float32(margin))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MarginPercentLeft(margin float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMarginPercent(flex.EdgeLeft, float32(margin))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMarginPercent(flex.EdgeLeft, float32(margin))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MarginPercentHorizontal(margin float64) *{{ .Type }} {
-	{{ .Name }}.MarginPercentLeft(margin).MarginPercentRight(margin)
+	{{ .Name }}{{ .Delegated }}.MarginPercentLeft(margin).MarginPercentRight(margin)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MarginPercentVertical(margin float64) *{{ .Type }} {
-	{{ .Name }}.MarginPercentTop(margin).MarginPercentBottom(margin)
+	{{ .Name }}{{ .Delegated }}.MarginPercentTop(margin).MarginPercentBottom(margin)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MarginPercentAll(margin float64) *{{ .Type }} {
-	{{ .Name }}.MarginPercentHorizontal(margin).MarginPercentVertical(margin)
+	{{ .Name }}{{ .Delegated }}.MarginPercentHorizontal(margin).MarginPercentVertical(margin)
 	return {{ .Name }}
 }
 
@@ -95,42 +86,42 @@ func ({{ .Name }} *{{ .Type }}) MarginPercentAll(margin float64) *{{ .Type }} {
 // For Padding
 
 func ({{ .Name }} *{{ .Type }}) PaddingTop(padding float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPadding(flex.EdgeTop, float32(padding))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPadding(flex.EdgeTop, float32(padding))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingRight(padding float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPadding(flex.EdgeRight, float32(padding))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPadding(flex.EdgeRight, float32(padding))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingBottom(padding float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPadding(flex.EdgeBottom, float32(padding))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPadding(flex.EdgeBottom, float32(padding))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingLeft(padding float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPadding(flex.EdgeLeft, float32(padding))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPadding(flex.EdgeLeft, float32(padding))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingHorizontal(padding float64) *{{ .Type }} {
-	{{ .Name }}.PaddingLeft(padding).PaddingRight(padding)
+	{{ .Name }}{{ .Delegated }}.PaddingLeft(padding).PaddingRight(padding)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingVertical(padding float64) *{{ .Type }} {
-	{{ .Name }}.PaddingTop(padding).PaddingBottom(padding)
+	{{ .Name }}{{ .Delegated }}.PaddingTop(padding).PaddingBottom(padding)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingAll(padding float64) *{{ .Type }} {
-	{{ .Name }}.PaddingHorizontal(padding).PaddingVertical(padding)
+	{{ .Name }}{{ .Delegated }}.PaddingHorizontal(padding).PaddingVertical(padding)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) Padding(top float64, right float64, bottom float64, left float64) *{{ .Type }} {
-	{{ .Name }}.
+	{{ .Name }}{{ .Delegated }}.
 		PaddingTop(top).
 		PaddingRight(right).
 		PaddingBottom(bottom).
@@ -141,42 +132,42 @@ func ({{ .Name }} *{{ .Type }}) Padding(top float64, right float64, bottom float
 // PADDING PERCENT
 
 func ({{ .Name }} *{{ .Type }}) PaddingPercentTop(padding float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPaddingPercent(flex.EdgeTop, float32(padding))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPaddingPercent(flex.EdgeTop, float32(padding))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingPercentRight(padding float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPaddingPercent(flex.EdgeRight, float32(padding))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPaddingPercent(flex.EdgeRight, float32(padding))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingPercentBottom(padding float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPaddingPercent(flex.EdgeBottom, float32(padding))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPaddingPercent(flex.EdgeBottom, float32(padding))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingPercentLeft(padding float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPaddingPercent(flex.EdgeLeft, float32(padding))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPaddingPercent(flex.EdgeLeft, float32(padding))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingPercentHorizontal(padding float64) *{{ .Type }} {
-	{{ .Name }}.PaddingPercentLeft(padding).PaddingPercentRight(padding)
+	{{ .Name }}{{ .Delegated }}.PaddingPercentLeft(padding).PaddingPercentRight(padding)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingPercentVertical(padding float64) *{{ .Type }} {
-	{{ .Name }}.PaddingPercentTop(padding).PaddingPercentBottom(padding)
+	{{ .Name }}{{ .Delegated }}.PaddingPercentTop(padding).PaddingPercentBottom(padding)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingPercentAll(padding float64) *{{ .Type }} {
-	{{ .Name }}.PaddingPercentHorizontal(padding).PaddingPercentVertical(padding)
+	{{ .Name }}{{ .Delegated }}.PaddingPercentHorizontal(padding).PaddingPercentVertical(padding)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PaddingPercent(top float64, right float64, bottom float64, left float64) *{{ .Type }} {
-	{{ .Name }}.
+	{{ .Name }}{{ .Delegated }}.
 		PaddingPercentTop(top).
 		PaddingPercentRight(right).
 		PaddingPercentBottom(bottom).
@@ -187,42 +178,42 @@ func ({{ .Name }} *{{ .Type }}) PaddingPercent(top float64, right float64, botto
 // BORDERWIDTH
 
 func ({{ .Name }} *{{ .Type }}) BorderWidthTop(borderWidth float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetBorder(flex.EdgeTop, float32(borderWidth))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetBorder(flex.EdgeTop, float32(borderWidth))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderWidthRight(borderWidth float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetBorder(flex.EdgeRight, float32(borderWidth))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetBorder(flex.EdgeRight, float32(borderWidth))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderWidthBottom(borderWidth float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetBorder(flex.EdgeBottom, float32(borderWidth))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetBorder(flex.EdgeBottom, float32(borderWidth))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderWidthLeft(borderWidth float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetBorder(flex.EdgeLeft, float32(borderWidth))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetBorder(flex.EdgeLeft, float32(borderWidth))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderWidthHorizontal(borderWidth float64) *{{ .Type }} {
-	{{ .Name }}.BorderWidthLeft(borderWidth).BorderWidthRight(borderWidth)
+	{{ .Name }}{{ .Delegated }}.BorderWidthLeft(borderWidth).BorderWidthRight(borderWidth)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderWidthVertical(borderWidth float64) *{{ .Type }} {
-	{{ .Name }}.BorderWidthTop(borderWidth).BorderWidthBottom(borderWidth)
+	{{ .Name }}{{ .Delegated }}.BorderWidthTop(borderWidth).BorderWidthBottom(borderWidth)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderWidthAll(borderWidth float64) *{{ .Type }} {
-	{{ .Name }}.BorderWidthHorizontal(borderWidth).BorderWidthVertical(borderWidth)
+	{{ .Name }}{{ .Delegated }}.BorderWidthHorizontal(borderWidth).BorderWidthVertical(borderWidth)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderWidth(top float64, right float64, bottom float64, left float64) *{{ .Type }} {
-	{{ .Name }}.
+	{{ .Name }}{{ .Delegated }}.
 		BorderWidthTop(top).
 		BorderWidthRight(right).
 		BorderWidthBottom(bottom).
@@ -233,48 +224,48 @@ func ({{ .Name }} *{{ .Type }}) BorderWidth(top float64, right float64, bottom f
 // BACKGROUND
 
 func ({{ .Name }} *{{ .Type }}) BackgroundColor(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.backgroundColor = getRgba(red, green, blue, alpha...)
+	{{ .Name }}{{ .Delegated }}.backgroundColor = getRgba(red, green, blue, alpha...)
 	return {{ .Name }}
 }
 
 // BORDER COLOR
 
 func ({{ .Name }} *{{ .Type }}) BorderColorTop(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.borderColor[EdgeTop] = getRgba(red, green, blue, alpha...)
+	{{ .Name }}{{ .Delegated }}.borderColor[EdgeTop] = getRgba(red, green, blue, alpha...)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderColorRight(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.borderColor[EdgeRight] = getRgba(red, green, blue, alpha...)
+	{{ .Name }}{{ .Delegated }}.borderColor[EdgeRight] = getRgba(red, green, blue, alpha...)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderColorBottom(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.borderColor[EdgeBottom] = getRgba(red, green, blue, alpha...)
+	{{ .Name }}{{ .Delegated }}.borderColor[EdgeBottom] = getRgba(red, green, blue, alpha...)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderColorLeft(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.borderColor[EdgeLeft] = getRgba(red, green, blue, alpha...)
+	{{ .Name }}{{ .Delegated }}.borderColor[EdgeLeft] = getRgba(red, green, blue, alpha...)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderColorHorizontal(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.
+	{{ .Name }}{{ .Delegated }}.
 		BorderColorLeft(red, green, blue, alpha...).
 		BorderColorRight(red, green, blue, alpha...)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderColorVertical(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.
+	{{ .Name }}{{ .Delegated }}.
 		BorderColorTop(red, green, blue, alpha...).
 		BorderColorBottom(red, green, blue, alpha...)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) BorderColorAll(red int, green int, blue int, alpha ...float64) *{{ .Type }} {
-	{{ .Name }}.
+	{{ .Name }}{{ .Delegated }}.
 		BorderColorHorizontal(red, green, blue, alpha...).
 		BorderColorVertical(red, green, blue, alpha...)
 	return {{ .Name }}

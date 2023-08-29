@@ -1,5 +1,7 @@
 package pdflexgo
 
+//go:generate go run generator/main.go
+
 import (
 	"io"
 
@@ -13,12 +15,17 @@ type defaultProps struct {
 	fontColor  rgba
 }
 
+type HeaderFooterFunc = func(pageNumber int, pageName string) (content Node)
+
 type Pdf struct {
 	fpdf  *gofpdf.Fpdf
 	pages []*PageElement
 
 	fontsLoaded  []FontLoadInformation
 	defaultProps *defaultProps
+
+	header HeaderFooterFunc
+	footer HeaderFooterFunc
 }
 
 func NewPdf() *Pdf {
@@ -34,6 +41,18 @@ func NewPdf() *Pdf {
 		},
 	}
 
+	pdf.fpdf.SetAutoPageBreak(false, 0)
+
+	return pdf
+}
+
+func (pdf *Pdf) Header(header HeaderFooterFunc) *Pdf {
+	pdf.header = header
+	return pdf
+}
+
+func (pdf *Pdf) Footer(footer HeaderFooterFunc) *Pdf {
+	pdf.footer = footer
 	return pdf
 }
 
@@ -44,8 +63,10 @@ func (pdf *Pdf) Pages(pages ...*PageElement) *Pdf {
 
 func (pdf *Pdf) Render() *Pdf {
 
+	pageNumber := 1
 	for _, page := range pdf.pages {
-		page.render(pdf)
+		page.render(pdf, pageNumber)
+		pageNumber++
 	}
 
 	return pdf

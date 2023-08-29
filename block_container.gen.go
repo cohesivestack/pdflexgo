@@ -23,15 +23,18 @@ func (block *BlockElement) Direction(direction Direction) *BlockElement {
 }
 
 func (block *BlockElement) DirectionInherit() *BlockElement {
-	return block.Direction(DirectionInherit)
+	block.Direction(DirectionInherit)
+	return block
 }
 
 func (block *BlockElement) DirectionLTR() *BlockElement {
-	return block.Direction(DirectionLTR)
+	block.Direction(DirectionLTR)
+	return block
 }
 
 func (block *BlockElement) DirectionRTL() *BlockElement {
-	return block.Direction(DirectionRTL)
+	block.Direction(DirectionRTL)
+	return block
 }
 
 // FLEX DIRECTION
@@ -42,19 +45,23 @@ func (block *BlockElement) FlexDirection(direction FlexDirection) *BlockElement 
 }
 
 func (block *BlockElement) FlexDirectionColumn() *BlockElement {
-	return block.FlexDirection(FlexDirectionColumn)
+	block.FlexDirection(FlexDirectionColumn)
+	return block
 }
 
 func (block *BlockElement) FlexDirectionColumnReverse() *BlockElement {
-	return block.FlexDirection(FlexDirectionColumnReverse)
+	block.FlexDirection(FlexDirectionColumnReverse)
+	return block
 }
 
 func (block *BlockElement) FlexDirectionRow() *BlockElement {
-	return block.FlexDirection(FlexDirectionRow)
+	block.FlexDirection(FlexDirectionRow)
+	return block
 }
 
 func (block *BlockElement) FlexDirectionRowReverse() *BlockElement {
-	return block.FlexDirection(FlexDirectionRowReverse)
+	block.FlexDirection(FlexDirectionRowReverse)
+	return block
 }
 
 // JustifyContent
@@ -64,23 +71,28 @@ func (block *BlockElement) JustifyContent(justification Justify) *BlockElement {
 }
 
 func (block *BlockElement) JustifyContentStart() *BlockElement {
-	return block.JustifyContent(JustifyStart)
+	block.JustifyContent(JustifyStart)
+	return block
 }
 
 func (block *BlockElement) JustifyContentCenter() *BlockElement {
-	return block.JustifyContent(JustifyCenter)
+	block.JustifyContent(JustifyCenter)
+	return block
 }
 
 func (block *BlockElement) JustifyContentEnd() *BlockElement {
-	return block.JustifyContent(JustifyEnd)
+	block.JustifyContent(JustifyEnd)
+	return block
 }
 
 func (block *BlockElement) JustifyContentSpaceBetween() *BlockElement {
-	return block.JustifyContent(JustifySpaceBetween)
+	block.JustifyContent(JustifySpaceBetween)
+	return block
 }
 
 func (block *BlockElement) JustifyContentSpaceAround() *BlockElement {
-	return block.JustifyContent(JustifySpaceAround)
+	block.JustifyContent(JustifySpaceAround)
+	return block
 }
 
 // ALIGN CONTENT
@@ -185,13 +197,16 @@ func (block *BlockElement) FlexWrapValue(wrapValue Wrap) *BlockElement {
 }
 
 func (block *BlockElement) FlexNoWrap() *BlockElement {
-	return block.FlexWrapValue(WrapNoWrap)
+	block.FlexWrapValue(WrapNoWrap)
+	return block
 }
 
 func (block *BlockElement) FlexWrap() *BlockElement {
-	return block.FlexWrapValue(WrapWrap)
+	block.FlexWrapValue(WrapWrap)
+	return block
 }
 
 func (block *BlockElement) FlexWrapReverse() *BlockElement {
-	return block.FlexWrapValue(WrapWrapReverse)
+	block.FlexWrapValue(WrapWrapReverse)
+	return block
 }

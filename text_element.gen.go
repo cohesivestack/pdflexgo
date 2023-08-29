@@ -5,15 +5,6 @@ import (
 	"github.com/kjk/flex"
 )
 
-func (text *TextElement) Width(width float64) *TextElement {
-	text.getFlexNode().StyleSetWidth(float32(width))
-	return text
-}
-func (text *TextElement) Height(height float64) *TextElement {
-	text.getFlexNode().StyleSetHeight(float32(height))
-	return text
-}
-
 // MARGIN
 
 func (text *TextElement) MarginTop(margin float64) *TextElement {

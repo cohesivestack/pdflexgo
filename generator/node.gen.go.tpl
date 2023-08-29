@@ -3,24 +3,34 @@ package pdflexgo
 
 import "github.com/kjk/flex"
 
+func ({{ .Name }} *{{ .Type }}) Width(width float64) *{{ .Type }} {
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetWidth(float32(width))
+	return {{ .Name }}
+}
+
+func ({{ .Name }} *{{ .Type }}) Height(height float64) *{{ .Type }} {
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetHeight(float32(height))
+	return {{ .Name }}
+}
+
 func ({{ .Name }} *{{ .Type }}) WidthPercent(width float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetWidthPercent(float32(width))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetWidthPercent(float32(width))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) HeightPercent(height float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetHeightPercent(float32(height))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetHeightPercent(float32(height))
 
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) WidthAuto() *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetWidthAuto()
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetWidthAuto()
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) HeightAuto() *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetHeightAuto()
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetHeightAuto()
 
 	return {{ .Name }}
 }
@@ -28,155 +38,155 @@ func ({{ .Name }} *{{ .Type }}) HeightAuto() *{{ .Type }} {
 // ALIGN SELF
 
 func ({{ .Name }} *{{ .Type }}) AlignSelfType(align Align) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetAlignSelf(flex.Align(align))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetAlignSelf(flex.Align(align))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignSelfAuto() *{{ .Type }} {
-	{{ .Name }}.AlignSelfType(AlignAuto)
+	{{ .Name }}{{ .Delegated }}.AlignSelfType(AlignAuto)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignSelfStart() *{{ .Type }} {
-	{{ .Name }}.AlignSelfType(AlignStart)
+	{{ .Name }}{{ .Delegated }}.AlignSelfType(AlignStart)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignSelfCenter() *{{ .Type }} {
-	{{ .Name }}.AlignSelfType(AlignCenter)
+	{{ .Name }}{{ .Delegated }}.AlignSelfType(AlignCenter)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignSelfEnd() *{{ .Type }} {
-	{{ .Name }}.AlignSelfType(AlignEnd)
+	{{ .Name }}{{ .Delegated }}.AlignSelfType(AlignEnd)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignSelfStretch() *{{ .Type }} {
-	{{ .Name }}.AlignSelfType(AlignStretch)
+	{{ .Name }}{{ .Delegated }}.AlignSelfType(AlignStretch)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignSelfBaseline() *{{ .Type }} {
-	{{ .Name }}.AlignSelfType(AlignBaseline)
+	{{ .Name }}{{ .Delegated }}.AlignSelfType(AlignBaseline)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignSelfSpaceBetween() *{{ .Type }} {
-	{{ .Name }}.AlignSelfType(AlignSpaceBetween)
+	{{ .Name }}{{ .Delegated }}.AlignSelfType(AlignSpaceBetween)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignSelfSpaceAround() *{{ .Type }} {
-	{{ .Name }}.AlignSelfType(AlignSpaceAround)
+	{{ .Name }}{{ .Delegated }}.AlignSelfType(AlignSpaceAround)
 	return {{ .Name }}
 }
 
 // FLEX FUNCTIONS
 
 func ({{ .Name }} *{{ .Type }}) FlexGrow(flexGrow float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetFlexGrow(float32(flexGrow))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetFlexGrow(float32(flexGrow))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexShrink(flexShrink float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetFlexShrink(float32(flexShrink))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetFlexShrink(float32(flexShrink))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexBasis(flexBasis float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetFlexBasis(float32(flexBasis))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetFlexBasis(float32(flexBasis))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexBasisPercent(flexBasisPercent float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetFlexBasisPercent(float32(flexBasisPercent))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetFlexBasisPercent(float32(flexBasisPercent))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexBasisAuto() *{{ .Type }} {
-	flex.NodeStyleSetFlexBasisAuto({{ .Name }}.getFlexNode())
+	flex.NodeStyleSetFlexBasisAuto({{ .Name }}{{ .Delegated }}.getFlexNode())
 	return {{ .Name }}
 }
 
 
 func ({{ .Name }} *{{ .Type }}) FlexAuto() *{{ .Type }} {
-	return {{ .Name }}.
+	return {{ .Name }}{{ .Delegated }}.
 		FlexGrow(1).
 		FlexShrink(1).
 		FlexBasisAuto()
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexNone() *{{ .Type }} {
-	return {{ .Name }}.
+	return {{ .Name }}{{ .Delegated }}.
 		FlexGrow(0).
 		FlexShrink(0).
 		FlexBasisAuto()
 }
 
 func ({{ .Name }} *{{ .Type }}) MinWidth(minWidth float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMinWidth(float32(minWidth))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMinWidth(float32(minWidth))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MinWidthPercent(minWidthPercent float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMinWidthPercent(float32(minWidthPercent))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMinWidthPercent(float32(minWidthPercent))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MinHeight(minHeight float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMinHeight(float32(minHeight))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMinHeight(float32(minHeight))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MinHeightPercent(minHeightPercent float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMinHeightPercent(float32(minHeightPercent))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMinHeightPercent(float32(minHeightPercent))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MaxWidth(maxWidth float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMaxWidth(float32(maxWidth))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMaxWidth(float32(maxWidth))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MaxWidthPercent(maxWidthPercent float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMaxWidthPercent(float32(maxWidthPercent))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMaxWidthPercent(float32(maxWidthPercent))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MaxHeight(maxHeight float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMaxHeight(float32(maxHeight))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMaxHeight(float32(maxHeight))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) MaxHeightPercent(maxHeightPercent float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetMaxHeightPercent(float32(maxHeightPercent))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetMaxHeightPercent(float32(maxHeightPercent))
 	return {{ .Name }}
 }
 
 // ASPECT RATIO
 
 func ({{ .Name }} *{{ .Type }}) AspectRatio(ratio float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetAspectRatio(float32(ratio))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetAspectRatio(float32(ratio))
 	return {{ .Name }}
 }
 
 // POSITION TYPE
 
 func ({{ .Name }} *{{ .Type }}) PositionType(_type PositionType) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPositionType(flex.PositionType(_type))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPositionType(flex.PositionType(_type))
 
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PositionTypeRelative() *{{ .Type }} {
-	{{ .Name }}.PositionType(PositionTypeRelative)
+	{{ .Name }}{{ .Delegated }}.PositionType(PositionTypeRelative)
 
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PositionTypeAbsolute() *{{ .Type }} {
-	{{ .Name }}.PositionType(PositionTypeAbsolute)
+	{{ .Name }}{{ .Delegated }}.PositionType(PositionTypeAbsolute)
 
 	return {{ .Name }}
 }
@@ -184,34 +194,34 @@ func ({{ .Name }} *{{ .Type }}) PositionTypeAbsolute() *{{ .Type }} {
 // POSITION  TYPE
 
 func ({{ .Name }} *{{ .Type }}) Position(_type PositionType) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPositionType(flex.PositionType(_type))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPositionType(flex.PositionType(_type))
 	return {{ .Name }}
 }
 
 // POSITION
 
 func ({{ .Name }} *{{ .Type }}) PositionTop(position float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPosition(flex.EdgeTop, float32(position))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPosition(flex.EdgeTop, float32(position))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PositionRight(position float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPosition(flex.EdgeRight, float32(position))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPosition(flex.EdgeRight, float32(position))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PositionBottom(position float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPosition(flex.EdgeBottom, float32(position))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPosition(flex.EdgeBottom, float32(position))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PositionLeft(position float64) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetPosition(flex.EdgeLeft, float32(position))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetPosition(flex.EdgeLeft, float32(position))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) PositionAll(position float64) *{{ .Type }} {
-	{{ .Name }}.
+	{{ .Name }}{{ .Delegated }}.
 		PositionTop(position).
 		PositionRight(position).
 		PositionBottom(position).

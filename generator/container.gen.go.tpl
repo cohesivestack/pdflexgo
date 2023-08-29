@@ -8,8 +8,8 @@ import "github.com/kjk/flex"
 func ({{ .Name }} *{{ .Type }}) Children(children ...Node) *{{ .Type }} {
 
 	for _, child := range children {
-		{{ .Name }}.getFlexNode().InsertChild(child.getFlexNode(), len({{ .Name }}.getFlexNode().Children))
-		{{ .Name }}.children = append({{ .Name }}.children, child)
+		{{ .Name }}{{ .Delegated }}.getFlexNode().InsertChild(child.getFlexNode(), len({{ .Name }}{{ .Delegated }}.getFlexNode().Children))
+		{{ .Name }}{{ .Delegated }}.children = append({{ .Name }}{{ .Delegated }}.children, child)
 	}
 
 	return {{ .Name }}
@@ -18,180 +18,195 @@ func ({{ .Name }} *{{ .Type }}) Children(children ...Node) *{{ .Type }} {
 // DIRECTION
 
 func ({{ .Name }} *{{ .Type }}) Direction(direction Direction) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetDirection(flex.Direction(direction))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetDirection(flex.Direction(direction))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) DirectionInherit() *{{ .Type }} {
-	return {{ .Name }}.Direction(DirectionInherit)
+	{{ .Name }}{{ .Delegated }}.Direction(DirectionInherit)
+	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) DirectionLTR() *{{ .Type }} {
-	return {{ .Name }}.Direction(DirectionLTR)
+	{{ .Name }}{{ .Delegated }}.Direction(DirectionLTR)
+	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) DirectionRTL() *{{ .Type }} {
-	return {{ .Name }}.Direction(DirectionRTL)
+	{{ .Name }}{{ .Delegated }}.Direction(DirectionRTL)
+	return {{ .Name }}
 }
 
 // FLEX DIRECTION
 
 func ({{ .Name }} *{{ .Type }}) FlexDirection(direction FlexDirection) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetFlexDirection(flex.FlexDirection(direction))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetFlexDirection(flex.FlexDirection(direction))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexDirectionColumn() *{{ .Type }} {
-	return {{ .Name }}.FlexDirection(FlexDirectionColumn)
+	{{ .Name }}{{ .Delegated }}.FlexDirection(FlexDirectionColumn)
+	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexDirectionColumnReverse() *{{ .Type }} {
-	return {{ .Name }}.FlexDirection(FlexDirectionColumnReverse)
+	{{ .Name }}{{ .Delegated }}.FlexDirection(FlexDirectionColumnReverse)
+	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexDirectionRow() *{{ .Type }} {
-	return {{ .Name }}.FlexDirection(FlexDirectionRow)
+	{{ .Name }}{{ .Delegated }}.FlexDirection(FlexDirectionRow)
+	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexDirectionRowReverse() *{{ .Type }} {
-	return {{ .Name }}.FlexDirection(FlexDirectionRowReverse)
+	{{ .Name }}{{ .Delegated }}.FlexDirection(FlexDirectionRowReverse)
+	return {{ .Name }}
 }
 
 // JustifyContent
 func ({{ .Name }} *{{ .Type }}) JustifyContent(justification Justify) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetJustifyContent(flex.Justify(justification))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetJustifyContent(flex.Justify(justification))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) JustifyContentStart() *{{ .Type }} {
-	return {{ .Name }}.JustifyContent(JustifyStart)
+	{{ .Name }}{{ .Delegated }}.JustifyContent(JustifyStart)
+	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) JustifyContentCenter() *{{ .Type }} {
-	return {{ .Name }}.JustifyContent(JustifyCenter)
+	{{ .Name }}{{ .Delegated }}.JustifyContent(JustifyCenter)
+	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) JustifyContentEnd() *{{ .Type }} {
-	return {{ .Name }}.JustifyContent(JustifyEnd)
+	{{ .Name }}{{ .Delegated }}.JustifyContent(JustifyEnd)
+	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) JustifyContentSpaceBetween() *{{ .Type }} {
-	return {{ .Name }}.JustifyContent(JustifySpaceBetween)
+	{{ .Name }}{{ .Delegated }}.JustifyContent(JustifySpaceBetween)
+	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) JustifyContentSpaceAround() *{{ .Type }} {
-	return {{ .Name }}.JustifyContent(JustifySpaceAround)
+	{{ .Name }}{{ .Delegated }}.JustifyContent(JustifySpaceAround)
+	return {{ .Name }}
 }
 
 // ALIGN CONTENT
 
 func ({{ .Name }} *{{ .Type }}) AlignContentType(align Align) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetAlignContent(flex.Align(align))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetAlignContent(flex.Align(align))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignContentAuto() *{{ .Type }} {
-	{{ .Name }}.AlignContentType(AlignAuto)
+	{{ .Name }}{{ .Delegated }}.AlignContentType(AlignAuto)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignContentStart() *{{ .Type }} {
-	{{ .Name }}.AlignContentType(AlignStart)
+	{{ .Name }}{{ .Delegated }}.AlignContentType(AlignStart)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignContentCenter() *{{ .Type }} {
-	{{ .Name }}.AlignContentType(AlignCenter)
+	{{ .Name }}{{ .Delegated }}.AlignContentType(AlignCenter)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignContentEnd() *{{ .Type }} {
-	{{ .Name }}.AlignContentType(AlignEnd)
+	{{ .Name }}{{ .Delegated }}.AlignContentType(AlignEnd)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignContentStretch() *{{ .Type }} {
-	{{ .Name }}.AlignContentType(AlignStretch)
+	{{ .Name }}{{ .Delegated }}.AlignContentType(AlignStretch)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignContentBaseline() *{{ .Type }} {
-	{{ .Name }}.AlignContentType(AlignBaseline)
+	{{ .Name }}{{ .Delegated }}.AlignContentType(AlignBaseline)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignContentSpaceBetween() *{{ .Type }} {
-	{{ .Name }}.AlignContentType(AlignSpaceBetween)
+	{{ .Name }}{{ .Delegated }}.AlignContentType(AlignSpaceBetween)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignContentSpaceAround() *{{ .Type }} {
-	{{ .Name }}.AlignContentType(AlignSpaceAround)
+	{{ .Name }}{{ .Delegated }}.AlignContentType(AlignSpaceAround)
 	return {{ .Name }}
 }
 
 // ALIGN ITEMS
 
 func ({{ .Name }} *{{ .Type }}) AlignItemsType(align Align) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetAlignItems(flex.Align(align))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetAlignItems(flex.Align(align))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignItemsAuto() *{{ .Type }} {
-	{{ .Name }}.AlignItemsType(AlignAuto)
+	{{ .Name }}{{ .Delegated }}.AlignItemsType(AlignAuto)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignItemsStart() *{{ .Type }} {
-	{{ .Name }}.AlignItemsType(AlignStart)
+	{{ .Name }}{{ .Delegated }}.AlignItemsType(AlignStart)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignItemsCenter() *{{ .Type }} {
-	{{ .Name }}.AlignItemsType(AlignCenter)
+	{{ .Name }}{{ .Delegated }}.AlignItemsType(AlignCenter)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignItemsEnd() *{{ .Type }} {
-	{{ .Name }}.AlignItemsType(AlignEnd)
+	{{ .Name }}{{ .Delegated }}.AlignItemsType(AlignEnd)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignItemsStretch() *{{ .Type }} {
-	{{ .Name }}.AlignItemsType(AlignStretch)
+	{{ .Name }}{{ .Delegated }}.AlignItemsType(AlignStretch)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignItemsBaseline() *{{ .Type }} {
-	{{ .Name }}.AlignItemsType(AlignBaseline)
+	{{ .Name }}{{ .Delegated }}.AlignItemsType(AlignBaseline)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignItemsSpaceBetween() *{{ .Type }} {
-	{{ .Name }}.AlignItemsType(AlignSpaceBetween)
+	{{ .Name }}{{ .Delegated }}.AlignItemsType(AlignSpaceBetween)
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) AlignItemsSpaceAround() *{{ .Type }} {
-	{{ .Name }}.AlignItemsType(AlignSpaceAround)
+	{{ .Name }}{{ .Delegated }}.AlignItemsType(AlignSpaceAround)
 	return {{ .Name }}
 }
 
 // FLEX WRAP
 
 func ({{ .Name }} *{{ .Type }}) FlexWrapValue(wrapValue Wrap) *{{ .Type }} {
-	{{ .Name }}.getFlexNode().StyleSetFlexWrap(flex.Wrap(wrapValue))
+	{{ .Name }}{{ .Delegated }}.getFlexNode().StyleSetFlexWrap(flex.Wrap(wrapValue))
 	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexNoWrap() *{{ .Type }} {
-	return {{ .Name }}.FlexWrapValue(WrapNoWrap)
+	{{ .Name }}{{ .Delegated }}.FlexWrapValue(WrapNoWrap)
+	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexWrap() *{{ .Type }} {
-	return {{ .Name }}.FlexWrapValue(WrapWrap)
+	{{ .Name }}{{ .Delegated }}.FlexWrapValue(WrapWrap)
+	return {{ .Name }}
 }
 
 func ({{ .Name }} *{{ .Type }}) FlexWrapReverse() *{{ .Type }} {
-	return {{ .Name }}.FlexWrapValue(WrapWrapReverse)
+	{{ .Name }}{{ .Delegated }}.FlexWrapValue(WrapWrapReverse)
+	return {{ .Name }}
 }

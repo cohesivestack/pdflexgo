@@ -5,15 +5,6 @@ import (
 	"github.com/kjk/flex"
 )
 
-func (image *ImageElement) Width(width float64) *ImageElement {
-	image.getFlexNode().StyleSetWidth(float32(width))
-	return image
-}
-func (image *ImageElement) Height(height float64) *ImageElement {
-	image.getFlexNode().StyleSetHeight(float32(height))
-	return image
-}
-
 // MARGIN
 
 func (image *ImageElement) MarginTop(margin float64) *ImageElement {

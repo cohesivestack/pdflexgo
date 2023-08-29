@@ -8,8 +8,8 @@ import "github.com/kjk/flex"
 func (page *PageElement) Children(children ...Node) *PageElement {
 
 	for _, child := range children {
-		page.getFlexNode().InsertChild(child.getFlexNode(), len(page.getFlexNode().Children))
-		page.children = append(page.children, child)
+		page.body.getFlexNode().InsertChild(child.getFlexNode(), len(page.body.getFlexNode().Children))
+		page.body.children = append(page.body.children, child)
 	}
 
 	return page
@@ -18,180 +18,195 @@ func (page *PageElement) Children(children ...Node) *PageElement {
 // DIRECTION
 
 func (page *PageElement) Direction(direction Direction) *PageElement {
-	page.getFlexNode().StyleSetDirection(flex.Direction(direction))
+	page.body.getFlexNode().StyleSetDirection(flex.Direction(direction))
 	return page
 }
 
 func (page *PageElement) DirectionInherit() *PageElement {
-	return page.Direction(DirectionInherit)
+	page.body.Direction(DirectionInherit)
+	return page
 }
 
 func (page *PageElement) DirectionLTR() *PageElement {
-	return page.Direction(DirectionLTR)
+	page.body.Direction(DirectionLTR)
+	return page
 }
 
 func (page *PageElement) DirectionRTL() *PageElement {
-	return page.Direction(DirectionRTL)
+	page.body.Direction(DirectionRTL)
+	return page
 }
 
 // FLEX DIRECTION
 
 func (page *PageElement) FlexDirection(direction FlexDirection) *PageElement {
-	page.getFlexNode().StyleSetFlexDirection(flex.FlexDirection(direction))
+	page.body.getFlexNode().StyleSetFlexDirection(flex.FlexDirection(direction))
 	return page
 }
 
 func (page *PageElement) FlexDirectionColumn() *PageElement {
-	return page.FlexDirection(FlexDirectionColumn)
+	page.body.FlexDirection(FlexDirectionColumn)
+	return page
 }
 
 func (page *PageElement) FlexDirectionColumnReverse() *PageElement {
-	return page.FlexDirection(FlexDirectionColumnReverse)
+	page.body.FlexDirection(FlexDirectionColumnReverse)
+	return page
 }
 
 func (page *PageElement) FlexDirectionRow() *PageElement {
-	return page.FlexDirection(FlexDirectionRow)
+	page.body.FlexDirection(FlexDirectionRow)
+	return page
 }
 
 func (page *PageElement) FlexDirectionRowReverse() *PageElement {
-	return page.FlexDirection(FlexDirectionRowReverse)
+	page.body.FlexDirection(FlexDirectionRowReverse)
+	return page
 }
 
 // JustifyContent
 func (page *PageElement) JustifyContent(justification Justify) *PageElement {
-	page.getFlexNode().StyleSetJustifyContent(flex.Justify(justification))
+	page.body.getFlexNode().StyleSetJustifyContent(flex.Justify(justification))
 	return page
 }
 
 func (page *PageElement) JustifyContentStart() *PageElement {
-	return page.JustifyContent(JustifyStart)
+	page.body.JustifyContent(JustifyStart)
+	return page
 }
 
 func (page *PageElement) JustifyContentCenter() *PageElement {
-	return page.JustifyContent(JustifyCenter)
+	page.body.JustifyContent(JustifyCenter)
+	return page
 }
 
 func (page *PageElement) JustifyContentEnd() *PageElement {
-	return page.JustifyContent(JustifyEnd)
+	page.body.JustifyContent(JustifyEnd)
+	return page
 }
 
 func (page *PageElement) JustifyContentSpaceBetween() *PageElement {
-	return page.JustifyContent(JustifySpaceBetween)
+	page.body.JustifyContent(JustifySpaceBetween)
+	return page
 }
 
 func (page *PageElement) JustifyContentSpaceAround() *PageElement {
-	return page.JustifyContent(JustifySpaceAround)
+	page.body.JustifyContent(JustifySpaceAround)
+	return page
 }
 
 // ALIGN CONTENT
 
 func (page *PageElement) AlignContentType(align Align) *PageElement {
-	page.getFlexNode().StyleSetAlignContent(flex.Align(align))
+	page.body.getFlexNode().StyleSetAlignContent(flex.Align(align))
 	return page
 }
 
 func (page *PageElement) AlignContentAuto() *PageElement {
-	page.AlignContentType(AlignAuto)
+	page.body.AlignContentType(AlignAuto)
 	return page
 }
 
 func (page *PageElement) AlignContentStart() *PageElement {
-	page.AlignContentType(AlignStart)
+	page.body.AlignContentType(AlignStart)
 	return page
 }
 
 func (page *PageElement) AlignContentCenter() *PageElement {
-	page.AlignContentType(AlignCenter)
+	page.body.AlignContentType(AlignCenter)
 	return page
 }
 
 func (page *PageElement) AlignContentEnd() *PageElement {
-	page.AlignContentType(AlignEnd)
+	page.body.AlignContentType(AlignEnd)
 	return page
 }
 
 func (page *PageElement) AlignContentStretch() *PageElement {
-	page.AlignContentType(AlignStretch)
+	page.body.AlignContentType(AlignStretch)
 	return page
 }
 
 func (page *PageElement) AlignContentBaseline() *PageElement {
-	page.AlignContentType(AlignBaseline)
+	page.body.AlignContentType(AlignBaseline)
 	return page
 }
 
 func (page *PageElement) AlignContentSpaceBetween() *PageElement {
-	page.AlignContentType(AlignSpaceBetween)
+	page.body.AlignContentType(AlignSpaceBetween)
 	return page
 }
 
 func (page *PageElement) AlignContentSpaceAround() *PageElement {
-	page.AlignContentType(AlignSpaceAround)
+	page.body.AlignContentType(AlignSpaceAround)
 	return page
 }
 
 // ALIGN ITEMS
 
 func (page *PageElement) AlignItemsType(align Align) *PageElement {
-	page.getFlexNode().StyleSetAlignItems(flex.Align(align))
+	page.body.getFlexNode().StyleSetAlignItems(flex.Align(align))
 	return page
 }
 
 func (page *PageElement) AlignItemsAuto() *PageElement {
-	page.AlignItemsType(AlignAuto)
+	page.body.AlignItemsType(AlignAuto)
 	return page
 }
 
 func (page *PageElement) AlignItemsStart() *PageElement {
-	page.AlignItemsType(AlignStart)
+	page.body.AlignItemsType(AlignStart)
 	return page
 }
 
 func (page *PageElement) AlignItemsCenter() *PageElement {
-	page.AlignItemsType(AlignCenter)
+	page.body.AlignItemsType(AlignCenter)
 	return page
 }
 
 func (page *PageElement) AlignItemsEnd() *PageElement {
-	page.AlignItemsType(AlignEnd)
+	page.body.AlignItemsType(AlignEnd)
 	return page
 }
 
 func (page *PageElement) AlignItemsStretch() *PageElement {
-	page.AlignItemsType(AlignStretch)
+	page.body.AlignItemsType(AlignStretch)
 	return page
 }
 
 func (page *PageElement) AlignItemsBaseline() *PageElement {
-	page.AlignItemsType(AlignBaseline)
+	page.body.AlignItemsType(AlignBaseline)
 	return page
 }
 
 func (page *PageElement) AlignItemsSpaceBetween() *PageElement {
-	page.AlignItemsType(AlignSpaceBetween)
+	page.body.AlignItemsType(AlignSpaceBetween)
 	return page
 }
 
 func (page *PageElement) AlignItemsSpaceAround() *PageElement {
-	page.AlignItemsType(AlignSpaceAround)
+	page.body.AlignItemsType(AlignSpaceAround)
 	return page
 }
 
 // FLEX WRAP
 
 func (page *PageElement) FlexWrapValue(wrapValue Wrap) *PageElement {
-	page.getFlexNode().StyleSetFlexWrap(flex.Wrap(wrapValue))
+	page.body.getFlexNode().StyleSetFlexWrap(flex.Wrap(wrapValue))
 	return page
 }
 
 func (page *PageElement) FlexNoWrap() *PageElement {
-	return page.FlexWrapValue(WrapNoWrap)
+	page.body.FlexWrapValue(WrapNoWrap)
+	return page
 }
 
 func (page *PageElement) FlexWrap() *PageElement {
-	return page.FlexWrapValue(WrapWrap)
+	page.body.FlexWrapValue(WrapWrap)
+	return page
 }
 
 func (page *PageElement) FlexWrapReverse() *PageElement {
-	return page.FlexWrapValue(WrapWrapReverse)
+	page.body.FlexWrapValue(WrapWrapReverse)
+	return page
 }

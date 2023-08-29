@@ -9,22 +9,22 @@ import (
 )
 
 type PageElement struct {
-	abstractElement
-
-	children []Node
+	layout *BlockElement
+	body   *BlockElement
 
 	// Public attributes
 	orientation Orientation
 	unit        Unit
+	name        string
 }
 
 func Page() *PageElement {
 	page := &PageElement{}
 
-	page.abstractElement.initialize()
+	page.layout = Block().FlexDirectionColumn()
+	page.body = Block().FlexDirectionColumn().FlexAuto()
 
 	page.Size(DefaultSize)
-	page.FlexDirection(FlexDirectionColumn)
 
 	return page
 }
@@ -35,6 +35,24 @@ func (page *PageElement) Size(size Size) *PageElement {
 	page.Width(width)
 	page.Height(height)
 
+	return page
+}
+
+func (page *PageElement) Width(width float64) *PageElement {
+	page.body.getFlexNode().StyleSetWidth(float32(width))
+	page.layout.Width(width)
+
+	return page
+}
+
+func (page *PageElement) Height(height float64) *PageElement {
+	page.layout.Height(height)
+
+	return page
+}
+
+func (page *PageElement) Name(name string) *PageElement {
+	page.name = name
 	return page
 }
 
@@ -49,26 +67,38 @@ func (page *PageElement) Unit(unit Unit) *PageElement {
 }
 
 func (page *PageElement) markRequiredAsDirty() {
-	for _, child := range page.children {
+	for _, child := range page.layout.children {
 		child.markRequiredAsDirty()
 	}
 }
 
 func (page *PageElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf) {
 
-	for _, child := range page.children {
+	for _, child := range page.layout.children {
 		child.preRender(defaultProps, fpdf)
 	}
 }
 
-func (page *PageElement) render(pdf *Pdf) {
+func (page *PageElement) render(pdf *Pdf, pageNumber int) {
 
+	// Set Layout
+	if pdf.header != nil {
+		page.layout.Children(pdf.header(pageNumber, page.name))
+	}
+
+	page.layout.Children(page.body)
+
+	if pdf.footer != nil {
+		page.layout.Children(pdf.footer(pageNumber, page.name))
+	}
+
+	// Initialize fpdf
 	initializeFpdf := func(fpdf *gofpdf.Fpdf) {
 		fpdf.AddPageFormat(
 			string(page.orientation),
 			gofpdf.SizeType{
-				Wd: float64(page.getFlexNode().StyleGetWidth().Value),
-				Ht: float64(page.getFlexNode().StyleGetHeight().Value)})
+				Wd: float64(page.layout.getFlexNode().StyleGetWidth().Value),
+				Ht: float64(page.layout.getFlexNode().StyleGetHeight().Value)})
 		fpdf.SetFont("Arial", "", DefaultFontSize)
 	}
 
@@ -89,15 +119,15 @@ func (page *PageElement) render(pdf *Pdf) {
 	page.preRender(pdf.defaultProps, fpdfTemp)
 
 	// Calculate Flex nodes
-	flex.CalculateLayout(page.getFlexNode(), flex.Undefined, flex.Undefined, page.getFlexNode().Style.Direction)
+	flex.CalculateLayout(page.layout.getFlexNode(), flex.Undefined, flex.Undefined, page.layout.getFlexNode().Style.Direction)
 
 	page.markRequiredAsDirty()
 
-	flex.CalculateLayout(page.getFlexNode(), flex.Undefined, flex.Undefined, page.getFlexNode().Style.Direction)
+	flex.CalculateLayout(page.layout.getFlexNode(), flex.Undefined, flex.Undefined, page.layout.getFlexNode().Style.Direction)
 
-	page.renderElement(pdf)
+	page.layout.renderElement(pdf)
 
-	for _, child := range page.children {
+	for _, child := range page.layout.children {
 		child.render(pdf)
 	}
 }
