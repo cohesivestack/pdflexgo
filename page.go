@@ -208,12 +208,14 @@ func (page *PageElement) render(pdf *Pdf, pageNumber int) (nextPageWithOverflowe
 		bodyHeight := page.body.delegated.getFlexNode().LayoutGetHeight()
 		nodesVerticalSpace := 0.0
 		for i, node := range page.body.delegated.children {
-			nodesVerticalSpace += float64(node.getFlexNode().LayoutGetHeight() + node.getFlexNode().LayoutGetMargin(flex.EdgeTop) + node.getFlexNode().LayoutGetMargin(flex.EdgeBottom))
-			if i > 0 && nodesVerticalSpace > float64(bodyHeight) {
-				overflowedNodes := page.body.delegated.children[i:]
-				page.body.delegated.children = page.body.delegated.children[:i]
-				nextPageWithOverflowed = page.createOverflowedPage(overflowedNodes)
-				break
+			if node.getFlexNode().Style.PositionType != flex.PositionTypeAbsolute {
+				nodesVerticalSpace += float64(node.getFlexNode().LayoutGetHeight() + node.getFlexNode().LayoutGetMargin(flex.EdgeTop) + node.getFlexNode().LayoutGetMargin(flex.EdgeBottom))
+				if i > 0 && nodesVerticalSpace > float64(bodyHeight) {
+					overflowedNodes := page.body.delegated.children[i:]
+					page.body.delegated.children = page.body.delegated.children[:i]
+					nextPageWithOverflowed = page.createOverflowedPage(overflowedNodes)
+					break
+				}
 			}
 		}
 	}
