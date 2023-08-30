@@ -48,6 +48,7 @@ func (block *BlockElement) Margin(top float64, right float64, bottom float64, le
 
 func (block *BlockElement) MarginPercentTop(margin float64) *BlockElement {
 	block.getFlexNode().StyleSetMarginPercent(flex.EdgeTop, float32(margin))
+
 	return block
 }
 

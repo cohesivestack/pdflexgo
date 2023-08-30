@@ -166,6 +166,14 @@ const (
 	OverflowScroll
 )
 
+// PageOverflow
+type PageOverflow int
+
+const (
+	PageOverflowNew PageOverflow = iota
+	PageOverflowHidden
+)
+
 // Display
 type Display int
 

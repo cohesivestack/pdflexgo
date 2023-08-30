@@ -59,12 +59,20 @@ func (pdf *Pdf) Pages(pages ...*PageElement) *Pdf {
 	return pdf
 }
 
+func renderPageRecursive(page *PageElement, pdf *Pdf, pageNumber int) int {
+	nextPageOverflowed := page.render(pdf, pageNumber)
+	if nextPageOverflowed != nil {
+		// Recursive call with overflowed nodes and incremented page number
+		return renderPageRecursive(nextPageOverflowed, pdf, pageNumber+1)
+	}
+	return pageNumber + 1
+}
+
 func (pdf *Pdf) Render() *Pdf {
 
 	pageNumber := 1
 	for _, page := range pdf.pages {
-		page.render(pdf, pageNumber)
-		pageNumber++
+		pageNumber = renderPageRecursive(page, pdf, pageNumber)
 	}
 
 	return pdf

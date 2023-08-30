@@ -9,27 +9,79 @@ import (
 )
 
 type PageElement struct {
-	layout *BlockElement
-	body   SegmentBuilder
+	layout      *BlockElement
+	bodyBuilder SegmentBuilder
+	body        *Segment
 
 	// Public attributes
 	orientation Orientation
 	unit        Unit
 	name        string
+
+	overflow PageOverflow
 }
 
 func Page() *PageElement {
-	page := &PageElement{}
+	page := &PageElement{
+		layout: Block().FlexDirectionColumn(),
+	}
 
-	page.layout = Block().FlexDirectionColumn()
-
+	page.OverflowNew()
 	page.Size(DefaultSize)
 
 	return page
 }
 
+func (page *PageElement) createOverflowedPage(overflowedNodes []Node) *PageElement {
+
+	for _, node := range overflowedNodes {
+		node.getFlexNode().Parent = nil
+		node.markRequiredAsDirty()
+	}
+
+	newPage := Page()
+	newPage.Orientation(page.orientation)
+	newPage.Unit(page.unit)
+	newPage.Width(float64(page.layout.flexNode.LayoutGetWidth()))
+	newPage.Height(float64(page.layout.flexNode.LayoutGetHeight()))
+	newPage.Body(func(body *Segment) { body.Children(overflowedNodes...) })
+
+	newPage.layout.getFlexNode().Layout.Margin = page.layout.getFlexNode().Layout.Margin
+
+	layoutNode := page.layout.getFlexNode()
+	newLayoutNode := newPage.layout.getFlexNode()
+	for _, edge := range []flex.Edge{flex.EdgeTop, flex.EdgeRight, flex.EdgeBottom, flex.EdgeLeft} {
+		margin := layoutNode.StyleGetMargin(edge)
+		if margin.Unit == flex.UnitPercent {
+			newLayoutNode.StyleSetMarginPercent(edge, margin.Value)
+		} else if margin.Unit == flex.UnitPoint {
+			newLayoutNode.StyleSetMargin(edge, margin.Value)
+		} else if margin.Unit == flex.UnitAuto {
+			newLayoutNode.StyleSetMarginAuto(edge)
+		}
+
+		padding := layoutNode.StyleGetPadding(edge)
+		if padding.Unit == flex.UnitPercent {
+			newLayoutNode.StyleSetPaddingPercent(edge, padding.Value)
+		} else if padding.Unit == flex.UnitPoint {
+			newLayoutNode.StyleSetPadding(edge, padding.Value)
+		}
+
+		newLayoutNode.StyleSetBorder(edge, layoutNode.StyleGetBorder(edge))
+
+		newPage.BackgroundColor(page.layout.backgroundColor.red, page.layout.backgroundColor.green, page.layout.backgroundColor.blue, page.layout.backgroundColor.alpha)
+	}
+
+	newPage.BorderColorTop(page.layout.borderColor[EdgeTop].red, page.layout.borderColor[EdgeTop].green, page.layout.borderColor[EdgeTop].blue, page.layout.borderColor[EdgeTop].alpha)
+	newPage.BorderColorRight(page.layout.borderColor[EdgeRight].red, page.layout.borderColor[EdgeRight].green, page.layout.borderColor[EdgeRight].blue, page.layout.borderColor[EdgeRight].alpha)
+	newPage.BorderColorBottom(page.layout.borderColor[EdgeBottom].red, page.layout.borderColor[EdgeBottom].green, page.layout.borderColor[EdgeBottom].blue, page.layout.borderColor[EdgeBottom].alpha)
+	newPage.BorderColorLeft(page.layout.borderColor[EdgeLeft].red, page.layout.borderColor[EdgeLeft].green, page.layout.borderColor[EdgeLeft].blue, page.layout.borderColor[EdgeLeft].alpha)
+
+	return newPage
+}
+
 func (page *PageElement) Body(body SegmentBuilder) *PageElement {
-	page.body = body
+	page.bodyBuilder = body
 	return page
 }
 
@@ -82,30 +134,33 @@ func (page *PageElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 	}
 }
 
-func (page *PageElement) render(pdf *Pdf, pageNumber int) {
+func (page *PageElement) render(pdf *Pdf, pageNumber int) (nextPageWithOverflowed *PageElement) {
 
 	// Set Layout
 	if pdf.header != nil {
 		header := segment().FlexDirectionColumn()
 		header.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
+		header.delegated.FlexNone()
 		header.pageNumber = pageNumber
 		header.pageName = page.name
 		pdf.header(header)
 		page.layout.Children(header.delegated)
 	}
 
-	if page.body != nil {
-		body := segment().FlexDirectionColumn()
-		body.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
-		body.pageNumber = pageNumber
-		body.pageName = page.name
-		page.body(body)
-		page.layout.Children(body.delegated)
+	if page.bodyBuilder != nil {
+		page.body = segment().FlexDirectionColumn()
+		page.body.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
+		page.body.delegated.FlexAuto()
+		page.body.pageNumber = pageNumber
+		page.body.pageName = page.name
+		page.bodyBuilder(page.body)
+		page.layout.Children(page.body.delegated)
 	}
 
 	if pdf.footer != nil {
 		footer := segment().FlexDirectionColumn()
 		footer.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
+		footer.delegated.FlexNone()
 		footer.pageNumber = pageNumber
 		footer.pageName = page.name
 		pdf.footer(footer)
@@ -145,11 +200,42 @@ func (page *PageElement) render(pdf *Pdf, pageNumber int) {
 
 	flex.CalculateLayout(page.layout.getFlexNode(), flex.Undefined, flex.Undefined, page.layout.getFlexNode().Style.Direction)
 
+	if page.body != nil && page.body.delegated.getFlexNode().Style.FlexDirection == flex.FlexDirectionColumn && page.body.delegated.getFlexNode().Layout.HadOverflow {
+		bodyHeight := page.body.delegated.getFlexNode().LayoutGetHeight()
+		nodesHeight := 0.0
+		for i, node := range page.body.delegated.children {
+			nodesHeight += float64(node.getFlexNode().LayoutGetHeight())
+			if i > 0 && nodesHeight > float64(bodyHeight) {
+				overflowedNodes := page.body.delegated.children[i:]
+				page.body.delegated.children = page.body.delegated.children[:i]
+				nextPageWithOverflowed = page.createOverflowedPage(overflowedNodes)
+				break
+			}
+		}
+	}
+
 	page.layout.renderElement(pdf)
 
 	for _, child := range page.layout.children {
 		child.render(pdf)
 	}
+
+	return
+}
+
+func (page *PageElement) OverflowNew() *PageElement {
+	page.overflow = PageOverflowNew
+	return page
+}
+
+func (page *PageElement) Overflow(overflow PageOverflow) *PageElement {
+	page.overflow = overflow
+	return page
+}
+
+func (page *PageElement) OverflowHidden() *PageElement {
+	page.overflow = PageOverflowHidden
+	return page
 }
 
 func sizeToWidthHeight(size Size) (float64, float64) {
