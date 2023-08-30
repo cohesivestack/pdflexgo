@@ -44,7 +44,10 @@ func (page *PageElement) createOverflowedPage(overflowedNodes []Node) *PageEleme
 	newPage.Unit(page.unit)
 	newPage.Width(float64(page.layout.flexNode.LayoutGetWidth()))
 	newPage.Height(float64(page.layout.flexNode.LayoutGetHeight()))
-	newPage.Body(func(body *Segment) { body.Children(overflowedNodes...) })
+	newPage.Body(func(body *Segment) {
+		page.body.copySegmentWithoutChildren(body)
+		body.Children(overflowedNodes...)
+	})
 
 	newPage.layout.getFlexNode().Layout.Margin = page.layout.getFlexNode().Layout.Margin
 
@@ -69,8 +72,9 @@ func (page *PageElement) createOverflowedPage(overflowedNodes []Node) *PageEleme
 
 		newLayoutNode.StyleSetBorder(edge, layoutNode.StyleGetBorder(edge))
 
-		newPage.BackgroundColor(page.layout.backgroundColor.red, page.layout.backgroundColor.green, page.layout.backgroundColor.blue, page.layout.backgroundColor.alpha)
 	}
+
+	newPage.BackgroundColor(page.layout.backgroundColor.red, page.layout.backgroundColor.green, page.layout.backgroundColor.blue, page.layout.backgroundColor.alpha)
 
 	newPage.BorderColorTop(page.layout.borderColor[EdgeTop].red, page.layout.borderColor[EdgeTop].green, page.layout.borderColor[EdgeTop].blue, page.layout.borderColor[EdgeTop].alpha)
 	newPage.BorderColorRight(page.layout.borderColor[EdgeRight].red, page.layout.borderColor[EdgeRight].green, page.layout.borderColor[EdgeRight].blue, page.layout.borderColor[EdgeRight].alpha)
