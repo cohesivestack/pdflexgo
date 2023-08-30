@@ -24,7 +24,7 @@ func main() {
 
 	for _, name := range []string{
 		"block",
-		"page",
+		"segment",
 	} {
 		renderTemplate(tmpl, "container", name)
 	}
@@ -40,6 +40,7 @@ func main() {
 
 	for _, name := range []string{
 		"page",
+		"segment",
 		"block",
 		"text",
 		"text_multi_format",
@@ -56,12 +57,18 @@ func renderTemplate(tmpl *template.Template, group string, name string) {
 	if err != nil {
 		panic(err)
 	}
+
 	_data := data{
 		Name: snakeToCamel(name),
-		Type: fmt.Sprintf("%s%s", upperFirst(snakeToCamel(name)), "Element")}
+		Type: fmt.Sprintf("%s%s", upperFirst(snakeToCamel(name)), "Element"),
+	}
 
-	if name == "page" {
-		_data.Delegated = ".body"
+	switch name {
+	case "page":
+		_data.Delegated = ".layout"
+	case "segment":
+		_data.Delegated = ".delegated"
+		_data.Type = upperFirst(snakeToCamel(name))
 	}
 
 	err = tmpl.ExecuteTemplate(

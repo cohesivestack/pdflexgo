@@ -8,19 +8,19 @@ import (
 // MARGIN
 
 func (page *PageElement) MarginTop(margin float64) *PageElement {
-	page.body.getFlexNode().StyleSetMargin(flex.EdgeTop, float32(margin))
+	page.layout.getFlexNode().StyleSetMargin(flex.EdgeTop, float32(margin))
 	return page
 }
 func (page *PageElement) MarginRight(margin float64) *PageElement {
-	page.body.getFlexNode().StyleSetMargin(flex.EdgeRight, float32(margin))
+	page.layout.getFlexNode().StyleSetMargin(flex.EdgeRight, float32(margin))
 	return page
 }
 func (page *PageElement) MarginBottom(margin float64) *PageElement {
-	page.body.getFlexNode().StyleSetMargin(flex.EdgeBottom, float32(margin))
+	page.layout.getFlexNode().StyleSetMargin(flex.EdgeBottom, float32(margin))
 	return page
 }
 func (page *PageElement) MarginLeft(margin float64) *PageElement {
-	page.body.getFlexNode().StyleSetMargin(flex.EdgeLeft, float32(margin))
+	page.layout.getFlexNode().StyleSetMargin(flex.EdgeLeft, float32(margin))
 	return page
 }
 func (page *PageElement) MarginHorizontal(margin float64) *PageElement {
@@ -28,15 +28,15 @@ func (page *PageElement) MarginHorizontal(margin float64) *PageElement {
 	return page
 }
 func (page *PageElement) MarginVertical(margin float64) *PageElement {
-	page.body.MarginTop(margin).MarginBottom(margin)
+	page.layout.MarginTop(margin).MarginBottom(margin)
 	return page
 }
 func (page *PageElement) MarginAll(margin float64) *PageElement {
-	page.body.MarginHorizontal(margin).MarginVertical(margin)
+	page.layout.MarginHorizontal(margin).MarginVertical(margin)
 	return page
 }
 func (page *PageElement) Margin(top float64, right float64, bottom float64, left float64) *PageElement {
-	page.body.
+	page.layout.
 		MarginTop(top).
 		MarginRight(right).
 		MarginBottom(bottom).
@@ -47,37 +47,37 @@ func (page *PageElement) Margin(top float64, right float64, bottom float64, left
 // MARGIN PERCENT
 
 func (page *PageElement) MarginPercentTop(margin float64) *PageElement {
-	page.body.getFlexNode().StyleSetMarginPercent(flex.EdgeTop, float32(margin))
+	page.layout.getFlexNode().StyleSetMarginPercent(flex.EdgeTop, float32(margin))
 	return page
 }
 
 func (page *PageElement) MarginPercentRight(margin float64) *PageElement {
-	page.body.getFlexNode().StyleSetMarginPercent(flex.EdgeRight, float32(margin))
+	page.layout.getFlexNode().StyleSetMarginPercent(flex.EdgeRight, float32(margin))
 	return page
 }
 
 func (page *PageElement) MarginPercentBottom(margin float64) *PageElement {
-	page.body.getFlexNode().StyleSetMarginPercent(flex.EdgeBottom, float32(margin))
+	page.layout.getFlexNode().StyleSetMarginPercent(flex.EdgeBottom, float32(margin))
 	return page
 }
 
 func (page *PageElement) MarginPercentLeft(margin float64) *PageElement {
-	page.body.getFlexNode().StyleSetMarginPercent(flex.EdgeLeft, float32(margin))
+	page.layout.getFlexNode().StyleSetMarginPercent(flex.EdgeLeft, float32(margin))
 	return page
 }
 
 func (page *PageElement) MarginPercentHorizontal(margin float64) *PageElement {
-	page.body.MarginPercentLeft(margin).MarginPercentRight(margin)
+	page.layout.MarginPercentLeft(margin).MarginPercentRight(margin)
 	return page
 }
 
 func (page *PageElement) MarginPercentVertical(margin float64) *PageElement {
-	page.body.MarginPercentTop(margin).MarginPercentBottom(margin)
+	page.layout.MarginPercentTop(margin).MarginPercentBottom(margin)
 	return page
 }
 
 func (page *PageElement) MarginPercentAll(margin float64) *PageElement {
-	page.body.MarginPercentHorizontal(margin).MarginPercentVertical(margin)
+	page.layout.MarginPercentHorizontal(margin).MarginPercentVertical(margin)
 	return page
 }
 
@@ -86,42 +86,42 @@ func (page *PageElement) MarginPercentAll(margin float64) *PageElement {
 // For Padding
 
 func (page *PageElement) PaddingTop(padding float64) *PageElement {
-	page.body.getFlexNode().StyleSetPadding(flex.EdgeTop, float32(padding))
+	page.layout.getFlexNode().StyleSetPadding(flex.EdgeTop, float32(padding))
 	return page
 }
 
 func (page *PageElement) PaddingRight(padding float64) *PageElement {
-	page.body.getFlexNode().StyleSetPadding(flex.EdgeRight, float32(padding))
+	page.layout.getFlexNode().StyleSetPadding(flex.EdgeRight, float32(padding))
 	return page
 }
 
 func (page *PageElement) PaddingBottom(padding float64) *PageElement {
-	page.body.getFlexNode().StyleSetPadding(flex.EdgeBottom, float32(padding))
+	page.layout.getFlexNode().StyleSetPadding(flex.EdgeBottom, float32(padding))
 	return page
 }
 
 func (page *PageElement) PaddingLeft(padding float64) *PageElement {
-	page.body.getFlexNode().StyleSetPadding(flex.EdgeLeft, float32(padding))
+	page.layout.getFlexNode().StyleSetPadding(flex.EdgeLeft, float32(padding))
 	return page
 }
 
 func (page *PageElement) PaddingHorizontal(padding float64) *PageElement {
-	page.body.PaddingLeft(padding).PaddingRight(padding)
+	page.layout.PaddingLeft(padding).PaddingRight(padding)
 	return page
 }
 
 func (page *PageElement) PaddingVertical(padding float64) *PageElement {
-	page.body.PaddingTop(padding).PaddingBottom(padding)
+	page.layout.PaddingTop(padding).PaddingBottom(padding)
 	return page
 }
 
 func (page *PageElement) PaddingAll(padding float64) *PageElement {
-	page.body.PaddingHorizontal(padding).PaddingVertical(padding)
+	page.layout.PaddingHorizontal(padding).PaddingVertical(padding)
 	return page
 }
 
 func (page *PageElement) Padding(top float64, right float64, bottom float64, left float64) *PageElement {
-	page.body.
+	page.layout.
 		PaddingTop(top).
 		PaddingRight(right).
 		PaddingBottom(bottom).
@@ -132,42 +132,42 @@ func (page *PageElement) Padding(top float64, right float64, bottom float64, lef
 // PADDING PERCENT
 
 func (page *PageElement) PaddingPercentTop(padding float64) *PageElement {
-	page.body.getFlexNode().StyleSetPaddingPercent(flex.EdgeTop, float32(padding))
+	page.layout.getFlexNode().StyleSetPaddingPercent(flex.EdgeTop, float32(padding))
 	return page
 }
 
 func (page *PageElement) PaddingPercentRight(padding float64) *PageElement {
-	page.body.getFlexNode().StyleSetPaddingPercent(flex.EdgeRight, float32(padding))
+	page.layout.getFlexNode().StyleSetPaddingPercent(flex.EdgeRight, float32(padding))
 	return page
 }
 
 func (page *PageElement) PaddingPercentBottom(padding float64) *PageElement {
-	page.body.getFlexNode().StyleSetPaddingPercent(flex.EdgeBottom, float32(padding))
+	page.layout.getFlexNode().StyleSetPaddingPercent(flex.EdgeBottom, float32(padding))
 	return page
 }
 
 func (page *PageElement) PaddingPercentLeft(padding float64) *PageElement {
-	page.body.getFlexNode().StyleSetPaddingPercent(flex.EdgeLeft, float32(padding))
+	page.layout.getFlexNode().StyleSetPaddingPercent(flex.EdgeLeft, float32(padding))
 	return page
 }
 
 func (page *PageElement) PaddingPercentHorizontal(padding float64) *PageElement {
-	page.body.PaddingPercentLeft(padding).PaddingPercentRight(padding)
+	page.layout.PaddingPercentLeft(padding).PaddingPercentRight(padding)
 	return page
 }
 
 func (page *PageElement) PaddingPercentVertical(padding float64) *PageElement {
-	page.body.PaddingPercentTop(padding).PaddingPercentBottom(padding)
+	page.layout.PaddingPercentTop(padding).PaddingPercentBottom(padding)
 	return page
 }
 
 func (page *PageElement) PaddingPercentAll(padding float64) *PageElement {
-	page.body.PaddingPercentHorizontal(padding).PaddingPercentVertical(padding)
+	page.layout.PaddingPercentHorizontal(padding).PaddingPercentVertical(padding)
 	return page
 }
 
 func (page *PageElement) PaddingPercent(top float64, right float64, bottom float64, left float64) *PageElement {
-	page.body.
+	page.layout.
 		PaddingPercentTop(top).
 		PaddingPercentRight(right).
 		PaddingPercentBottom(bottom).
@@ -178,42 +178,42 @@ func (page *PageElement) PaddingPercent(top float64, right float64, bottom float
 // BORDERWIDTH
 
 func (page *PageElement) BorderWidthTop(borderWidth float64) *PageElement {
-	page.body.getFlexNode().StyleSetBorder(flex.EdgeTop, float32(borderWidth))
+	page.layout.getFlexNode().StyleSetBorder(flex.EdgeTop, float32(borderWidth))
 	return page
 }
 
 func (page *PageElement) BorderWidthRight(borderWidth float64) *PageElement {
-	page.body.getFlexNode().StyleSetBorder(flex.EdgeRight, float32(borderWidth))
+	page.layout.getFlexNode().StyleSetBorder(flex.EdgeRight, float32(borderWidth))
 	return page
 }
 
 func (page *PageElement) BorderWidthBottom(borderWidth float64) *PageElement {
-	page.body.getFlexNode().StyleSetBorder(flex.EdgeBottom, float32(borderWidth))
+	page.layout.getFlexNode().StyleSetBorder(flex.EdgeBottom, float32(borderWidth))
 	return page
 }
 
 func (page *PageElement) BorderWidthLeft(borderWidth float64) *PageElement {
-	page.body.getFlexNode().StyleSetBorder(flex.EdgeLeft, float32(borderWidth))
+	page.layout.getFlexNode().StyleSetBorder(flex.EdgeLeft, float32(borderWidth))
 	return page
 }
 
 func (page *PageElement) BorderWidthHorizontal(borderWidth float64) *PageElement {
-	page.body.BorderWidthLeft(borderWidth).BorderWidthRight(borderWidth)
+	page.layout.BorderWidthLeft(borderWidth).BorderWidthRight(borderWidth)
 	return page
 }
 
 func (page *PageElement) BorderWidthVertical(borderWidth float64) *PageElement {
-	page.body.BorderWidthTop(borderWidth).BorderWidthBottom(borderWidth)
+	page.layout.BorderWidthTop(borderWidth).BorderWidthBottom(borderWidth)
 	return page
 }
 
 func (page *PageElement) BorderWidthAll(borderWidth float64) *PageElement {
-	page.body.BorderWidthHorizontal(borderWidth).BorderWidthVertical(borderWidth)
+	page.layout.BorderWidthHorizontal(borderWidth).BorderWidthVertical(borderWidth)
 	return page
 }
 
 func (page *PageElement) BorderWidth(top float64, right float64, bottom float64, left float64) *PageElement {
-	page.body.
+	page.layout.
 		BorderWidthTop(top).
 		BorderWidthRight(right).
 		BorderWidthBottom(bottom).
@@ -224,48 +224,48 @@ func (page *PageElement) BorderWidth(top float64, right float64, bottom float64,
 // BACKGROUND
 
 func (page *PageElement) BackgroundColor(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.body.backgroundColor = getRgba(red, green, blue, alpha...)
+	page.layout.backgroundColor = getRgba(red, green, blue, alpha...)
 	return page
 }
 
 // BORDER COLOR
 
 func (page *PageElement) BorderColorTop(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.body.borderColor[EdgeTop] = getRgba(red, green, blue, alpha...)
+	page.layout.borderColor[EdgeTop] = getRgba(red, green, blue, alpha...)
 	return page
 }
 
 func (page *PageElement) BorderColorRight(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.body.borderColor[EdgeRight] = getRgba(red, green, blue, alpha...)
+	page.layout.borderColor[EdgeRight] = getRgba(red, green, blue, alpha...)
 	return page
 }
 
 func (page *PageElement) BorderColorBottom(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.body.borderColor[EdgeBottom] = getRgba(red, green, blue, alpha...)
+	page.layout.borderColor[EdgeBottom] = getRgba(red, green, blue, alpha...)
 	return page
 }
 
 func (page *PageElement) BorderColorLeft(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.body.borderColor[EdgeLeft] = getRgba(red, green, blue, alpha...)
+	page.layout.borderColor[EdgeLeft] = getRgba(red, green, blue, alpha...)
 	return page
 }
 
 func (page *PageElement) BorderColorHorizontal(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.body.
+	page.layout.
 		BorderColorLeft(red, green, blue, alpha...).
 		BorderColorRight(red, green, blue, alpha...)
 	return page
 }
 
 func (page *PageElement) BorderColorVertical(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.body.
+	page.layout.
 		BorderColorTop(red, green, blue, alpha...).
 		BorderColorBottom(red, green, blue, alpha...)
 	return page
 }
 
 func (page *PageElement) BorderColorAll(red int, green int, blue int, alpha ...float64) *PageElement {
-	page.body.
+	page.layout.
 		BorderColorHorizontal(red, green, blue, alpha...).
 		BorderColorVertical(red, green, blue, alpha...)
 	return page

@@ -10,7 +10,7 @@ import (
 
 type PageElement struct {
 	layout *BlockElement
-	body   *BlockElement
+	body   SegmentBuilder
 
 	// Public attributes
 	orientation Orientation
@@ -22,10 +22,14 @@ func Page() *PageElement {
 	page := &PageElement{}
 
 	page.layout = Block().FlexDirectionColumn()
-	page.body = Block().FlexDirectionColumn().FlexAuto()
 
 	page.Size(DefaultSize)
 
+	return page
+}
+
+func (page *PageElement) Body(body SegmentBuilder) *PageElement {
+	page.body = body
 	return page
 }
 
@@ -39,7 +43,6 @@ func (page *PageElement) Size(size Size) *PageElement {
 }
 
 func (page *PageElement) Width(width float64) *PageElement {
-	page.body.getFlexNode().StyleSetWidth(float32(width))
 	page.layout.Width(width)
 
 	return page
@@ -83,13 +86,30 @@ func (page *PageElement) render(pdf *Pdf, pageNumber int) {
 
 	// Set Layout
 	if pdf.header != nil {
-		page.layout.Children(pdf.header(pageNumber, page.name))
+		header := segment().FlexDirectionColumn()
+		header.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
+		header.pageNumber = pageNumber
+		header.pageName = page.name
+		pdf.header(header)
+		page.layout.Children(header.delegated)
 	}
 
-	page.layout.Children(page.body)
+	if page.body != nil {
+		body := segment().FlexDirectionColumn()
+		body.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
+		body.pageNumber = pageNumber
+		body.pageName = page.name
+		page.body(body)
+		page.layout.Children(body.delegated)
+	}
 
 	if pdf.footer != nil {
-		page.layout.Children(pdf.footer(pageNumber, page.name))
+		footer := segment().FlexDirectionColumn()
+		footer.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
+		footer.pageNumber = pageNumber
+		footer.pageName = page.name
+		pdf.footer(footer)
+		page.layout.Children(footer.delegated)
 	}
 
 	// Initialize fpdf

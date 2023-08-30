@@ -15,8 +15,6 @@ type defaultProps struct {
 	fontColor  rgba
 }
 
-type HeaderFooterFunc = func(pageNumber int, pageName string) (content Node)
-
 type Pdf struct {
 	fpdf  *gofpdf.Fpdf
 	pages []*PageElement
@@ -24,8 +22,8 @@ type Pdf struct {
 	fontsLoaded  []FontLoadInformation
 	defaultProps *defaultProps
 
-	header HeaderFooterFunc
-	footer HeaderFooterFunc
+	header SegmentBuilder
+	footer SegmentBuilder
 }
 
 func NewPdf() *Pdf {
@@ -46,12 +44,12 @@ func NewPdf() *Pdf {
 	return pdf
 }
 
-func (pdf *Pdf) Header(header HeaderFooterFunc) *Pdf {
+func (pdf *Pdf) Header(header SegmentBuilder) *Pdf {
 	pdf.header = header
 	return pdf
 }
 
-func (pdf *Pdf) Footer(footer HeaderFooterFunc) *Pdf {
+func (pdf *Pdf) Footer(footer SegmentBuilder) *Pdf {
 	pdf.footer = footer
 	return pdf
 }
