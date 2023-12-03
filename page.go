@@ -139,17 +139,19 @@ func (page *PageElement) preRender(defaultProps *defaultProps, fpdf *gofpdf.Fpdf
 	}
 }
 
-func (page *PageElement) render(pdf *Pdf, pageNumber int) (nextPageWithOverflowed *PageElement) {
+func (page *PageElement) render(pdf *Pdf, pageNumber int, overflowedContinuation bool) (nextPageWithOverflowed *PageElement) {
 
 	// Set Layout
+	var headerSegment *Header
 	if pdf.header != nil {
-		header := segment().FlexDirectionColumn()
-		header.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
-		header.delegated.FlexNone()
-		header.pageNumber = pageNumber
-		header.pageName = page.name
-		pdf.header(header)
-		page.layout.Children(header.delegated)
+		headerSegment = header()
+		headerSegment.FlexDirectionColumn()
+		headerSegment.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
+		headerSegment.delegated.FlexNone()
+		headerSegment.pageNumber = pageNumber
+		headerSegment.pageName = page.name
+		pdf.header(headerSegment)
+		page.layout.Children(headerSegment.delegated)
 	}
 
 	if page.bodyBuilder != nil {
@@ -162,14 +164,16 @@ func (page *PageElement) render(pdf *Pdf, pageNumber int) (nextPageWithOverflowe
 		page.layout.Children(page.body.delegated)
 	}
 
+	var footerSegment *Footer
 	if pdf.footer != nil {
-		footer := segment().FlexDirectionColumn()
-		footer.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
-		footer.delegated.FlexNone()
-		footer.pageNumber = pageNumber
-		footer.pageName = page.name
-		pdf.footer(footer)
-		page.layout.Children(footer.delegated)
+		footerSegment = footer()
+		footerSegment.FlexDirectionColumn()
+		footerSegment.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
+		footerSegment.delegated.FlexNone()
+		footerSegment.pageNumber = pageNumber
+		footerSegment.pageName = page.name
+		pdf.footer(footerSegment)
+		page.layout.Children(footerSegment.delegated)
 	}
 
 	// Initialize fpdf
@@ -223,8 +227,16 @@ func (page *PageElement) render(pdf *Pdf, pageNumber int) (nextPageWithOverflowe
 
 	page.layout.renderElement(pdf)
 
-	for _, child := range page.layout.children {
-		child.render(pdf)
+	if headerSegment != nil && (!overflowedContinuation || !headerSegment.skipRenderAfterOverflow) {
+		headerSegment.delegated.render(pdf)
+	}
+
+	if page.body != nil {
+		page.body.delegated.render(pdf)
+	}
+
+	if footerSegment != nil && (nextPageWithOverflowed == nil || !footerSegment.skipRenderAfterOverflow) {
+		footerSegment.delegated.render(pdf)
 	}
 
 	return

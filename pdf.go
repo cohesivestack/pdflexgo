@@ -22,8 +22,8 @@ type Pdf struct {
 	fontsLoaded  []FontLoadInformation
 	defaultProps *defaultProps
 
-	header SegmentBuilder
-	footer SegmentBuilder
+	header HeaderBuilder
+	footer FooterBuilder
 }
 
 func NewPdf() *Pdf {
@@ -44,12 +44,12 @@ func NewPdf() *Pdf {
 	return pdf
 }
 
-func (pdf *Pdf) Header(header SegmentBuilder) *Pdf {
+func (pdf *Pdf) Header(header HeaderBuilder) *Pdf {
 	pdf.header = header
 	return pdf
 }
 
-func (pdf *Pdf) Footer(footer SegmentBuilder) *Pdf {
+func (pdf *Pdf) Footer(footer FooterBuilder) *Pdf {
 	pdf.footer = footer
 	return pdf
 }
@@ -59,11 +59,11 @@ func (pdf *Pdf) Pages(pages ...*PageElement) *Pdf {
 	return pdf
 }
 
-func renderPageRecursive(page *PageElement, pdf *Pdf, pageNumber int) int {
-	nextPageOverflowed := page.render(pdf, pageNumber)
+func renderPageRecursive(page *PageElement, pdf *Pdf, pageNumber int, overflowedContinuation bool) int {
+	nextPageOverflowed := page.render(pdf, pageNumber, overflowedContinuation)
 	if nextPageOverflowed != nil {
 		// Recursive call with overflowed nodes and incremented page number
-		return renderPageRecursive(nextPageOverflowed, pdf, pageNumber+1)
+		return renderPageRecursive(nextPageOverflowed, pdf, pageNumber+1, true)
 	}
 	return pageNumber + 1
 }
@@ -72,7 +72,7 @@ func (pdf *Pdf) Render() *Pdf {
 
 	pageNumber := 1
 	for _, page := range pdf.pages {
-		pageNumber = renderPageRecursive(page, pdf, pageNumber)
+		pageNumber = renderPageRecursive(page, pdf, pageNumber, false)
 	}
 
 	return pdf
