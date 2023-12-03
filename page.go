@@ -40,6 +40,7 @@ func (page *PageElement) createOverflowedPage(overflowedNodes []Node) *PageEleme
 	}
 
 	newPage := Page()
+	newPage.Name(page.name)
 	newPage.Orientation(page.orientation)
 	newPage.Unit(page.unit)
 	newPage.Width(float64(page.layout.flexNode.LayoutGetWidth()))
