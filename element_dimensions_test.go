@@ -11,7 +11,7 @@ func TestBlockDimensions(t *testing.T) {
 	pdf := NewPdf()
 
 	block := Block().Width(400).Height(200)
-	pdf.Pages(Page().Body(func(body *Segment) {
+	pdf.Pages(Page().Body(func(body *Body) {
 		body.Children(block)
 	})).Render()
 
@@ -24,7 +24,7 @@ func TestBlockDimensionsWithMargin(t *testing.T) {
 	pdf := NewPdf()
 
 	block := Block().Width(400).Height(200).Margin(10, 20, 30, 40)
-	pdf.Pages(Page().Body(func(body *Segment) {
+	pdf.Pages(Page().Body(func(body *Body) {
 		body.Children(block)
 	})).Render()
 
@@ -37,7 +37,7 @@ func TestBlockDimensionsWithPadding(t *testing.T) {
 	pdf := NewPdf()
 
 	block := Block().Width(400).Height(200).Padding(10, 20, 30, 40)
-	pdf.Pages(Page().Body(func(body *Segment) {
+	pdf.Pages(Page().Body(func(body *Body) {
 		body.Children(block)
 	})).Render()
 
@@ -50,7 +50,7 @@ func TestBlockDimensionsWithBorder(t *testing.T) {
 	pdf := NewPdf()
 
 	block := Block().Width(400).Height(200).BorderWidth(10, 20, 30, 40)
-	pdf.Pages(Page().Body(func(body *Segment) {
+	pdf.Pages(Page().Body(func(body *Body) {
 		body.Children(block)
 	})).Render()
 

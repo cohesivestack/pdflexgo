@@ -24,7 +24,9 @@ func main() {
 
 	for _, name := range []string{
 		"block",
-		"segment",
+		"body",
+		"header",
+		"footer",
 	} {
 		renderTemplate(tmpl, "container", name)
 	}
@@ -40,7 +42,9 @@ func main() {
 
 	for _, name := range []string{
 		"page",
-		"segment",
+		"body",
+		"header",
+		"footer",
 		"block",
 		"text",
 		"text_multi_format",
@@ -66,7 +70,7 @@ func renderTemplate(tmpl *template.Template, group string, name string) {
 	switch name {
 	case "page":
 		_data.Delegated = ".layout"
-	case "segment":
+	case "body", "footer", "header":
 		_data.Delegated = ".delegated"
 		_data.Type = upperFirst(snakeToCamel(name))
 	}

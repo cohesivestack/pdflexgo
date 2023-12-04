@@ -10,8 +10,8 @@ import (
 
 type PageElement struct {
 	layout      *BlockElement
-	bodyBuilder SegmentBuilder
-	body        *Segment
+	bodyBuilder BodyBuilder
+	body        *Body
 
 	// Public attributes
 	orientation Orientation
@@ -45,8 +45,8 @@ func (page *PageElement) createOverflowedPage(overflowedNodes []Node) *PageEleme
 	newPage.Unit(page.unit)
 	newPage.Width(float64(page.layout.flexNode.LayoutGetWidth()))
 	newPage.Height(float64(page.layout.flexNode.LayoutGetHeight()))
-	newPage.Body(func(body *Segment) {
-		page.body.copySegmentWithoutChildren(body)
+	newPage.Body(func(body *Body) {
+		page.body.copyBodyWithoutChildren(body)
 		body.Children(overflowedNodes...)
 	})
 
@@ -85,7 +85,7 @@ func (page *PageElement) createOverflowedPage(overflowedNodes []Node) *PageEleme
 	return newPage
 }
 
-func (page *PageElement) Body(body SegmentBuilder) *PageElement {
+func (page *PageElement) Body(body BodyBuilder) *PageElement {
 	page.bodyBuilder = body
 	return page
 }
@@ -155,11 +155,10 @@ func (page *PageElement) render(pdf *Pdf, pageNumber int, overflowedContinuation
 	}
 
 	if page.bodyBuilder != nil {
-		page.body = segment().FlexDirectionColumn()
+		page.body = body().FlexDirectionColumn()
 		page.body.delegated.Width(float64(page.layout.getFlexNode().LayoutGetWidth()))
 		page.body.delegated.FlexAuto()
 		page.body.pageNumber = pageNumber
-		page.body.pageName = page.name
 		page.bodyBuilder(page.body)
 		page.layout.Children(page.body.delegated)
 	}
